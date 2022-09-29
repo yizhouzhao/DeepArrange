@@ -10,7 +10,7 @@ Fruits:
     餐桌
         [1] 圆桌 [2] 长桌 [3] 方桌
     水果
-        [1] Apple [2] Avocado [3] Kiwi [4] Lime [5] Pomegrante
+        [1] Apple [2] Avocado [3] Kiwi [4] Lime [5] Pomegrante [6] Orange
 
 
 3. Evaluation metrics
