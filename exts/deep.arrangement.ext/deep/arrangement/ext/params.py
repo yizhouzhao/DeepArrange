@@ -8,3 +8,8 @@ EXTENSION_FOLDER_PATH = Path(
 )
 
 ASSET_PATH = str(EXTENSION_FOLDER_PATH.parent.parent.resolve()) + "/Asset"
+
+LEAN_ON_POSITIONS = [
+    (0,0),
+    (1,1),
+]
