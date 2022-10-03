@@ -26,6 +26,10 @@ class MyExtension(omni.ext.IExt):
                 with ui.HStack(height = 20):
                     ui.Button("Add scene", clicked_fn=self.add_scene)
                     ui.Button("Randomize scene", clicked_fn=self.randomize_scene)
+                with ui.HStack(height = 20):
+                    self.bookshelf_id_ui = omni.ui.IntField(width = 30)    
+                    ui.Button("Add bookshelf", clicked_fn = self.add_bookshelf)
+                
                     
 
     ################################ scene #########################################
@@ -40,18 +44,13 @@ class MyExtension(omni.ext.IExt):
         # scene
         self.stage = omni.usd.get_context().get_stage() 
         self.layer = self.stage.GetRootLayer()
+        house_prim_path = "/World/layout"
         house_path = os.path.join(HOUSE_INFO_PATH, "0", "layout.usd")  
 
-        # move obj to the correct place
-        house_prim_path = "/World/layout"
-        house_prim = self.stage.GetPrimAtPath(house_prim_path)
-        if not house_prim.IsValid():
-            house_prim = self.stage.DefinePrim(house_prim_path)
+        from .utils import import_asset_to_stage
+        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
 
-        print("house_path:", house_path)
-        success_bool = house_prim.GetReferences().AddReference(house_path)
 
-        assert success_bool, "Scene loading unsuccessful"
 
     def randomize_scene(self, rand = True):
         """
@@ -67,6 +66,15 @@ class MyExtension(omni.ext.IExt):
         self.randomizer.randomize_house(rand = rand)
         self.task_desc_ui.model.set_value("Added floor/wall material")
 
+    def add_bookshelf(self):
+        """
+        Add bookshelf
+        """
+        from .task.bookshelf import BookShelfScene
+        asset_id = self.bookshelf_id_ui.model.get_value_as_int()
+        task_scene = BookShelfScene("border", asset_id)
+        task_scene.add_base_asset()
+
 
     def on_shutdown(self):
-        print("[deep.arrangement.ext] MyExtension shutdown")
+        print("[deep.arrangement.ext] MyExtension shutdown") 
