@@ -41,3 +41,19 @@ DESK_PATHS = {
         "D/Desk/Desk_01.usd",
     ]
 }
+
+BOOKSHELVE_OBJS = [
+    "Book", "Magazine","Plant","Sculpture","Vase",
+]
+
+TABLE_OBJS = [
+    "Fruit","Dinnerware","Flatware","GadgetsAndTool","Magazine","Tchotchke","Vase",
+]
+
+DESK_OBJS = [
+    "Book","Clock_Desk","Magazine","DeskDecor","Plant","Sculpture","Supply","TableLamp",
+]
+
+WALL_OBJS = [
+    "Clock","Picture",
+]

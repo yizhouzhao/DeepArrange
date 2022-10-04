@@ -1,7 +1,8 @@
 import os
+import random
 
 import omni.usd
-from pxr import Gf
+from pxr import Gf, Sdf
 from omni.physx.scripts.utils import setStaticCollider
 
 from ..params import ASSET_PATH
@@ -15,6 +16,11 @@ class CommonScene():
         self.base_asset_file_paths = base_asset_file_paths
         self.base_prim_path = base_prim_path
 
+        # objects
+        self.object_candidates = None
+        self.objects = []
+        self.object_prim_paths = []
+        
         # side choice
         self.side_choice = side_choice
 
@@ -83,5 +89,56 @@ class CommonScene():
 
         # add collider
         setStaticCollider(self.base_prim)
-        
+    
+    def load_obj_info(self, object_type:str, amount:int = 1):
+        """
+        Add object to scene
+        ::params:
+            object_type: string
+            amount: int
+        """
+        assert object_type in self.object_candidates, f"OBJ Type {object_type} not in candidates"
 
+        object_folder = os.listdir(os.path.join(ASSET_PATH, "I", object_type))
+
+        object_name = random.choice(object_folder)
+
+        for i in range(amount):
+            object_info = {
+                "type": object_type,
+                "name": object_name,
+                "file_path": os.path.join(ASSET_PATH, "I", object_type, object_name),
+                "image_path": os.path.join(ASSET_PATH, "I", object_type, ".thumbs/256x256", object_name + ".png")
+            }
+            self.objects.append(object_info)
+
+            # add object to scene
+            self.add_object(object_info)
+
+
+    def add_object(self, object_info, position = (0, 200, 0), rotation = (1, 0, 0, 0)):
+        """
+        Add object to scene
+        """
+        object_type = object_info["type"]
+        object_prim_path = f"/World/{object_type}" 
+
+        # import 
+        self.stage = omni.usd.get_context().get_stage() 
+        object_prim = import_asset_to_stage(self.stage, object_prim_path, object_info["file_path"])
+        self.object_prim_paths.append(object_prim.GetPath().pathString)
+
+
+        xform_mat = Gf.Matrix4d().SetScale([1,1,1]) *  \
+                Gf.Matrix4d().SetRotate(Gf.Quatf(float(rotation[0]), float(rotation[1]), float(rotation[2]), float(rotation[3]))) * \
+                Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
+
+        # move to correct position and rotation
+        omni.kit.commands.execute(
+            "TransformPrimCommand",
+            path=object_prim.GetPath(),
+            new_transform_matrix=xform_mat,
+        )
+
+        # attribute
+        object_prim.CreateAttribute("arr:type", Sdf.ValueTypeNames.String, False).Set(object_type)

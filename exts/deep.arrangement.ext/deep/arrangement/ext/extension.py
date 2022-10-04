@@ -1,5 +1,6 @@
 # python import
 import os
+import random
 
 # omniverse import
 import carb
@@ -32,6 +33,8 @@ class MyExtension(omni.ext.IExt):
                     self.task_base_id_ui = omni.ui.IntField()   
                 with ui.HStack(height = 20):
                     ui.Button("Add Task Base", clicked_fn = self.add_task_base)
+                    ui.Button("Add Object", clicked_fn = self.add_task_object)
+                    
                 
                     
     ################################ scene #########################################
@@ -83,16 +86,24 @@ class MyExtension(omni.ext.IExt):
 
         print("side_choice", side_choice)
         if task_type == "Bookshelf":
-            task_scene = BookshelfBase(side_choice, asset_id)
-            task_scene.add_base_asset()
+            self.task_scene = BookshelfBase(side_choice, asset_id)
+            self.task_scene.add_base_asset()
         elif task_type == "Table":
-            task_scene = TableBase(side_choice, asset_id)
-            task_scene.add_base_asset()
+            self.task_scene = TableBase(side_choice, asset_id)
+            self.task_scene.add_base_asset()
         elif task_type == "Desk":
-            task_scene = DeskBase(side_choice, asset_id)
-            task_scene.add_base_asset()
+            self.task_scene = DeskBase(side_choice, asset_id)
+            self.task_scene.add_base_asset()
         else: # Wall
-            task_scene = WallBase()
+            self.task_scene = WallBase()
+
+    def add_task_object(self, mode = "random"):
+        """
+        Add task object
+        """
+        object_type = random.choice(self.task_scene.object_candidates)
+        self.task_scene.load_obj_info(object_type, 1)
+        print("objects", self.task_scene.objects)
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 
