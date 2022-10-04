@@ -7,6 +7,9 @@ EXTENSION_FOLDER_PATH = Path(
     omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)
 )
 
+TASK_CHOICES = ["Bookshelf", "Table", "Desk", "Wall"]
+SIDE_CHOICES = ["Border", "Corner", "Center"]
+
 ASSET_PATH = str(EXTENSION_FOLDER_PATH.parent.parent.resolve()) + "/Asset"
 
 LEAN_ON_POSITIONS = [

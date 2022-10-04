@@ -8,7 +8,7 @@ import omni.ext
 import omni.ui as ui
 
 # deep arrangement import
-from .params import ASSET_PATH
+from .params import ASSET_PATH, SIDE_CHOICES, TASK_CHOICES
 from .layout.randomizer import Randomizer
 
 
@@ -27,17 +27,19 @@ class MyExtension(omni.ext.IExt):
                     ui.Button("Add scene", clicked_fn=self.add_scene)
                     ui.Button("Randomize scene", clicked_fn=self.randomize_scene)
                 with ui.HStack(height = 20):
-                    self.bookshelf_id_ui = omni.ui.IntField(width = 30)    
-                    ui.Button("Add bookshelf", clicked_fn = self.add_bookshelf)
+                    self.task_type_ui = ui.ComboBox( 0, *TASK_CHOICES)
+                    self.side_choice_ui = ui.ComboBox( 0, *SIDE_CHOICES)
+                    self.task_base_id_ui = omni.ui.IntField()   
+                with ui.HStack(height = 20):
+                    ui.Button("Add Task Base", clicked_fn = self.add_task_base)
                 
                     
-
     ################################ scene #########################################
 
     def add_scene(self):
         print("Add scene EXTENSION_FOLDER_PATH", ASSET_PATH)
 
-        HOUSE_INFO_PATH = os.path.join(ASSET_PATH, "Scene")
+        HOUSE_INFO_PATH = os.path.join(ASSET_PATH, "S")
 
         print("asset", os.listdir(ASSET_PATH))
 
@@ -49,7 +51,6 @@ class MyExtension(omni.ext.IExt):
 
         from .utils import import_asset_to_stage
         import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
-
 
 
     def randomize_scene(self, rand = True):
@@ -66,15 +67,32 @@ class MyExtension(omni.ext.IExt):
         self.randomizer.randomize_house(rand = rand)
         self.task_desc_ui.model.set_value("Added floor/wall material")
 
-    def add_bookshelf(self):
-        """
-        Add bookshelf
-        """
-        from .task.bookshelf import BookShelfScene
-        asset_id = self.bookshelf_id_ui.model.get_value_as_int()
-        task_scene = BookShelfScene("border", asset_id)
-        task_scene.add_base_asset()
 
+    def add_task_base(self):
+        """
+        Add task asset
+        """
+        from .task.base import BookshelfBase, DeskBase, TableBase, WallBase
+
+        # type and id
+        task_index = self.task_type_ui.model.get_item_value_model().get_value_as_int()
+        task_type = TASK_CHOICES[task_index]
+        side_index = self.side_choice_ui.model.get_item_value_model().get_value_as_int()
+        side_choice = SIDE_CHOICES[side_index]
+        asset_id = self.task_base_id_ui.model.get_value_as_int()
+
+        print("side_choice", side_choice)
+        if task_type == "Bookshelf":
+            task_scene = BookshelfBase(side_choice, asset_id)
+            task_scene.add_base_asset()
+        elif task_type == "Table":
+            task_scene = TableBase(side_choice, asset_id)
+            task_scene.add_base_asset()
+        elif task_type == "Desk":
+            task_scene = DeskBase(side_choice, asset_id)
+            task_scene.add_base_asset()
+        else: # Wall
+            task_scene = WallBase()
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 

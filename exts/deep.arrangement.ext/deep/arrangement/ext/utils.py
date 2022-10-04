@@ -14,6 +14,11 @@ def get_prim_bbox(stage, prim):
     return game_bboxes
 
 def import_asset_to_stage(stage, prim_path, asset_path, position = (0,0,0), rotation = (1, 0, 0, 0), scale = 1):
+    """
+    Import asset to path
+    """
+    prim_path = omni.usd.get_stage_next_free_path(stage, prim_path, True)
+
     asset_prim = stage.GetPrimAtPath(prim_path)
     if not asset_prim.IsValid():
         asset_prim = stage.DefinePrim(prim_path)
