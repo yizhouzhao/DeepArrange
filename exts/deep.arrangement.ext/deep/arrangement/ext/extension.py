@@ -34,6 +34,8 @@ class MyExtension(omni.ext.IExt):
                 with ui.HStack(height = 20):
                     ui.Button("Add Task Base", clicked_fn = self.add_task_base)
                     ui.Button("Add Object", clicked_fn = self.add_task_object)
+                with ui.HStack(height = 20):
+                    ui.Button("Set camera", clicked_fn = self.set_camera)
                     
                 
                     
@@ -79,20 +81,20 @@ class MyExtension(omni.ext.IExt):
 
         # type and id
         task_index = self.task_type_ui.model.get_item_value_model().get_value_as_int()
-        task_type = TASK_CHOICES[task_index]
+        self.task_type = TASK_CHOICES[task_index]
         side_index = self.side_choice_ui.model.get_item_value_model().get_value_as_int()
-        side_choice = SIDE_CHOICES[side_index]
+        self.side_choice = SIDE_CHOICES[side_index]
         asset_id = self.task_base_id_ui.model.get_value_as_int()
 
-        print("side_choice", side_choice)
-        if task_type == "Bookshelf":
-            self.task_scene = BookshelfBase(side_choice, asset_id)
+        print("side_choice", self.side_choice)
+        if self.task_type == "Bookshelf":
+            self.task_scene = BookshelfBase(self.side_choice, asset_id)
             self.task_scene.add_base_asset()
-        elif task_type == "Table":
-            self.task_scene = TableBase(side_choice, asset_id)
+        elif self.task_type == "Table":
+            self.task_scene = TableBase(self.side_choice, asset_id)
             self.task_scene.add_base_asset()
-        elif task_type == "Desk":
-            self.task_scene = DeskBase(side_choice, asset_id)
+        elif self.task_type == "Desk":
+            self.task_scene = DeskBase(self.side_choice, asset_id)
             self.task_scene.add_base_asset()
         else: # Wall
             self.task_scene = WallBase()
@@ -104,6 +106,17 @@ class MyExtension(omni.ext.IExt):
         object_type = random.choice(self.task_scene.object_candidates)
         self.task_scene.load_obj_info(object_type, 1)
         print("objects", self.task_scene.objects)
+
+    def set_camera(self):
+        """
+        Set up camera
+        """
+        from .render.helper import RenderHelper
+
+        self.render_helper = RenderHelper()
+        pos = (0, 500, 80)
+        rot = [0, 0, -0.7071068, 0.7071068]
+        self.render_helper.add_camera(camera_path = "/World/Camera_0", position=pos, rotation=rot)
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 

@@ -36,6 +36,7 @@ TABLE_PATHS = {
 }
 
 
+
 DESK_PATHS = {
     "Border": [
         "D/Desk/Desk_01.usd",
@@ -57,3 +58,23 @@ DESK_OBJS = [
 WALL_OBJS = [
     "Clock","Picture",
 ]
+
+
+CAMERA_CONFIGS = {
+    "Bookshelf": {
+        "Border": (0, 60, 200),
+        "Corner": (0, 0, 0),
+    },
+    "Table": {
+        "Border": (0, 60, 200),
+        "Corner": (0, 0, 0),
+        "Center": (0 ,0, 0),
+    },
+    "Desk": {
+        "Border": (0, 60, 200),
+    },
+    "Wall": {
+        "Border": (0, 60, 200),
+    },
+    
+}
