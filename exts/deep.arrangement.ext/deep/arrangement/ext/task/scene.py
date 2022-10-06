@@ -104,7 +104,7 @@ class ArrangeScene():
         """
         assert object_type in self.object_candidates, f"OBJ Type {object_type} not in candidates"
 
-        object_folder = os.listdir(os.path.join(ASSET_PATH, "I", object_type))
+        object_folder = [obj for obj in os.listdir(os.path.join(ASSET_PATH, "I", object_type)) if obj.endswith(".usd")]
 
         object_name = random.choice(object_folder)
 

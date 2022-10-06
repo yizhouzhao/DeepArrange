@@ -106,7 +106,7 @@ class MyExtension(omni.ext.IExt):
         stage = omni.usd.get_context().get_stage()
         object_prim_path = self.task_scene.objects[-1]["prim_path"]  
         object_prim = stage.GetPrimAtPath(object_prim_path)
-        x, y = np.random.randn(), np.random.randn()
+        x, y = np.tanh(np.random.randn()), np.tanh(np.random.randn())
         self.task_scene.map_object(object_prim, (x, y)) 
 
     def set_camera(self):
