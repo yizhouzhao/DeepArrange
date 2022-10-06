@@ -8,6 +8,8 @@ from omni.physx.scripts.utils import setStaticCollider
 from ..params import ASSET_PATH
 from ..utils import import_asset_to_stage
 
+from .config import *
+
 
 class CommonScene():
     def __init__(self, side_choice, base_asset_id, base_prim_path, base_asset_file_paths) -> None:
@@ -19,9 +21,9 @@ class CommonScene():
         # objects
         self.object_candidates = None
         self.objects = []
-        self.object_prim_paths = []
         
-        # side choice
+        # task/side choice
+        self.task_choice = ""
         self.side_choice = side_choice
 
         if self.side_choice == "Corner":
@@ -110,13 +112,19 @@ class CommonScene():
                 "file_path": os.path.join(ASSET_PATH, "I", object_type, object_name),
                 "image_path": os.path.join(ASSET_PATH, "I", object_type, ".thumbs/256x256", object_name + ".png")
             }
-            self.objects.append(object_info)
+            
+            # modify size 
+            if object_type in OBJS_SIZE_MODIFICATION:
+                object_scale = OBJS_SIZE_MODIFICATION[object_type]
+            else:
+                object_scale = 1.0
 
             # add object to scene
-            self.add_object(object_info)
+            self.add_object(object_info, scale=object_scale)
+            self.objects.append(object_info)
 
 
-    def add_object(self, object_info, position = (0, 200, 0), rotation = (1, 0, 0, 0)):
+    def add_object(self, object_info, position = (0, 200, 0), rotation = (1, 0, 0, 0), scale = 1.0):
         """
         Add object to scene
         """
@@ -126,10 +134,10 @@ class CommonScene():
         # import 
         self.stage = omni.usd.get_context().get_stage() 
         object_prim = import_asset_to_stage(self.stage, object_prim_path, object_info["file_path"])
-        self.object_prim_paths.append(object_prim.GetPath().pathString)
+        object_info["prim_path"] = object_prim.GetPath().pathString
 
-
-        xform_mat = Gf.Matrix4d().SetScale([1,1,1]) *  \
+        # xform
+        xform_mat = Gf.Matrix4d().SetScale(scale) *  \
                 Gf.Matrix4d().SetRotate(Gf.Quatf(float(rotation[0]), float(rotation[1]), float(rotation[2]), float(rotation[3]))) * \
                 Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
 
@@ -142,3 +150,27 @@ class CommonScene():
 
         # attribute
         object_prim.CreateAttribute("arr:type", Sdf.ValueTypeNames.String, False).Set(object_type)
+
+    def move_object(self, object_prim, position = (0, 200, 0), rotation = (1, 0, 0, 0)):
+        """
+        Move object
+        """
+        # scale
+        scale = object_prim.GetAttribute("xformOp:scale").Get()
+        # xform
+        xform_mat = Gf.Matrix4d().SetScale(scale) *  \
+                Gf.Matrix4d().SetRotate(Gf.Quatf(float(rotation[0]), float(rotation[1]), float(rotation[2]), float(rotation[3]))) * \
+            Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
+
+        # move to correct position and rotation
+        omni.kit.commands.execute(
+            "TransformPrimCommand",
+            path=object_prim.GetPath(),
+            new_transform_matrix=xform_mat,
+        )
+
+    def map_object(self, object_prim, pos):
+        """
+        Map object to position
+        """
+        

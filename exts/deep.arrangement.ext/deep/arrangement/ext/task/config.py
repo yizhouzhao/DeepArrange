@@ -59,6 +59,14 @@ WALL_OBJS = [
     "Clock","Picture",
 ]
 
+OBJS_SIZE_MODIFICATION = {
+    "Book": 0.7,
+    "Magazine": 0.7,
+    "Sculpture": 0.7,
+    "Picture":0.7,
+    "Vase":0.7,
+}
+
 
 CAMERA_CONFIGS = {
     "Bookshelf": {
