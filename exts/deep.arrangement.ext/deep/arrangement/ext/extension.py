@@ -1,5 +1,6 @@
 # python import
 import os
+import numpy as np
 import random
 
 # omniverse import
@@ -11,6 +12,7 @@ import omni.ui as ui
 # deep arrangement import
 from .params import ASSET_PATH, SIDE_CHOICES, TASK_CHOICES
 from .layout.randomizer import Randomizer
+from .task.scene import ArrangeScene
 
 
 class MyExtension(omni.ext.IExt):
@@ -33,7 +35,9 @@ class MyExtension(omni.ext.IExt):
                     self.task_base_id_ui = omni.ui.IntField()   
                 with ui.HStack(height = 20):
                     ui.Button("Add Task Base", clicked_fn = self.add_task_base)
+                with ui.HStack(height = 20):
                     ui.Button("Add Object", clicked_fn = self.add_task_object)
+                    ui.Button("Move Object", clicked_fn = self.move_task_object)
                 with ui.HStack(height = 20):
                     ui.Button("Set camera", clicked_fn = self.set_camera)
                     
@@ -77,8 +81,6 @@ class MyExtension(omni.ext.IExt):
         """
         Add task asset
         """
-        from .task.base import BookshelfBase, DeskBase, TableBase, WallBase
-
         # type and id
         task_index = self.task_type_ui.model.get_item_value_model().get_value_as_int()
         self.task_type = TASK_CHOICES[task_index]
@@ -86,19 +88,9 @@ class MyExtension(omni.ext.IExt):
         self.side_choice = SIDE_CHOICES[side_index]
         asset_id = self.task_base_id_ui.model.get_value_as_int()
 
-        print("side_choice", self.side_choice)
-        if self.task_type == "Bookshelf":
-            self.task_scene = BookshelfBase(self.side_choice, asset_id)
-            self.task_scene.add_base_asset()
-        elif self.task_type == "Table":
-            self.task_scene = TableBase(self.side_choice, asset_id)
-            self.task_scene.add_base_asset()
-        elif self.task_type == "Desk":
-            self.task_scene = DeskBase(self.side_choice, asset_id)
-            self.task_scene.add_base_asset()
-        else: # Wall
-            self.task_scene = WallBase()
-
+        self.task_scene = ArrangeScene(self.task_type, self.side_choice, asset_id, "/World/base")
+        self.task_scene.add_base_asset()
+ 
     def add_task_object(self, mode = "random"):
         """
         Add task object
@@ -106,6 +98,16 @@ class MyExtension(omni.ext.IExt):
         object_type = random.choice(self.task_scene.object_candidates)
         self.task_scene.load_obj_info(object_type, 1)
         print("objects", self.task_scene.objects)
+
+    def move_task_object(self):
+        """
+        Move task object
+        """
+        stage = omni.usd.get_context().get_stage()
+        object_prim_path = self.task_scene.objects[-1]["prim_path"]  
+        object_prim = stage.GetPrimAtPath(object_prim_path)
+        x, y = np.random.randn(), np.random.randn()
+        self.task_scene.map_object(object_prim, (x, y)) 
 
     def set_camera(self):
         """
@@ -117,6 +119,7 @@ class MyExtension(omni.ext.IExt):
         pos = (0, 500, 80)
         rot = [0, 0, -0.7071068, 0.7071068]
         # self.render_helper.add_camera(camera_path = "/World/Camera_0", position=pos, rotation=rot)
+
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 
