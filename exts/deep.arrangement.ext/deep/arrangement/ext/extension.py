@@ -116,7 +116,7 @@ class MyExtension(omni.ext.IExt):
         self.render_helper = RenderHelper()
         pos = (0, 500, 80)
         rot = [0, 0, -0.7071068, 0.7071068]
-        self.render_helper.add_camera(camera_path = "/World/Camera_0", position=pos, rotation=rot)
+        # self.render_helper.add_camera(camera_path = "/World/Camera_0", position=pos, rotation=rot)
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 

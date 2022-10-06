@@ -78,3 +78,43 @@ CAMERA_CONFIGS = {
     },
     
 }
+
+# how to place the object
+PLACEMENT_CONFIGS = {
+    "Bookshelf":{
+        "Border": {
+            "mean": (0, -1, 100),
+            "sd": (50, -1, 50),
+        },
+        "Corder":{
+            "mean":(-378, -1, 100),
+            "sd": (50, -1, 50),
+        }
+    },
+    "Table":{
+        "Border": {
+            "mean": (0, 0, -1),
+            "sd": (50, 50, -1),
+        },
+        "Corder":{
+            "mean":(-378, 0, -1),
+            "sd": (50, 50, -1),
+        },
+        "Center":{
+            "mean":(0, 150, -1),
+            "sd": (50, 50, -1),
+        }
+    },
+    "Desk":{
+        "Border": {
+            "mean": (0, 0, -1),
+            "sd": (50, 50, -1),
+        }
+    },
+    "Wall": {
+        "Border": {
+            "mean": (0, -1, 100),
+            "sd": (50, -1, 50),
+        },
+    },
+}
