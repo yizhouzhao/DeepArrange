@@ -20,3 +20,6 @@ Value: Inception score/CLIP score/VQA score/User study
 
 
 D:\DeepArrange\Asset
+
+
+# isaac-sim path
