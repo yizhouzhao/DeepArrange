@@ -29,7 +29,10 @@ class ArrangeScene():
         self.objects = []
         self.object_mean = np.array(OBJS_PLACEMENT_CONFIGS[self.task_choice][self.side_choice]["mean"])
         self.object_sd = np.array(OBJS_PLACEMENT_CONFIGS[self.task_choice][self.side_choice]["sd"])
-    
+
+        # scene
+        self.stage = omni.usd.get_context().get_stage() 
+
     def add_base_asset(self):
         """
         Add base asset to current scene
@@ -105,7 +108,6 @@ class ArrangeScene():
         assert object_type in self.object_candidates, f"OBJ Type {object_type} not in candidates"
 
         object_folder = [obj for obj in os.listdir(os.path.join(ASSET_PATH, "I", object_type)) if obj.endswith(".usd")]
-
         object_name = random.choice(object_folder)
 
         for i in range(amount):
@@ -131,11 +133,21 @@ class ArrangeScene():
         """
         Add object to scene
         """
+
+        obj_root_prim = self.stage.GetPrimAtPath("/World/objects")
+        if not obj_root_prim.IsValid():
+            # create an unit xform
+            omni.kit.commands.execute(
+                    "CreatePrim",
+                    prim_path="/World/objects",
+                    prim_type="Xform",
+                    select_new_prim=False,
+                )
+
         object_type = object_info["type"]
-        object_prim_path = f"/World/{object_type}" 
+        object_prim_path = f"/World/objects/{object_type}" 
 
         # import 
-        self.stage = omni.usd.get_context().get_stage() 
         object_prim = import_asset_to_stage(self.stage, object_prim_path, object_info["file_path"])
         object_info["prim_path"] = object_prim.GetPath().pathString
 

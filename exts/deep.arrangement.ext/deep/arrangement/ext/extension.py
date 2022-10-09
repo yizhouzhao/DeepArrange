@@ -40,6 +40,8 @@ class MyExtension(omni.ext.IExt):
                     ui.Button("Move Object", clicked_fn = self.move_task_object)
                 with ui.HStack(height = 20):
                     ui.Button("Set camera", clicked_fn = self.set_camera)
+                    ui.Button("Capture image", clicked_fn = self.capture_image)
+                    
                     
                 
                     
@@ -120,6 +122,8 @@ class MyExtension(omni.ext.IExt):
         rot = [0, 0, -0.7071068, 0.7071068]
         # self.render_helper.add_camera(camera_path = "/World/Camera_0", position=pos, rotation=rot)
 
+    def capture_image(self):
+        self.render_helper.capture_image()
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 
