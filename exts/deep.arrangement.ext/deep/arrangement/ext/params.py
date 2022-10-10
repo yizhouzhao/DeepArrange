@@ -16,8 +16,3 @@ SIDE_CHOICES = ["Border", "Corner", "Center"]
 
 ASSET_PATH = str(EXTENSION_FOLDER_PATH.parent.parent.resolve()) + "/Asset"
 DATA_PATH = str(EXTENSION_FOLDER_PATH.parent.parent.resolve()) + "/Data"
-
-LEAN_ON_POSITIONS = [
-    (0,0),
-    (1,1),
-]

@@ -96,7 +96,9 @@ class ArrangeScene():
         if self.task_choice == "Bookshelf":
             self.object_mean[1] = (self.base_bboxes[1][1] + self.base_bboxes[0][1]) * 0.5
         elif self.task_choice in ["Table", "Desk"]:
-            self.object_mean[1] = self.base_bboxes[1][2]
+            self.object_mean[2] = self.base_bboxes[1][2]
+        
+        print("object_mean", self.object_mean)
     
     def load_obj_info(self, object_type:str, amount:int = 1):
         """
@@ -189,7 +191,7 @@ class ArrangeScene():
         """
         Map object to position:
         """
-        print("pos2d", pos2d)
+        # print("pos2d", pos2d)
         if self.task_choice in ["Bookshelf", "Wall"]:
             offset = np.array([pos2d[0], 0, pos2d[1]])
         else:

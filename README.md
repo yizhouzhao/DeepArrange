@@ -1,3 +1,5 @@
+/home/yizhou/.local/share/isaac_sim-2022.1.1
+
 # DeepArrange
 
 1. Scene
