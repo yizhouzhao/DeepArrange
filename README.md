@@ -1,4 +1,4 @@
-/home/yizhou/.local/share/isaac_sim-2022.1.1
+/home/yizhou/.local/share/isaac_sim-2022.1.1/jupyter_notebook.sh
 
 # DeepArrange
 

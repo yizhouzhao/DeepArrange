@@ -9,6 +9,7 @@ import random
 import omni.usd
 from pxr import Gf, Sdf
 from omni.physx.scripts.utils import setStaticCollider, setRigidBody
+from omni.physx.scripts import physicsUtils
 
 # from params import 
 
@@ -40,7 +41,15 @@ class ArrangeScene():
         # asset
         self.load_nucleus = load_nucleus
         self.asset_path = ASSET_PATH if not load_nucleus else "omniverse://localhost/Users/yizhou/Asset"
-          
+
+    def add_ground(self):
+        """
+        Add ground
+        """
+        ground_path = physicsUtils.add_ground_plane(self.stage, "/World/groundPlane", "Z", 750.0, Gf.Vec3f(0, 0, 0), Gf.Vec3f(0.2))
+        ground_prim = self.stage.GetPrimAtPath(ground_path)
+        ground_prim.GetAttribute('visibility').Set('invisible')
+
     def add_layout(self):
         """
         Add house layout background
@@ -63,8 +72,8 @@ class ArrangeScene():
         
         # asset 
         self.stage = omni.usd.get_context().get_stage() 
-        file_path = os.path.join(self.asset_path, self.base_asset_file_paths[self.base_asset_id])
-        self.base_prim = import_asset_to_stage(self.stage, self.base_prim_path, file_path)
+        self.base_file_path = os.path.join(self.asset_path, self.base_asset_file_paths[self.base_asset_id])
+        self.base_prim = import_asset_to_stage(self.stage, self.base_prim_path, self.base_file_path)
 
         # update path
         self.base_prim_path = self.base_prim.GetPath().pathString
@@ -142,7 +151,7 @@ class ArrangeScene():
                 "type": object_type,
                 "name": object_name,
                 "file_path": os.path.join(self.asset_path, "I", object_type, object_name),
-                "image_path": os.path.join(self.asset_path, "I", object_type, ".thumbs/256x256", object_name + ".png")
+                "image_path": os.path.join(self.asset_path, "I", object_type, ".thumbs/256x256", object_name + ".png"),
             }
             
             # modify size 
@@ -212,10 +221,13 @@ class ArrangeScene():
             new_transform_matrix=xform_mat,
         )
 
-    def map_object(self, object_prim, pos2d, rot = (1, 0, 0, 0)):
+    def map_object(self, object_prim_path, pos2d, rot = (1, 0, 0, 0)):
         """
         Map object to position:
         """
+        object_prim = self.stage.GetPrimAtPath(object_prim_path)
+        assert object_prim.IsValid(), f"Cannot find object at {object_prim_path}"
+
         # print("pos2d", pos2d)
         if self.task_choice in ["Bookshelf", "Wall"]:
             offset = np.array([pos2d[0], 0, pos2d[1]])
@@ -223,7 +235,7 @@ class ArrangeScene():
             offset = np.array([pos2d[0], pos2d[1], 0])
 
         object_position = self.object_mean + 2 * self.object_sd * offset
-        print("object_position", object_position)
+        # print("object_position", object_position)
         # move object
         self.move_object(object_prim, object_position, rot)
         

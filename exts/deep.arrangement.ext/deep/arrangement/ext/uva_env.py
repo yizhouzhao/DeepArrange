@@ -1,4 +1,7 @@
 # uva environment
+import json
+import numpy as np
+
 import omni.kit
 from omni.isaac.core import World
 
@@ -9,6 +12,12 @@ class UvaEnv():
         # init world
         self.world = World()
         self.stage = self.world.scene.stage
+
+        # record
+        self.scene = None
+        self.scene_record = {}
+
+    
     
     def reset_scene(self):
         """
@@ -23,5 +32,13 @@ class UvaEnv():
         object_prim = self.stage.GetPrimAtPath("/World/objects")
         if object_prim.IsValid():
             omni.kit.commands.execute("DeletePrims", paths=["/World/objects"])
+
+    def step(self, render = False):
+        """
+        Step env
+        """
+        self.world.step(render=render)
+
+    
         
 

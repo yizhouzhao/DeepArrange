@@ -3,6 +3,7 @@ import carb
 import os
 from pathlib import Path
 
+IS_PYTHON = str(carb.settings.get_settings().get("/app/window/title")) == "Isaac Sim Python"
 IS_IN_ISAAC_SIM = str(carb.settings.get_settings().get("/app/window/title")).startswith("Isaac Sim")
 IS_IN_CREAT = str(carb.settings.get_settings().get("/app/window/title")).startswith("Create")
 APP_VERION = str(carb.settings.get_settings().get("/app/version"))

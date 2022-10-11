@@ -3,8 +3,8 @@ import numpy as np
 from PIL import Image
 
 
-DATA_PATH = "/home/yizhou/Research/DeepArrange/Data"
-IS_IN_ISAAC_SIM, IS_IN_CREAT = True, False
+from .config import *
+IS_IN_ISAAC_SIM, IS_IN_CREAT = False, False
 
 import omni.usd
 from pxr import Gf
@@ -13,16 +13,19 @@ if IS_IN_CREAT:
     import omni.syntheticdata as syn
     from omni.kit.viewport.utility import get_active_viewport
 
-if IS_IN_ISAAC_SIM:
+if IS_IN_ISAAC_SIM or IS_PYTHON:
     import omni.syntheticdata 
     from omni.isaac.synthetic_utils import SyntheticDataHelper
 
 
 class RenderHelper():
-    def __init__(self, resolution = (1024, 1024)) -> None:
+    def __init__(self, task_type, side_choice, resolution = (1024, 1024)) -> None:
+        self.task_type = task_type
+        self.side_choice = side_choice
         self.resolution = resolution
-
         # setup view port   
+        
+
         if IS_IN_CREAT: 
             self.viewport = get_active_viewport()
             self.viewport.resolution = resolution
@@ -67,7 +70,43 @@ class RenderHelper():
             new_transform_matrix=xform_mat,
         )
     
-    def capture_image(self, camera_prim_path = "", image_name = "test"):
+    def set_cameras(self):
+        """
+        Set cameras from task types
+        """
+        assert IS_PYTHON, "Only works in Python driven environment"
+        camera_paths = TASK2CAMERA_PATHS[self.task_type][self.side_choice]
+        viewport_interface = omni.kit.viewport_legacy.get_viewport_interface()
+
+        self.viewports = []
+        self.handles = []
+        self.sd_helpers = []
+
+        for i in range(len(camera_paths)):
+            viewport_handle = viewport_interface.create_instance()
+            viewport = viewport_interface.get_viewport_window(viewport_handle)
+            viewport.set_active_camera(camera_paths[i])
+            viewport.set_window_pos(1000, 400)
+            viewport.set_window_size(420, 420)
+            viewport.set_texture_resolution(*self.resolution)
+
+            sd_helper = SyntheticDataHelper()
+            sd_helper.initialize(sensor_names=["rgb"], viewport=viewport)
+            self.sd_helpers.append(sd_helper)
+            self.viewports.append(viewport)
+            self.handles.append(viewport_handle)
+    
+    def get_images(self): 
+        """
+        Get images from cameras
+        """
+        assert IS_PYTHON, "Only works in Python driven environment"
+        for i in range(len(self.sd_helpers)):
+            sensor_data = self.sd_helpers[i].get_groundtruth(["rgb"], self.viewports[i])
+            self.save_rgb(sensor_data["rgb"], f"{DATA_PATH}/{i}")
+
+
+    def capture_image_debug(self, camera_prim_path = "", image_name = "test"):
         """
         Capture image from camera
         """

@@ -52,7 +52,8 @@ class MyExtension(omni.ext.IExt):
 
     def add_scene(self):
         self.task_scene.add_layout()
-
+        self.task_scene.add_ground()
+ 
     def randomize_scene(self, rand = True):
         """
         Randomize house materials
@@ -113,7 +114,7 @@ class MyExtension(omni.ext.IExt):
         # self.render_helper.add_camera(camera_path = "/World/Camera_0", position=pos, rotation=rot)
 
     def capture_image(self):
-        self.render_helper.capture_image()
+        self.render_helper.capture_image_debug()
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 
