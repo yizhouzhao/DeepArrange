@@ -3,7 +3,8 @@ import numpy as np
 from PIL import Image
 
 
-from ..params import DATA_PATH, IS_IN_ISAAC_SIM, IS_IN_CREAT
+DATA_PATH = "/home/yizhou/Research/DeepArrange/Data"
+IS_IN_ISAAC_SIM, IS_IN_CREAT = True, False
 
 import omni.usd
 from pxr import Gf

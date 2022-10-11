@@ -52,21 +52,6 @@ class MyExtension(omni.ext.IExt):
 
     def add_scene(self):
         self.task_scene.add_layout()
-        # print("Add scene EXTENSION_FOLDER_PATH", ASSET_PATH)
-
-        # HOUSE_INFO_PATH = os.path.join(ASSET_PATH, "S")
-
-        # print("asset", os.listdir(ASSET_PATH))
-
-        # # scene
-        # self.stage = omni.usd.get_context().get_stage() 
-        # self.layer = self.stage.GetRootLayer()
-        # house_prim_path = "/World/layout"
-        # house_path = os.path.join(HOUSE_INFO_PATH, "0", "layout.usd")  
-
-        # from .task.utils import import_asset_to_stage
-        # import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
-
 
     def randomize_scene(self, rand = True):
         """

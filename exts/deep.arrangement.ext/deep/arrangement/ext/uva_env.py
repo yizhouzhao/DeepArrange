@@ -16,12 +16,12 @@ class UvaEnv():
         """
         # clean base
         base_prim = self.stage.GetPrimAtPath("/World/base")
-        if base_prim:
+        if base_prim.IsValid():
             omni.kit.commands.execute("DeletePrims", paths=["/World/base"])
         
         # clean object
-        base_prim = self.stage.GetPrimAtPath("/World/objects")
-        if base_prim:
+        object_prim = self.stage.GetPrimAtPath("/World/objects")
+        if object_prim.IsValid():
             omni.kit.commands.execute("DeletePrims", paths=["/World/objects"])
         
 
