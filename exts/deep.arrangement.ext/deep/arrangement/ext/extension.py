@@ -10,7 +10,7 @@ import omni.ext
 import omni.ui as ui
 
 # deep arrangement import
-from .params import ASSET_PATH, SIDE_CHOICES, TASK_CHOICES
+from .params import *
 from .layout.randomizer import Randomizer
 from .task.scene import ArrangeScene
 
@@ -26,6 +26,9 @@ class MyExtension(omni.ext.IExt):
         self._window = ui.Window("Deep Arrangement", width=300, height=300)
         with self._window.frame:
             with ui.VStack():
+                with ui.HStack(height = 20):
+                    ui.Label("Load nucleus", width = 100)
+                    self.load_nucleus_checkbox = omni.ui.CheckBox(width=20, style={"font_size": 16})
                 with ui.HStack(height = 20):
                     ui.Button("Add scene", clicked_fn=self.add_scene)
                     ui.Button("Randomize scene", clicked_fn=self.randomize_scene)
@@ -48,20 +51,21 @@ class MyExtension(omni.ext.IExt):
     ################################ scene #########################################
 
     def add_scene(self):
-        print("Add scene EXTENSION_FOLDER_PATH", ASSET_PATH)
+        self.task_scene.add_layout()
+        # print("Add scene EXTENSION_FOLDER_PATH", ASSET_PATH)
 
-        HOUSE_INFO_PATH = os.path.join(ASSET_PATH, "S")
+        # HOUSE_INFO_PATH = os.path.join(ASSET_PATH, "S")
 
-        print("asset", os.listdir(ASSET_PATH))
+        # print("asset", os.listdir(ASSET_PATH))
 
-        # scene
-        self.stage = omni.usd.get_context().get_stage() 
-        self.layer = self.stage.GetRootLayer()
-        house_prim_path = "/World/layout"
-        house_path = os.path.join(HOUSE_INFO_PATH, "0", "layout.usd")  
+        # # scene
+        # self.stage = omni.usd.get_context().get_stage() 
+        # self.layer = self.stage.GetRootLayer()
+        # house_prim_path = "/World/layout"
+        # house_path = os.path.join(HOUSE_INFO_PATH, "0", "layout.usd")  
 
-        from .utils import import_asset_to_stage
-        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
+        # from .task.utils import import_asset_to_stage
+        # import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
 
 
     def randomize_scene(self, rand = True):
@@ -89,8 +93,9 @@ class MyExtension(omni.ext.IExt):
         side_index = self.side_choice_ui.model.get_item_value_model().get_value_as_int()
         self.side_choice = SIDE_CHOICES[side_index]
         asset_id = self.task_base_id_ui.model.get_value_as_int()
+        self.load_nucleus = self.load_nucleus_checkbox.model.get_value_as_bool()
 
-        self.task_scene = ArrangeScene(self.task_type, self.side_choice, asset_id, "/World/base")
+        self.task_scene = ArrangeScene(self.task_type, self.side_choice, asset_id, "/World/base", load_nucleus=self.load_nucleus)
         self.task_scene.add_base_asset()
  
     def add_task_object(self, mode = "random"):

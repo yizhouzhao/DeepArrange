@@ -1,4 +1,8 @@
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+import os
 import numpy as np
 import random
 
@@ -6,14 +10,14 @@ import omni.usd
 from pxr import Gf, Sdf
 from omni.physx.scripts.utils import setStaticCollider, setRigidBody
 
-from ..params import ASSET_PATH
-from ..utils import import_asset_to_stage
+# from params import 
 
+from .utils import import_asset_to_stage
 from .config import *
 
 
 class ArrangeScene():
-    def __init__(self, task_choice, side_choice, base_asset_id, base_prim_path) -> None:
+    def __init__(self, task_choice, side_choice, base_asset_id, base_prim_path, load_nucleus = True) -> None:
         # task/side choice
         self.task_choice = task_choice
         self.side_choice = side_choice    
@@ -33,6 +37,22 @@ class ArrangeScene():
         # scene
         self.stage = omni.usd.get_context().get_stage() 
 
+        # asset
+        self.load_nucleus = load_nucleus
+        self.asset_path = ASSET_PATH if not load_nucleus else "omniverse://localhost/Users/yizhou/Asset"
+          
+    def add_layout(self):
+        """
+        Add house layout background
+        """
+        # scene
+        self.stage = omni.usd.get_context().get_stage() 
+        self.layer = self.stage.GetRootLayer()
+        house_prim_path = "/World/layout"
+        house_path = os.path.join(self.asset_path, "S", "0", "layout.usd")  
+        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
+
+
     def add_base_asset(self):
         """
         Add base asset to current scene
@@ -43,7 +63,7 @@ class ArrangeScene():
         
         # asset 
         self.stage = omni.usd.get_context().get_stage() 
-        file_path = os.path.join(ASSET_PATH, self.base_asset_file_paths[self.base_asset_id])
+        file_path = os.path.join(self.asset_path, self.base_asset_file_paths[self.base_asset_id])
         self.base_prim = import_asset_to_stage(self.stage, self.base_prim_path, file_path)
 
         # update path
@@ -109,15 +129,20 @@ class ArrangeScene():
         """
         assert object_type in self.object_candidates, f"OBJ Type {object_type} not in candidates"
 
-        object_folder = [obj for obj in os.listdir(os.path.join(ASSET_PATH, "I", object_type)) if obj.endswith(".usd")]
+        if self.load_nucleus:
+            r = omni.client.list(os.path.join(self.asset_path, "I", object_type))    
+            print("loading asset from omni nucleus")
+            object_folder = sorted([e.relative_path for e in r[1]])
+        else:
+            object_folder = [obj for obj in os.listdir(os.path.join(self.asset_path, "I", object_type)) if obj.endswith(".usd")]
         object_name = random.choice(object_folder)
 
         for i in range(amount):
             object_info = {
                 "type": object_type,
                 "name": object_name,
-                "file_path": os.path.join(ASSET_PATH, "I", object_type, object_name),
-                "image_path": os.path.join(ASSET_PATH, "I", object_type, ".thumbs/256x256", object_name + ".png")
+                "file_path": os.path.join(self.asset_path, "I", object_type, object_name),
+                "image_path": os.path.join(self.asset_path, "I", object_type, ".thumbs/256x256", object_name + ".png")
             }
             
             # modify size 

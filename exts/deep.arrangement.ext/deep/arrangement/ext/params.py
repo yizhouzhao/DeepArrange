@@ -1,6 +1,9 @@
+import os
+import sys
+sys.path.append(os.path.dirname(__file__))
+
 import omni
 import carb
-import os
 from pathlib import Path
 
 IS_IN_ISAAC_SIM = str(carb.settings.get_settings().get("/app/window/title")).startswith("Isaac Sim")
