@@ -17,6 +17,8 @@ class UvaEnv():
         self.scene = None
         self.scene_record = {}
 
+    def register_scene(self, scene):
+        self.scene = scene
     
     
     def reset_scene(self):
@@ -32,6 +34,9 @@ class UvaEnv():
         object_prim = self.stage.GetPrimAtPath("/World/objects")
         if object_prim.IsValid():
             omni.kit.commands.execute("DeletePrims", paths=["/World/objects"])
+    
+    # def reset_scene(self):
+
 
     def step(self, render = False):
         """
