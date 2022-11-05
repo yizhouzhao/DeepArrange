@@ -11,6 +11,7 @@ from omni.isaac.core.prims.xform_prim import XFormPrim
 from pxr import UsdGeom, Gf
 
 from task.scene import ArrangeScene
+from params import IS_IN_PYTHON
 
 class UvaEnv():
     def __init__(self) -> None:
@@ -40,12 +41,11 @@ class UvaEnv():
         object_prim = self.stage.GetPrimAtPath("/World/objects")
         if object_prim.IsValid():
             omni.kit.commands.execute("DeletePrims", paths=["/World/objects"])
-    
+
     def add_scene_obj(self, mode = "random"):
         # object
         object_type = random.choice(self.scene.object_candidates)
         self.scene.load_obj_info(object_type, 1)
-
         # modify scene and object info
         object_info = self.scene.objects[-1]
         object_prim_path = object_info["prim_path"]
@@ -63,7 +63,6 @@ class UvaEnv():
         self.world.step(render=render)
 
     ## ---------------------------------------- Reward ---------------------------------------------
-    
     def affordance_aware_reward(self, object_prim_path, simulation_step = 10):
         object_prim = self.stage.GetPrimAtPath(object_prim_path)
         xform_cache = UsdGeom.XformCache()
@@ -82,6 +81,5 @@ class UvaEnv():
         
         return Gf.GetLength(end_translation - begin_translation)
 
-        
 
 

@@ -1,4 +1,8 @@
 /home/yizhou/.local/share/isaac_sim-2022.1.1/jupyter_notebook.sh
+~/.local/share/ov/pkg/isaac_sim-2022.1.1/python.sh 
+~/.local/share/ov/pkg/isaac_sim-2022.1.1/jupyter_notebook.sh
+
+exts/deep.arrangement.ext/deep/arrangement/ext
 
 # DeepArrange
 

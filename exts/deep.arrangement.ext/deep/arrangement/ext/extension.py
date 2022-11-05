@@ -32,6 +32,8 @@ class MyExtension(omni.ext.IExt):
         with self._window.frame:
             with ui.VStack():
                 with ui.HStack(height = 20):
+                    ui.Button("Add Task Base", clicked_fn = self.add_task_base)
+                with ui.HStack(height = 20):
                     ui.Label("Load nucleus", width = 100)
                     self.load_nucleus_checkbox = omni.ui.CheckBox(width=20, style={"font_size": 16})
                 with ui.HStack(height = 20):
@@ -48,12 +50,11 @@ class MyExtension(omni.ext.IExt):
                     ui.Button("Move Object", clicked_fn = self.move_task_object)
                 with ui.HStack(height = 20):
                     ui.Button("Set camera", clicked_fn = self.set_camera)
-                    ui.Button("Capture image", clicked_fn = self.capture_image)
-                    
+                    ui.Button("Capture image", clicked_fn = self.capture_image)              
                 with ui.HStack(height = 20):
                     ui.Button("Debug", clicked_fn = self.debug)
 
-                    
+
                 
                     
     ################################ scene #########################################
