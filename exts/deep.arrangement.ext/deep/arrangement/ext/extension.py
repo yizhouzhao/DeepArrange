@@ -27,6 +27,8 @@ class MyExtension(omni.ext.IExt):
         with self._window.frame:
             with ui.VStack():
                 with ui.HStack(height = 20):
+                    ui.Button("Add Task Base", clicked_fn = self.add_task_base)
+                with ui.HStack(height = 20):
                     ui.Label("Load nucleus", width = 100)
                     self.load_nucleus_checkbox = omni.ui.CheckBox(width=20, style={"font_size": 16})
                 with ui.HStack(height = 20):
@@ -35,17 +37,13 @@ class MyExtension(omni.ext.IExt):
                 with ui.HStack(height = 20):
                     self.task_type_ui = ui.ComboBox( 0, *TASK_CHOICES)
                     self.side_choice_ui = ui.ComboBox( 0, *SIDE_CHOICES)
-                    self.task_base_id_ui = omni.ui.IntField()   
-                with ui.HStack(height = 20):
-                    ui.Button("Add Task Base", clicked_fn = self.add_task_base)
+                    self.task_base_id_ui = omni.ui.IntField()        
                 with ui.HStack(height = 20):
                     ui.Button("Add Object", clicked_fn = self.add_task_object)
                     ui.Button("Move Object", clicked_fn = self.move_task_object)
                 with ui.HStack(height = 20):
                     ui.Button("Set camera", clicked_fn = self.set_camera)
                     ui.Button("Capture image", clicked_fn = self.capture_image)
-                    
-                    
                 
                     
     ################################ scene #########################################
@@ -100,7 +98,7 @@ class MyExtension(omni.ext.IExt):
         object_prim_path = self.task_scene.objects[-1]["prim_path"]  
         object_prim = stage.GetPrimAtPath(object_prim_path)
         x, y = np.tanh(np.random.randn()), np.tanh(np.random.randn())
-        self.task_scene.map_object(object_prim, (x, y)) 
+        self.task_scene.map_object(object_prim_path, (x, y)) 
 
     def set_camera(self):
         """
