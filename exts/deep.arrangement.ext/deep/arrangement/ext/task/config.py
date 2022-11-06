@@ -8,10 +8,12 @@ IS_IN_ISAAC_SIM = str(carb.settings.get_settings().get("/app/window/title")).sta
 IS_IN_CREAT = str(carb.settings.get_settings().get("/app/window/title")).startswith("Create")
 APP_VERION = str(carb.settings.get_settings().get("/app/version"))
 
-EXTENSION_FOLDER_PATH = "/home/yizhou/Research/DeepArrange"
-# Path(
-#     omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)
-# )
+if IS_IN_ISAAC_SIM or IS_PYTHON:
+    EXTENSION_FOLDER_PATH = "/home/yizhou/Research/DeepArrange"
+else:
+    EXTENSION_FOLDER_PATH = str(Path(
+        omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)
+    ).parent.parent.resolve())
 
 TASK_CHOICES = ["Bookshelf", "Table", "Desk", "Wall"]
 SIDE_CHOICES = ["Border", "Corner", "Center"]

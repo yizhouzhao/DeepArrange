@@ -60,7 +60,7 @@ class ArrangeScene():
         house_prim_path = "/World/layout"
         house_path = os.path.join(self.asset_path, "S", "0", "layout.usd")  
         import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
-
+ 
 
     def add_base_asset(self):
         """
@@ -152,6 +152,8 @@ class ArrangeScene():
                 "name": object_name,
                 "file_path": os.path.join(self.asset_path, "I", object_type, object_name),
                 "image_path": os.path.join(self.asset_path, "I", object_type, ".thumbs/256x256", object_name + ".png"),
+                "prim_path": "",
+                "xform_name": "",
             }
             
             # modify size 

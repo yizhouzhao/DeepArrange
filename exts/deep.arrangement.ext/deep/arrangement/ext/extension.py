@@ -1,7 +1,12 @@
 # python import
 import os
+import sys
+sys.path.append(os.path.dirname(__file__))
+
 import numpy as np
 import random
+
+
 
 # omniverse import
 import carb
@@ -30,6 +35,8 @@ class MyExtension(omni.ext.IExt):
                     ui.Label("Load nucleus", width = 100)
                     self.load_nucleus_checkbox = omni.ui.CheckBox(width=20, style={"font_size": 16})
                 with ui.HStack(height = 20):
+                    ui.Button("Add Task Base", clicked_fn = self.add_task_base)
+                with ui.HStack(height = 20):
                     ui.Button("Add scene", clicked_fn=self.add_scene)
                     ui.Button("Randomize scene", clicked_fn=self.randomize_scene)
                 with ui.HStack(height = 20):
@@ -37,14 +44,15 @@ class MyExtension(omni.ext.IExt):
                     self.side_choice_ui = ui.ComboBox( 0, *SIDE_CHOICES)
                     self.task_base_id_ui = omni.ui.IntField()   
                 with ui.HStack(height = 20):
-                    ui.Button("Add Task Base", clicked_fn = self.add_task_base)
-                with ui.HStack(height = 20):
                     ui.Button("Add Object", clicked_fn = self.add_task_object)
                     ui.Button("Move Object", clicked_fn = self.move_task_object)
                 with ui.HStack(height = 20):
                     ui.Button("Set camera", clicked_fn = self.set_camera)
                     ui.Button("Capture image", clicked_fn = self.capture_image)
                     
+                with ui.HStack(height = 20):
+                    ui.Button("Debug", clicked_fn = self.debug)
+
                     
                 
                     
@@ -98,9 +106,9 @@ class MyExtension(omni.ext.IExt):
         """
         stage = omni.usd.get_context().get_stage()
         object_prim_path = self.task_scene.objects[-1]["prim_path"]  
-        object_prim = stage.GetPrimAtPath(object_prim_path)
+        # object_prim = stage.GetPrimAtPath(object_prim_path)
         x, y = np.tanh(np.random.randn()), np.tanh(np.random.randn())
-        self.task_scene.map_object(object_prim, (x, y)) 
+        self.task_scene.map_object(object_prim_path, (x, y)) 
 
     def set_camera(self):
         """
@@ -118,3 +126,14 @@ class MyExtension(omni.ext.IExt):
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 
+
+    def debug(self):
+        stage = omni.usd.get_context().get_stage()
+        prim = stage.GetPrimAtPath("/World/Cube")
+        mat = omni.usd.get_world_transform_matrix(prim, 0)
+        print("translation 0", mat.ExtractTranslation())
+
+
+        mat = omni.usd.get_world_transform_matrix(prim, 10)
+        print("translation 0", mat.ExtractTranslation())
+        
