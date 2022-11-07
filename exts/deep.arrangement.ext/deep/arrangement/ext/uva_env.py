@@ -7,6 +7,7 @@ import asyncio
 
 import omni.usd
 import omni.kit
+
 from omni.isaac.core import World
 from omni.isaac.core.prims.xform_prim import XFormPrim
 
@@ -32,7 +33,7 @@ class UvaEnv():
     def register_scene(self, scene):
         self.scene = scene
     
-    def reset_scene(self):
+    def clean_scene(self):
         """
         Reset scene to key layout and camera only
         """
@@ -64,10 +65,22 @@ class UvaEnv():
         """
         Step env
         """
-        self.world.step(render=render)
+        if IS_IN_PYTHON:
+            self.world.step(render=render)
+        else:
+            async def time_proceed():
+                self.timeline.play()
+                await asyncio.sleep(0.2)
+                self.timeline.pause()
+            
+            asyncio.ensure_future(time_proceed())
+
     
     def reset(self):
-        self.world.reset()
+        if IS_IN_PYTHON: 
+            self.world.reset()
+        else:
+            self.timeline.stop()
 
     ## ---------------------------------------- Reward ---------------------------------------------
     def affordance_aware_reward(self, object_prim_path, simulation_step = 10):

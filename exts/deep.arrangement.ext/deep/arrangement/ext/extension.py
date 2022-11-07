@@ -130,7 +130,7 @@ class MyExtension(omni.ext.IExt):
     def uva_test(self):
         from uva_env import UvaEnv
         env = UvaEnv()
-    
+        
     #####################################################################################################
 
     def on_shutdown(self):
