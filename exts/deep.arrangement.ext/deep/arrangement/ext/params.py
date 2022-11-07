@@ -12,8 +12,10 @@ IS_IN_CREAT = str(carb.settings.get_settings().get("/app/window/title")).startsw
 APP_VERION = str(carb.settings.get_settings().get("/app/version"))
 
 EXTENSION_FOLDER_PATH = Path(
-    omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)
+    str(omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__))
 )
+
+print("EXTENSION_FOLDER_PATH", EXTENSION_FOLDER_PATH)
 
 TASK_CHOICES = ["Bookshelf", "Table", "Desk", "Wall"]
 SIDE_CHOICES = ["Border", "Corner", "Center"]

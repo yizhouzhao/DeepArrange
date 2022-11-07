@@ -9,7 +9,6 @@ import random
 import omni.usd
 from pxr import Gf, Sdf
 from omni.physx.scripts.utils import setStaticCollider, setRigidBody
-from omni.physx.scripts import physicsUtils
 
 # from params import 
 
@@ -41,26 +40,7 @@ class ArrangeScene():
         # asset
         self.load_nucleus = load_nucleus
         self.asset_path = ASSET_PATH if not load_nucleus else "omniverse://localhost/Users/yizhou/Asset"
-
-    def add_ground(self):
-        """
-        Add ground
-        """
-        ground_path = physicsUtils.add_ground_plane(self.stage, "/World/groundPlane", "Z", 750.0, Gf.Vec3f(0, 0, 0), Gf.Vec3f(0.2))
-        ground_prim = self.stage.GetPrimAtPath(ground_path)
-        ground_prim.GetAttribute('visibility').Set('invisible')
-
-    def add_layout(self):
-        """
-        Add house layout background
-        """
-        # scene
-        self.stage = omni.usd.get_context().get_stage() 
-        self.layer = self.stage.GetRootLayer()
-        house_prim_path = "/World/layout"
-        house_path = os.path.join(self.asset_path, "S", "0", "layout.usd")  
-        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
- 
+    
 
     def add_base_asset(self):
         """
@@ -143,7 +123,10 @@ class ArrangeScene():
             print("loading asset from omni nucleus")
             object_folder = sorted([e.relative_path for e in r[1]])
         else:
-            object_folder = [obj for obj in os.listdir(os.path.join(self.asset_path, "I", object_type)) if obj.endswith(".usd")]
+            object_folder = [obj for obj in os.listdir(os.path.join(self.asset_path, "I", object_type))]
+        
+        object_folder = list(filter(lambda x: x.endswith(".usd"), object_folder))
+        print("object_folder", object_folder)
         object_name = random.choice(object_folder)
 
         for i in range(amount):

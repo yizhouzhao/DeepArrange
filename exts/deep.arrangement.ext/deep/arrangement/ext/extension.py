@@ -36,10 +36,10 @@ class MyExtension(omni.ext.IExt):
                 with ui.HStack(height = 20):
                     ui.Label("Load nucleus", width = 100)
                     self.load_nucleus_checkbox = omni.ui.CheckBox(width=20, style={"font_size": 16})
+                # with ui.HStack(height = 20):
+                #     ui.Button("Add Task Base", clicked_fn = self.add_task_base)
                 with ui.HStack(height = 20):
-                    ui.Button("Add Task Base", clicked_fn = self.add_task_base)
-                with ui.HStack(height = 20):
-                    ui.Button("Add scene", clicked_fn=self.add_scene)
+                    ui.Button("Add room", clicked_fn=self.add_room)
                     ui.Button("Randomize scene", clicked_fn=self.randomize_scene)
                 with ui.HStack(height = 20):
                     self.task_type_ui = ui.ComboBox( 0, *TASK_CHOICES)
@@ -53,6 +53,10 @@ class MyExtension(omni.ext.IExt):
                     ui.Button("Capture image", clicked_fn = self.capture_image)          
                 with ui.HStack(height = 20):
                     ui.Button("Uva test", clicked_fn = self.uva_test)
+                    ui.Button("Uva Play", clicked_fn = self.uva_play)
+                with ui.HStack(height = 20):
+                    ui.Button("Uva Reset", clicked_fn = self.uva_reset)
+                    ui.Button("Uva Clean", clicked_fn = self.uva_clean)
                 with ui.HStack(height = 20):
                     ui.Button("Debug", clicked_fn = self.debug)
 
@@ -61,9 +65,27 @@ class MyExtension(omni.ext.IExt):
                     
     ################################ scene #########################################
 
-    def add_scene(self):
-        self.task_scene.add_layout()
-        self.task_scene.add_ground()
+    def add_room(self):
+        # self.task_scene.add_layout()
+        """
+        Add house layout background
+        """
+        from task.utils import import_asset_to_stage
+        # scene
+        self.stage = omni.usd.get_context().get_stage() 
+        self.layer = self.stage.GetRootLayer()
+        house_prim_path = "/World/layout"
+        house_path = os.path.join(ASSET_PATH, "S", "0", "layout.usd")  
+        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
+
+        """
+        Add ground
+        """
+        from omni.physx.scripts import physicsUtils
+        from pxr import Gf
+        ground_path = physicsUtils.add_ground_plane(self.stage, "/World/groundPlane", "Z", 750.0, Gf.Vec3f(0, 0, 0), Gf.Vec3f(0.2))
+        ground_prim = self.stage.GetPrimAtPath(ground_path)
+        ground_prim.GetAttribute('visibility').Set('invisible')
  
     def randomize_scene(self, rand = True):
         """
@@ -120,17 +142,47 @@ class MyExtension(omni.ext.IExt):
         from .render.helper import RenderHelper
 
         self.render_helper = RenderHelper()
-        pos = (0, 500, 80)
-        rot = [0, 0, -0.7071068, 0.7071068]
+        # pos = (0, 500, 80)
+        # rot = [0, 0, -0.7071068, 0.7071068]
         # self.render_helper.add_camera(camera_path = "/World/Camera_0", position=pos, rotation=rot)
 
     def capture_image(self):
         self.render_helper.capture_image_debug()
 
     def uva_test(self):
+        print("uva_test")
         from uva_env import UvaEnv
-        env = UvaEnv()
+        self.env = UvaEnv()
+
+        task_type = "Table"
+        side_choice = "Border"
+        asset_id = 0
+        load_nucleus = True
+
+        from task.scene import ArrangeScene
+        scene = ArrangeScene(task_type, side_choice, asset_id, "/World/base", load_nucleus)
+        self.env.register_scene(scene)
+        # base
+        self.env.scene.add_base_asset()
+        self.env.add_scene_obj()
+
         
+    def uva_play(self):
+        print("uva_play")
+        self.env.step()
+
+        last_obj_path = self.env.scene.objects[-1]["prim_path"]
+        reward = self.env.reward_affordance(last_obj_path)
+        print("reward", last_obj_path, reward)
+    
+    def uva_reset(self):
+        print("uva_reset")
+        self.env.reset()
+    
+    def uva_clean(self):
+        print("uva_clean")
+        self.env.clean()
+    
     #####################################################################################################
 
     def on_shutdown(self):
