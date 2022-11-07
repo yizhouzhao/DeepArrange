@@ -76,7 +76,7 @@ class UvaEnv():
         else:
             async def time_proceed():
                 self.timeline.play()
-                await asyncio.sleep(0.2)
+                await asyncio.sleep(0.5)
                 self.timeline.pause()
             
             asyncio.ensure_future(time_proceed())
@@ -90,20 +90,24 @@ class UvaEnv():
     ## ---------------------------------------- Reward ---------------------------------------------
     def reward_affordance(self, object_prim_path, simulation_step = 10):
         object_prim = self.stage.GetPrimAtPath(object_prim_path)
-        xform_cache = UsdGeom.XformCache()
-        transform = xform_cache.GetLocalToWorldTransform(object_prim)
+        # xform_cache = UsdGeom.XformCache()
+        # transform = xform_cache.GetLocalToWorldTransform(object_prim)
+        transform = omni.usd.get_world_transform_matrix(object_prim)
         begin_translation = transform.ExtractTranslation() # record beginning translation
 
         for _ in range(simulation_step):
             self.step()
 
         timecode = self.timeline.get_current_time() * self.stage.GetTimeCodesPerSecond()
-        xform_cache = UsdGeom.XformCache(timecode)
-        transform = xform_cache.GetLocalToWorldTransform(object_prim)
+        # xform_cache = UsdGeom.XformCache(timecode)
+        # transform = xform_cache.GetLocalToWorldTransform(object_prim)
+        transform = transform = omni.usd.get_world_transform_matrix(object_prim, timecode)
         end_translation = transform.ExtractTranslation() # record beginning translation
 
         if IS_IN_PYTHON:
             self.reset()
+
+        print(object_prim_path, "begin_translation", begin_translation, "timecode", timecode, "end_translation", end_translation)
         
         return Gf.GetLength(end_translation - begin_translation)
 

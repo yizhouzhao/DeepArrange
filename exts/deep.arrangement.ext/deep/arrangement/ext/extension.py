@@ -196,5 +196,5 @@ class MyExtension(omni.ext.IExt):
 
 
         mat = omni.usd.get_world_transform_matrix(prim, 10)
-        print("translation 0", mat.ExtractTranslation())
+        print("translation 10", mat.ExtractTranslation())
         
