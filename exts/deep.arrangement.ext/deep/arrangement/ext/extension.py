@@ -50,7 +50,9 @@ class MyExtension(omni.ext.IExt):
                     ui.Button("Move Object", clicked_fn = self.move_task_object)
                 with ui.HStack(height = 20):
                     ui.Button("Set camera", clicked_fn = self.set_camera)
-                    ui.Button("Capture image", clicked_fn = self.capture_image)              
+                    ui.Button("Capture image", clicked_fn = self.capture_image)          
+                with ui.HStack(height = 20):
+                    ui.Button("Uva test", clicked_fn = self.uva_test)
                 with ui.HStack(height = 20):
                     ui.Button("Debug", clicked_fn = self.debug)
 
@@ -124,6 +126,12 @@ class MyExtension(omni.ext.IExt):
 
     def capture_image(self):
         self.render_helper.capture_image_debug()
+
+    def uva_test(self):
+        from uva_env import UvaEnv
+        env = UvaEnv()
+    
+    #####################################################################################################
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 

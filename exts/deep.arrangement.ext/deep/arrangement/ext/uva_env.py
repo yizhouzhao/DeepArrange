@@ -3,7 +3,9 @@ import json
 from this import d
 import numpy as np
 import random
+import asyncio
 
+import omni.usd
 import omni.kit
 from omni.isaac.core import World
 from omni.isaac.core.prims.xform_prim import XFormPrim
@@ -16,10 +18,12 @@ from params import IS_IN_PYTHON
 class UvaEnv():
     def __init__(self) -> None:
         # init world
-        self.world = World()
-        self.stage = self.world.scene.stage
-        self.timeline = omni.timeline.get_timeline_interface()
-        
+        if IS_IN_PYTHON:
+            self.world = World()
+            self.stage = self.world.scene.stage
+        else:
+            self.stage = omni.usd.get_context().get_stage()
+            self.timeline = omni.timeline.get_timeline_interface()
 
         # record
         self.scene: ArrangeScene = None
@@ -61,6 +65,9 @@ class UvaEnv():
         Step env
         """
         self.world.step(render=render)
+    
+    def reset(self):
+        self.world.reset()
 
     ## ---------------------------------------- Reward ---------------------------------------------
     def affordance_aware_reward(self, object_prim_path, simulation_step = 10):
@@ -77,7 +84,7 @@ class UvaEnv():
         transform = xform_cache.GetLocalToWorldTransform(object_prim)
         end_translation = transform.ExtractTranslation() # record beginning translation
 
-        self.world.reset()
+        self.reset()
         
         return Gf.GetLength(end_translation - begin_translation)
 
