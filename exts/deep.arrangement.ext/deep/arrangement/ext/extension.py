@@ -61,6 +61,10 @@ class MyExtension(omni.ext.IExt):
                 with ui.HStack(height = 20):
                     ui.Button("Debug", clicked_fn = self.debug)
 
+                ui.Spacer(height = 20)
+                with ui.HStack(height = 20):
+                    ui.Button("YH Debug", clicked_fn = self.yuan_hong_debug)
+
 
                 
                     
@@ -203,4 +207,11 @@ class MyExtension(omni.ext.IExt):
 
         mat = omni.usd.get_world_transform_matrix(prim, 10)
         print("translation 10", mat.ExtractTranslation())
-        
+
+    #############################################################################
+
+    def yuan_hong_debug(self):
+        """
+        Effect: put a magazine/book into a shelf.
+        """
+        pass
