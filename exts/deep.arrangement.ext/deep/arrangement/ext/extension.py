@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(__file__))
 
 import numpy as np
 import random
+import asyncio
 
 
 
@@ -82,10 +83,14 @@ class MyExtension(omni.ext.IExt):
         Add ground
         """
         from omni.physx.scripts import physicsUtils
-        from pxr import Gf
+        from pxr import Gf, UsdPhysics, Sdf
         ground_path = physicsUtils.add_ground_plane(self.stage, "/World/groundPlane", "Z", 750.0, Gf.Vec3f(0, 0, 0), Gf.Vec3f(0.2))
         ground_prim = self.stage.GetPrimAtPath(ground_path)
         ground_prim.GetAttribute('visibility').Set('invisible')
+
+        physicsScene = UsdPhysics.Scene.Define(self.stage, Sdf.Path("/World/physicsScene"))
+        physicsScene.CreateGravityDirectionAttr().Set(Gf.Vec3f(0.0, 0.0, -1.0))
+        physicsScene.CreateGravityMagnitudeAttr().Set(9.81)
  
     def randomize_scene(self, rand = True):
         """
@@ -172,8 +177,9 @@ class MyExtension(omni.ext.IExt):
         self.env.step()
 
         last_obj_path = self.env.scene.objects[-1]["prim_path"]
-        reward = self.env.reward_affordance(last_obj_path)
-        print("reward", last_obj_path, reward)
+        # reward = self.env.reward_affordance(last_obj_path)
+        # print("reward", last_obj_path, reward)
+        asyncio.ensure_future(self.env.reward_affordance_async(last_obj_path))
     
     def uva_reset(self):
         print("uva_reset")

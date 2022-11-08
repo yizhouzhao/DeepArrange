@@ -1,6 +1,6 @@
 # uva environment
 import json
-from this import d
+import time
 import numpy as np
 import random
 import asyncio
@@ -72,14 +72,7 @@ class UvaEnv():
         Step env
         """
         if IS_IN_PYTHON:
-            self.world.step(render=render)
-        else:
-            async def time_proceed():
-                self.timeline.play()
-                await asyncio.sleep(0.5)
-                self.timeline.pause()
-            
-            asyncio.ensure_future(time_proceed())
+            self.world.step(render=render)        
 
     
     def reset(self):
@@ -95,6 +88,7 @@ class UvaEnv():
         transform = omni.usd.get_world_transform_matrix(object_prim)
         begin_translation = transform.ExtractTranslation() # record beginning translation
 
+        
         for _ in range(simulation_step):
             self.step()
 
@@ -110,6 +104,23 @@ class UvaEnv():
         print(object_prim_path, "begin_translation", begin_translation, "timecode", timecode, "end_translation", end_translation)
         
         return Gf.GetLength(end_translation - begin_translation)
+
+    async def reward_affordance_async(self, object_prim_path):
+        object_prim = self.stage.GetPrimAtPath(object_prim_path)
+        # xform_cache = UsdGeom.XformCache()
+        # transform = xform_cache.GetLocalToWorldTransform(object_prim)
+        transform = omni.usd.get_world_transform_matrix(object_prim)
+        begin_translation = transform.ExtractTranslation() # record beginning translation
+        self.timeline.play()
+        await asyncio.sleep(1)
+        timecode = self.timeline.get_current_time() * self.stage.GetTimeCodesPerSecond()
+        transform = transform = omni.usd.get_world_transform_matrix(object_prim, timecode)
+        end_translation = transform.ExtractTranslation() # record end translation
+        self.timeline.stop()
+
+        print(object_prim_path, "begin_translation", begin_translation, "timecode", timecode, "end_translation", end_translation)
+     
+
 
 
 
