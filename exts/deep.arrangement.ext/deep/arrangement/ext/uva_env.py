@@ -20,7 +20,10 @@ class UvaEnv():
     def __init__(self) -> None:
         # init world
         self.world = World()
-        self.world.reset()
+
+        if IS_IN_PYTHON:
+            self.world.reset()
+            
         self.stage = self.world.scene.stage
         self.stage = omni.usd.get_context().get_stage()
         self.timeline = omni.timeline.get_timeline_interface()
@@ -28,6 +31,12 @@ class UvaEnv():
         # record
         self.scene: ArrangeScene = None
         self.scene_record = {}
+
+        # enable forcefield
+        manager = omni.kit.app.get_app().get_extension_manager()
+        self.forcefields_api_was_enabled = manager.is_extension_enabled("omni.physx.forcefields")
+        if not self.forcefields_api_was_enabled:
+            manager.set_extension_enabled_immediate("omni.physx.forcefields", True)
 
     def register_scene(self, scene):
         self.scene = scene

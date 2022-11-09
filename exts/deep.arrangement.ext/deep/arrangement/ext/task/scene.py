@@ -7,7 +7,7 @@ import numpy as np
 import random
 
 import omni.usd
-from pxr import Gf, Sdf
+from pxr import Gf, Sdf, UsdPhysics
 from omni.physx.scripts.utils import setStaticCollider, setRigidBody
 
 # from params import 
@@ -186,7 +186,11 @@ class ArrangeScene():
 
         # attribute
         object_prim.CreateAttribute("arr:type", Sdf.ValueTypeNames.String, False).Set(object_type)
+        
+        # regidbody, mass, and density
         setRigidBody(object_prim, "convexHull", False)
+        mass_api = UsdPhysics.MassAPI.Apply(object_prim)
+        mass_api.CreateDensityAttr(1.0)
 
     def move_object(self, object_prim, position = (0, 200, 0), rotation = (1, 0, 0, 0)):
         """
