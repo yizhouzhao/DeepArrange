@@ -50,7 +50,8 @@ class RenderHelper():
 
             # Wait for viewports to be created
             # async def init_helper_async():
-
+            #     await omni.kit.app.get_app().next_update_async()
+            #     self.sd_helper.initialize_async(sensor_names=["rgb"], viewport=self.viewport)
             
             # asyncio.ensure_future(init_helper_async())
 
@@ -134,10 +135,10 @@ class RenderHelper():
             asyncio.ensure_future(capture_image_async())
         
         if IS_IN_ISAAC_SIM:
-            sensor_data = self.sd_helper.get_groundtruth(["rgb"], self.viewport)
-            print("sensor_data", sensor_data)
-            self.save_rgb(sensor_data["rgb"], f"{DATA_PATH}/{image_name}")
-            # asyncio.ensure_future(get_synthetic_data())
+            # sensor_data = self.sd_helper.get_groundtruth(["rgb"], self.viewport)
+            # print("sensor_data", sensor_data)
+            # self.save_rgb(sensor_data["rgb"], f"{DATA_PATH}/{image_name}")
+            asyncio.ensure_future(get_synthetic_data())
         
     def save_rgb(self, rgb_data, file_name):
         """
