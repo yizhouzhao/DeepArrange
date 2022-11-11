@@ -217,4 +217,36 @@ class MyExtension(omni.ext.IExt):
         """
         Effect: put a magazine/book into a shelf.
         """
-        pass
+        object = self.task_scene.objects[-1]
+        object_prim_path = object["prim_path"]  
+        type = object["type"]
+
+        print(self.task_scene.objects[-1])
+        
+        if "Magazine" in type:
+            print("magazine")
+            quatd_rot = [-0.5, -0.5, 0.5, 0.5]
+        elif "Book" in type:
+            print("book")
+            quatd_rot = [0.5, -0.5, -0.5, 0.5]
+        else:
+            return 
+
+        # do not position stacked or open books
+        name = object["name"]
+        if "Stack" in name or "Open" in name:
+            return
+        
+        from pxr.Gf import Matrix4d, Quatd
+
+        xform_mat = Matrix4d().SetRotate(Quatd(*quatd_rot))
+    
+        omni.kit.commands.execute(
+            "TransformPrimCommand",
+            path=object_prim_path,
+            new_transform_matrix=xform_mat,
+        )
+        
+        # self.task_scene.map_object(object_prim_path, 
+        #                            (0, 0), 
+        #                            [ 0.5, -0.5, -0.5, 0.5 ])

@@ -9,7 +9,7 @@ IS_IN_CREAT = str(carb.settings.get_settings().get("/app/window/title")).startsw
 APP_VERION = str(carb.settings.get_settings().get("/app/version"))
 
 if IS_IN_ISAAC_SIM or IS_PYTHON:
-    EXTENSION_FOLDER_PATH = "/home/yizhou/Research/DeepArrange"
+    EXTENSION_FOLDER_PATH = "/home/danny/Documents/omni-proj/DeepArrange"
 else:
     EXTENSION_FOLDER_PATH = str(Path(
         omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)
