@@ -165,16 +165,8 @@ class MyExtension(omni.ext.IExt):
         from uva_env import UvaEnv
         self.env = UvaEnv()
 
-        task_type = "Table"
-        side_choice = "Border"
-        asset_id = 0
-        load_nucleus = True
-
-        from task.scene import ArrangeScene
-        scene = ArrangeScene(task_type, side_choice, asset_id, "/World/base", load_nucleus)
-        self.env.register_scene(scene)
-        # base
-        self.env.scene.add_base_asset()
+        self.add_task_base()
+        self.env.register_scene(self.task_scene)
         self.env.add_scene_obj()
 
         
@@ -185,7 +177,9 @@ class MyExtension(omni.ext.IExt):
         last_obj_path = self.env.scene.objects[-1]["prim_path"]
         # reward = self.env.reward_affordance(last_obj_path)
         # print("reward", last_obj_path, reward)
-        asyncio.ensure_future(self.env.reward_affordance_async(last_obj_path))
+
+        # asyncio.ensure_future(self.env.reward_basic_async(last_obj_path))
+        self.env.reward_perturbation(last_obj_path)
     
     def uva_reset(self):
         print("uva_reset")
@@ -196,100 +190,28 @@ class MyExtension(omni.ext.IExt):
         self.env.clean()
 
     def add_force_field(self):
-        # enable api
-        manager = omni.kit.app.get_app().get_extension_manager()
-        self.forcefields_api_was_enabled = manager.is_extension_enabled("omni.physx.forcefields")
-        if not self.forcefields_api_was_enabled:
-            manager.set_extension_enabled_immediate("omni.physx.forcefields", True)
-
-        import omni.physx.scripts.physicsUtils as physicsUtils
-
-        from pxr import Gf, Sdf, Usd
-        from pxr import UsdGeom, UsdUtils, UsdPhysics
-        from pxr import PhysxSchema, PhysicsSchemaTools, ForceFieldSchema
-
-        stage = omni.usd.get_context().get_stage()
-
-        forcePrim = stage.GetPrimAtPath("/World/forcefield")
-        if not forcePrim.IsValid():
-            # create an unit xform
-            omni.kit.commands.execute(
-                    "CreatePrim",
-                    prim_path="/World/forcefield",
-                    prim_type="Xform",
-                    select_new_prim=False,
-                )
-
-
-        boxSpacing = 2
-        boxPathName = "/box"
-
-        # Create the force field prim
-        # forcefield_prim.GetTranslateOp().Set(Gf.Vec3f(0.0, 200.0, 0.0))
-        forcePrim = stage.GetPrimAtPath("/World/forcefield")
-
-        sphericalPrimApi = ForceFieldSchema.PhysxForceFieldSphericalAPI.Apply(forcePrim, "Explode") # Suck
-        sphericalPrimApi.CreateConstantAttr(1e4)
-        sphericalPrimApi.CreateLinearAttr(0.0)
-        sphericalPrimApi.CreateInverseSquareAttr(0.0)
-        sphericalPrimApi.CreateEnabledAttr(False)
-        sphericalPrimApi.CreatePositionAttr(Gf.Vec3f(0.0, 0.0, 0.0))
-        sphericalPrimApi.CreateRangeAttr(Gf.Vec2f(-1.0, -1.0))
-
-        noisePrimApi = ForceFieldSchema.PhysxForceFieldNoiseAPI.Apply(forcePrim, "Shake")
-        noisePrimApi.CreateDragAttr(1e4)
-        noisePrimApi.CreateAmplitudeAttr(Gf.Vec3f(100.0, 100.0, 0))
-        noisePrimApi.CreateFrequencyAttr(Gf.Vec3f(4.0))
-        noisePrimApi.CreateEnabledAttr(False)
-        noisePrimApi.CreatePositionAttr(Gf.Vec3f(0.0, 0.0, 0.0))
-        noisePrimApi.CreateRangeAttr(Gf.Vec2f(-1.0, -1.0))
-
-        windPrimApi = ForceFieldSchema.PhysxForceFieldWindAPI.Apply(forcePrim, "Wind")
-        windPrimApi.CreateDragAttr(1e4)
-        windPrimApi.CreateAverageSpeedAttr(10.0)
-        windPrimApi.CreateSpeedVariationAttr(10.0)
-        windPrimApi.CreateSpeedVariationFrequencyAttr(0.5)
-        windPrimApi.CreateAverageDirectionAttr(Gf.Vec3f(0.0, 1.0, 0.0))
-        windPrimApi.CreateDirectionVariationAttr(Gf.Vec3f(0.707, 0.0, 0.707))
-        windPrimApi.CreateDirectionVariationFrequencyAttr(Gf.Vec3f(0.5, 0.0, 0.5))
-        windPrimApi.CreateEnabledAttr(False)
-        windPrimApi.CreatePositionAttr(Gf.Vec3f(0.0, 0.0, 0.0))
-        windPrimApi.CreateRangeAttr(Gf.Vec2f(-1.0, -1.0))
-
-        # Add the collection 
-        collectionAPI = Usd.CollectionAPI.ApplyCollection(forcePrim, ForceFieldSchema.Tokens.forceFieldBodies)
-        collectionAPI.CreateIncludesRel().AddTarget(stage.GetDefaultPrim().GetPath())
-
-        # Boxes
-        boxSize = Gf.Vec3f(10.0)
-        boxPosition = Gf.Vec3f(0.0)
-        m = 2
-
-        for i in range(m):
-            for j in range(m):
-                boxPath = boxPathName + str(i) + str(j)
-                boxPosition[0] = (i + 0.5 - (0.5 * m)) * boxSpacing * boxSize[0]
-                boxPosition[2] = 0.5 * boxSize[1]
-                boxPosition[1] = 200 + (j + 0.5 - (0.5 * m)) * boxSpacing * boxSize[2]
-                boxPrim = physicsUtils.add_rigid_box(stage, boxPath, position=boxPosition, size=boxSize)
-        
-        # enable primAPi
-        sphericalPrimApi.GetEnabledAttr().Set(False) 
-        noisePrimApi.GetEnabledAttr().Set(False)
-        windPrimApi.GetEnabledAttr().Set(True)
+        pass
+    #    from task.utils import add_force_field
+    #    add_force_field()
     
     #####################################################################################################
 
     def on_shutdown(self):
         print("[deep.arrangement.ext] MyExtension shutdown") 
 
-    
         
 
     #############################################################################
 
     def debug(self):
-        pass
+        from pxr import Gf, UsdPhysics, Sdf
+        self.stage = omni.usd.get_context().get_stage()
+        object_prim_path = "/World/objects/Book"
+        linVelocity = Gf.Vec3f(2.0, 1.0, 2.0)
+        angularVelocity = Gf.Vec3f(0, 0, 45)
+        physicsAPI = UsdPhysics.RigidBodyAPI.Get(self.stage, Sdf.Path(object_prim_path))
+        physicsAPI.CreateVelocityAttr().Set(linVelocity)
+        physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)
 
     def yuan_hong_debug(self):
         """

@@ -40,3 +40,90 @@ def import_asset_to_stage(stage, prim_path, asset_path, position = (0,0,0), rota
     )
 
     return asset_prim
+
+def add_force_field():
+    """
+    Note: this is not available in the current version:
+    https://docs.omniverse.nvidia.com/prod_extensions/prod_extensions/ext_physics.html#physx-short-flatcache-also-known-as-fabric-rename-in-next-release
+    """
+     # enable api
+    manager = omni.kit.app.get_app().get_extension_manager()
+    forcefields_api_was_enabled = manager.is_extension_enabled("omni.physx.forcefields")
+    if not forcefields_api_was_enabled:
+        manager.set_extension_enabled_immediate("omni.physx.forcefields", True)
+
+    import omni.physx.scripts.physicsUtils as physicsUtils
+
+    from pxr import Gf, Sdf, Usd
+    from pxr import UsdGeom, UsdUtils, UsdPhysics
+    from pxr import PhysxSchema, PhysicsSchemaTools, ForceFieldSchema
+
+    stage = omni.usd.get_context().get_stage()
+
+    forcePrim = stage.GetPrimAtPath("/World/forcefield")
+    if not forcePrim.IsValid():
+        # create an unit xform
+        omni.kit.commands.execute(
+                "CreatePrim",
+                prim_path="/World/forcefield",
+                prim_type="Xform",
+                select_new_prim=False,
+            )
+
+
+    boxSpacing = 2
+    boxPathName = "/World/forcefield/box"
+
+    # Create the force field prim
+    # forcefield_prim.GetTranslateOp().Set(Gf.Vec3f(0.0, 200.0, 0.0))
+    forcePrim = stage.GetPrimAtPath("/World/forcefield")
+
+    sphericalPrimApi = ForceFieldSchema.PhysxForceFieldSphericalAPI.Apply(forcePrim, "Explode") # Suck
+    sphericalPrimApi.CreateConstantAttr(1e4)
+    sphericalPrimApi.CreateLinearAttr(0.0)
+    sphericalPrimApi.CreateInverseSquareAttr(0.0)
+    sphericalPrimApi.CreateEnabledAttr(False)
+    sphericalPrimApi.CreatePositionAttr(Gf.Vec3f(0.0, 0.0, 0.0))
+    sphericalPrimApi.CreateRangeAttr(Gf.Vec2f(-1.0, -1.0))
+
+    noisePrimApi = ForceFieldSchema.PhysxForceFieldNoiseAPI.Apply(forcePrim, "Shake")
+    noisePrimApi.CreateDragAttr(1e4)
+    noisePrimApi.CreateAmplitudeAttr(Gf.Vec3f(100.0, 100.0, 0))
+    noisePrimApi.CreateFrequencyAttr(Gf.Vec3f(4.0))
+    noisePrimApi.CreateEnabledAttr(False)
+    noisePrimApi.CreatePositionAttr(Gf.Vec3f(0.0, 0.0, 0.0))
+    noisePrimApi.CreateRangeAttr(Gf.Vec2f(-1.0, -1.0))
+
+    windPrimApi = ForceFieldSchema.PhysxForceFieldWindAPI.Apply(forcePrim, "Wind")
+    windPrimApi.CreateDragAttr(1e4)
+    windPrimApi.CreateAverageSpeedAttr(10.0)
+    windPrimApi.CreateSpeedVariationAttr(10.0)
+    windPrimApi.CreateSpeedVariationFrequencyAttr(0.5)
+    windPrimApi.CreateAverageDirectionAttr(Gf.Vec3f(0.0, 1.0, 0.0))
+    windPrimApi.CreateDirectionVariationAttr(Gf.Vec3f(0.707, 0.0, 0.707))
+    windPrimApi.CreateDirectionVariationFrequencyAttr(Gf.Vec3f(0.5, 0.0, 0.5))
+    windPrimApi.CreateEnabledAttr(False)
+    windPrimApi.CreatePositionAttr(Gf.Vec3f(0.0, 0.0, 0.0))
+    windPrimApi.CreateRangeAttr(Gf.Vec2f(-1.0, -1.0))
+
+    # Add the collection 
+    collectionAPI = Usd.CollectionAPI.ApplyCollection(forcePrim, ForceFieldSchema.Tokens.forceFieldBodies)
+    collectionAPI.CreateIncludesRel().AddTarget(stage.GetDefaultPrim().GetPath())
+
+    # Boxes
+    boxSize = Gf.Vec3f(10.0)
+    boxPosition = Gf.Vec3f(0.0)
+    m = 2
+
+    for i in range(m):
+        for j in range(m):
+            boxPath = boxPathName + str(i) + str(j)
+            boxPosition[0] = (i + 0.5 - (0.5 * m)) * boxSpacing * boxSize[0]
+            boxPosition[2] = 0.5 * boxSize[1]
+            boxPosition[1] = 200 + (j + 0.5 - (0.5 * m)) * boxSpacing * boxSize[2]
+            boxPrim = physicsUtils.add_rigid_box(stage, boxPath, position=boxPosition, size=boxSize)
+    
+    # enable primAPi
+    sphericalPrimApi.GetEnabledAttr().Set(False) 
+    noisePrimApi.GetEnabledAttr().Set(False)
+    windPrimApi.GetEnabledAttr().Set(True)

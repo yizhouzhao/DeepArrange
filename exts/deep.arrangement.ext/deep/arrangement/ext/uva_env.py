@@ -11,7 +11,8 @@ import omni.kit
 from omni.isaac.core import World
 from omni.isaac.core.prims.xform_prim import XFormPrim
 
-from pxr import UsdGeom, Gf
+from pxr import UsdGeom, Sdf, Gf, UsdPhysics
+# from pxr import ForceFieldSchema
 
 from task.scene import ArrangeScene
 from params import IS_IN_PYTHON, IS_IN_ISAAC_SIM
@@ -21,8 +22,8 @@ class UvaEnv():
         # init world
         self.world = World()
 
-        if IS_IN_PYTHON:
-            self.world.reset()
+        # if IS_IN_PYTHON:
+        self.world.reset()
             
         self.stage = self.world.scene.stage
         self.stage = omni.usd.get_context().get_stage()
@@ -32,11 +33,26 @@ class UvaEnv():
         self.scene: ArrangeScene = None
         self.scene_record = {}
 
+        # force
+        # self.create_force_field()
+        
+    def create_force_field(self):
         # enable forcefield
         manager = omni.kit.app.get_app().get_extension_manager()
-        self.forcefields_api_was_enabled = manager.is_extension_enabled("omni.physx.forcefields")
-        if not self.forcefields_api_was_enabled:
+        forcefields_api_was_enabled = manager.is_extension_enabled("omni.physx.forcefields")
+        if not forcefields_api_was_enabled:
             manager.set_extension_enabled_immediate("omni.physx.forcefields", True)
+
+        # disable flatcache
+        flatcache_api_was_enabled = manager.is_extension_enabled("omni.physx.flatcache")
+        if flatcache_api_was_enabled:
+            manager.set_extension_enabled_immediate("omni.physx.flatcache", False)
+
+        self.force_prim = self.stage.GetPrimAtPath("/World/forcefield")
+        if not self.force_prim.IsValid():
+            from task.utils import add_force_field
+            add_force_field()
+            self.force_prim = self.stage.GetPrimAtPath("/World/forcefield")
 
     def register_scene(self, scene):
         self.scene = scene
@@ -90,7 +106,10 @@ class UvaEnv():
             self.timeline.stop()
 
     ## ---------------------------------------- Reward ---------------------------------------------
-    def reward_affordance(self, object_prim_path, simulation_step = 10):
+    def reward_basic(self, object_prim_path, simulation_step = 60):
+        """
+        Get reward from affordance: play the timeline for seconds to see whether the object moves
+        """
         object_prim = self.stage.GetPrimAtPath(object_prim_path)
         # xform_cache = UsdGeom.XformCache()
         # transform = xform_cache.GetLocalToWorldTransform(object_prim)
@@ -114,7 +133,10 @@ class UvaEnv():
         
         return Gf.GetLength(end_translation - begin_translation)
 
-    async def reward_affordance_async(self, object_prim_path):
+    async def reward_basic_async(self, object_prim_path):
+        """
+        Async debug only
+        """
         object_prim = self.stage.GetPrimAtPath(object_prim_path)
         # xform_cache = UsdGeom.XformCache()
         # transform = xform_cache.GetLocalToWorldTransform(object_prim)
@@ -128,8 +150,34 @@ class UvaEnv():
         self.timeline.stop()
 
         print(object_prim_path, "begin_translation", begin_translation, "timecode", timecode, "end_translation", end_translation)
-     
+        # yield Gf.GetLength(end_translation - begin_translation)
 
+    def reward_perturbation(self, object_prim_path, mode = "noise"):
+        """
+        Get reward from perturbation for object prim at path
+        mode: noise, wind
+        """
+        # if mode == "noise":
+        #     forcePrimApi = ForceFieldSchema.PhysxForceFieldNoiseAPI.Apply(self.force_prim, "Shake")
+
+        # forcePrimApi.CreateEnabledAttr(True)
+
+        print("object_prim_path: ", object_prim_path)
+
+        linVelocity = Gf.Vec3f(list(8 * np.random.randn(3)))
+        angularVelocity = Gf.Vec3f(list(10 * np.random.randn(3)))
+        physicsAPI = UsdPhysics.RigidBodyAPI.Get(self.stage, Sdf.Path(object_prim_path))
+        physicsAPI.CreateVelocityAttr().Set(linVelocity)
+        physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)
+
+        if IS_IN_PYTHON:
+            reward = self.reward_basic(object_prim_path)
+            # forcePrimApi.CreateEnabledAttr(False)
+            return reward
+        else:
+            asyncio.ensure_future(self.reward_basic_async(object_prim_path))
+
+        
 
 
 
