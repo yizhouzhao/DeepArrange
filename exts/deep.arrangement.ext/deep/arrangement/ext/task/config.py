@@ -2,6 +2,7 @@ import omni
 import carb
 import os
 from pathlib import Path
+import getpass
 
 IS_PYTHON = str(carb.settings.get_settings().get("/app/window/title")) == "Isaac Sim Python"
 IS_IN_ISAAC_SIM = str(carb.settings.get_settings().get("/app/window/title")).startswith("Isaac Sim")
@@ -9,7 +10,10 @@ IS_IN_CREAT = str(carb.settings.get_settings().get("/app/window/title")).startsw
 APP_VERION = str(carb.settings.get_settings().get("/app/version"))
 
 if IS_IN_ISAAC_SIM or IS_PYTHON:
-    EXTENSION_FOLDER_PATH = "/home/danny/Documents/omni-proj/DeepArrange"
+    if getpass.getuser() == 'yizhou': 
+        EXTENSION_FOLDER_PATH = "/home/yizhou/Research/DeepArrange"
+    else:
+        EXTENSION_FOLDER_PATH = "/home/danny/Documents/omni-proj/DeepArrange"
 else:
     EXTENSION_FOLDER_PATH = str(Path(
         omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)
@@ -164,5 +168,22 @@ OBJS_PLACEMENT_CONFIGS = {
             "mean": (0, -1, 100),
             "sd": (50, -1, 50),
         },
+    },
+}
+
+# Rotation config for objects
+OBJS_ROTATION_CONFIGS = {
+    "Bookshelf":{
+        "Magazine": [-0.5, -0.5, 0.5, 0.5],
+        "Book": [0.5, -0.5, -0.5, 0.5],
+    },
+    "Table":{
+
+    },
+    "Desk":{
+
+    },
+    "Wall": {
+
     },
 }

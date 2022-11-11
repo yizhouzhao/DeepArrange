@@ -1,9 +1,6 @@
 import carb
 
-IS_PYTHON = str(carb.settings.get_settings().get("/app/window/title")) == "Isaac Sim Python"
-
-DATA_PATH = "/home/yizhou/Research/DeepArrange/Data"
-
+from task.config import IS_IN_ISAAC_SIM, IS_IN_CREAT, IS_PYTHON, DATA_PATH
 
 TASK2CAMERA_PATHS = {
     "Bookshelf":{

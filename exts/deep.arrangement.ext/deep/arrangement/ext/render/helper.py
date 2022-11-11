@@ -4,7 +4,7 @@ from PIL import Image
 
 
 from .config import *
-IS_IN_ISAAC_SIM, IS_IN_CREAT = False, False
+
 
 import omni.usd
 from pxr import Gf
@@ -110,6 +110,7 @@ class RenderHelper():
         """
         Capture image from camera
         """
+        print("capture_image_debug")
         stage = omni.usd.get_context().get_stage()
         camera = stage.GetPrimAtPath(camera_prim_path)
 

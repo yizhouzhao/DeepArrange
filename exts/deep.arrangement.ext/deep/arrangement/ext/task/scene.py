@@ -172,9 +172,12 @@ class ArrangeScene():
         object_prim = import_asset_to_stage(self.stage, object_prim_path, object_info["file_path"])
         object_info["prim_path"] = object_prim.GetPath().pathString
 
+        # get rotation
+        rot = self.get_object_rotation(object_info)
+
         # xform
         xform_mat = Gf.Matrix4d().SetScale(scale) *  \
-                Gf.Matrix4d().SetRotate(Gf.Quatd(float(rotation[0]), float(rotation[1]), float(rotation[2]), float(rotation[3]))) * \
+                Gf.Matrix4d().SetRotate(rot) * \
                 Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
 
         # move to correct position and rotation
@@ -191,6 +194,20 @@ class ArrangeScene():
         setRigidBody(object_prim, "convexHull", False)
         mass_api = UsdPhysics.MassAPI.Apply(object_prim)
         mass_api.CreateDensityAttr(1.0)
+
+    def get_object_rotation(self, object_info):
+        """
+        Get object rotation from task type and object type, name
+        """
+        # rotation config
+        rot = Gf.Quatd(1.0)
+
+        # book and magazine rotation
+        if object_info["type"] in OBJS_ROTATION_CONFIGS[self.task_choice]:
+            if not ("Stack" in object_info["name"] or "Open" in object_info["name"]): 
+                rot = Gf.Quatd(*OBJS_ROTATION_CONFIGS[self.task_choice][object_info["type"]])
+        
+        return rot
 
     def move_object(self, object_prim, position = (0, 200, 0), rotation = (1, 0, 0, 0)):
         """
