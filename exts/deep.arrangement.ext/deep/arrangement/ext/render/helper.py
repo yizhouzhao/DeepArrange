@@ -7,7 +7,7 @@ from .config import *
 
 
 import omni.usd
-from pxr import Gf
+from pxr import Gf, UsdGeom
 
 if IS_IN_CREAT:
     import omni.syntheticdata as syn
@@ -23,8 +23,9 @@ class RenderHelper():
         self.task_type = task_type
         self.side_choice = side_choice
         self.resolution = resolution
+
         # setup view port   
-        
+        self.stage = omni.usd.get_context().get_stage()
 
         if IS_IN_CREAT: 
             self.viewport = get_active_viewport()
@@ -37,7 +38,7 @@ class RenderHelper():
                     ],
                 )
         
-        if IS_IN_ISAAC_SIM:
+        if False: #IS_IN_ISAAC_SIM:
             viewport_interface = omni.kit.viewport_legacy.get_viewport_interface()
             viewport_handle = viewport_interface.create_instance()
             self.viewport = viewport_interface.get_viewport_window(viewport_handle)
@@ -54,29 +55,50 @@ class RenderHelper():
             #     self.sd_helper.initialize_async(sensor_names=["rgb"], viewport=self.viewport)
             
             # asyncio.ensure_future(init_helper_async())
+    
+    def add_task_cameras(self):
+        """
+        Add camera for current task
+        """
+        camera_info = TASK_CAMERA_INFO[self.task_type][self.side_choice]
+        
+        # add main camera
+        main_camera_path = f"/World/render/camera_main"
+        camera_prim = self.stage.GetPrimAtPath(main_camera_path)
+        if not camera_prim.IsValid():
+            pos = Gf.Vec3d(*camera_info["main"]["position"])
+            rot = Gf.Quatd(*camera_info["main"]["rotation"])
+            RenderHelper.add_camera(main_camera_path, pos, rot)
 
-    def add_camera(self, camera_path = "/World/Camera", position = (0, 0, 0), rotation = (1, 0, 0, 0), **kwargs):
+    @staticmethod
+    def add_camera(camera_path, position, rotation):
         stage = omni.usd.get_context().get_stage()
         target_path = omni.usd.get_stage_next_free_path(stage, camera_path, True)
         omni.kit.commands.execute("CreatePrimWithDefaultXformCommand", prim_path=target_path, prim_type="Camera", create_default_xform=True)
        
         # move to correct position and rotation
         xform_mat = Gf.Matrix4d().SetScale([1,1,1]) *  \
-                Gf.Matrix4d().SetRotate(Gf.Quatf(float(rotation[0]), float(rotation[1]), float(rotation[2]), float(rotation[3]))) * \
-                Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
+                Gf.Matrix4d().SetRotate(rotation) * \
+                Gf.Matrix4d().SetTranslate(position)
 
+        print("xform_mat: ", xform_mat)
         omni.kit.commands.execute(
             "TransformPrimCommand",
             path=target_path,
             new_transform_matrix=xform_mat,
-        )
+        )   
+
+        # set camera property
+        camera_prim = stage.GetPrimAtPath(target_path)
+        camera = UsdGeom.Camera(camera_prim)
+        camera.GetFocalLengthAttr().Set(14)
     
-    def set_cameras(self):
+    def set_cameras(self, camera_paths):
         """
         Set cameras from task types
         """
         assert IS_PYTHON, "Only works in Python driven environment"
-        camera_paths = TASK2CAMERA_PATHS[self.task_type][self.side_choice]
+
         viewport_interface = omni.kit.viewport_legacy.get_viewport_interface()
 
         self.viewports = []

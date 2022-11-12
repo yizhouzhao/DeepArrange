@@ -152,10 +152,20 @@ class MyExtension(omni.ext.IExt):
         """
         from .render.helper import RenderHelper
 
-        self.render_helper = RenderHelper("Table", "Border")
+        self.render_helper = RenderHelper("Bookshelf", "Border")
         # pos = (0, 500, 80)
         # rot = [0, 0, -0.7071068, 0.7071068]
-        # self.render_helper.add_camera(camera_path = "/World/Camera_0", position=pos, rotation=rot)
+
+        self.render_helper.add_task_cameras()
+        # stage = omni.usd.get_context().get_stage()
+        # camera_prim = stage.GetPrimAtPath("/World/layout/Camera_Bookshelf_Border_0")
+
+        # mat = omni.usd.get_world_transform_matrix(camera_prim)
+        # pos = mat.ExtractTranslation()
+        # rot = mat.ExtractRotationQuat()
+        # print("camera trans: ", pos, rot)
+
+        # RenderHelper.add_camera(camera_path = "/World/render/Camera_0", position = pos, rotation=rot)
 
     def capture_image(self):
         self.render_helper.capture_image_debug()

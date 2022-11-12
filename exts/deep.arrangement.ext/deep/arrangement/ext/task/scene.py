@@ -173,11 +173,11 @@ class ArrangeScene():
         object_info["prim_path"] = object_prim.GetPath().pathString
 
         # get rotation
-        rot = self.get_object_rotation(object_info)
+        rot = self.get_object_rotation_and_scale(object_info)
 
-        # xform
-        xform_mat = Gf.Matrix4d().SetScale(scale) *  \
-                Gf.Matrix4d().SetRotate(rot) * \
+       
+        # xform  # Gf.Matrix4d().SetScale(scale) * \
+        xform_mat = Gf.Matrix4d().SetRotate(rot) * \
                 Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
 
         # move to correct position and rotation
@@ -195,7 +195,7 @@ class ArrangeScene():
         mass_api = UsdPhysics.MassAPI.Apply(object_prim)
         mass_api.CreateDensityAttr(1.0)
 
-    def get_object_rotation(self, object_info):
+    def get_object_rotation_and_scale(self, object_info):
         """
         Get object rotation from task type and object type, name
         """
@@ -203,9 +203,9 @@ class ArrangeScene():
         rot = Gf.Quatd(1.0)
 
         # book and magazine rotation
-        if object_info["type"] in OBJS_ROTATION_CONFIGS[self.task_choice]:
+        if object_info["type"] in OBJS_SHAPE_CONFIGS[self.task_choice]:
             if not ("Stack" in object_info["name"] or "Open" in object_info["name"]): 
-                rot = Gf.Quatd(*OBJS_ROTATION_CONFIGS[self.task_choice][object_info["type"]])
+                rot = Gf.Quatd(*OBJS_SHAPE_CONFIGS[self.task_choice][object_info["type"]])
         
         return rot
 

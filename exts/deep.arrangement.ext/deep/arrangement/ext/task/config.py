@@ -171,8 +171,8 @@ OBJS_PLACEMENT_CONFIGS = {
     },
 }
 
-# Rotation config for objects
-OBJS_ROTATION_CONFIGS = {
+# objects scale and rotation config for objects
+OBJS_SHAPE_CONFIGS = {
     "Bookshelf":{
         "Magazine": [-0.5, -0.5, 0.5, 0.5],
         "Book": [0.5, -0.5, -0.5, 0.5],

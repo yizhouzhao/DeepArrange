@@ -33,3 +33,20 @@ TASK2CAMERA_PATHS = {
         ]
     }
 }
+
+TASK_CAMERA_INFO = {
+    "Bookshelf":{
+        "Border":{
+            # 0 for main camera
+            "main": {
+                "position": [0, 260, 100],
+                "rotation": (0, 0, 0.7071, 0.7071),
+                "focal_length": 14,
+            },
+            # side camera
+            "left": {
+
+            }
+        }
+    }
+}
