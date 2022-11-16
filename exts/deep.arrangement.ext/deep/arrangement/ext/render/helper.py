@@ -61,14 +61,17 @@ class RenderHelper():
         Add camera for current task
         """
         camera_info = TASK_CAMERA_INFO[self.task_type][self.side_choice]
-        
+        self.camera_paths = []
         # add main camera
+        
         main_camera_path = f"/World/render/camera_main"
         camera_prim = self.stage.GetPrimAtPath(main_camera_path)
         if not camera_prim.IsValid():
             pos = Gf.Vec3d(*camera_info["main"]["position"])
             rot = Gf.Quatd(*camera_info["main"]["rotation"])
             RenderHelper.add_camera(main_camera_path, pos, rot)
+        
+        self.camera_paths.append(main_camera_path)
 
     @staticmethod
     def add_camera(camera_path, position, rotation):
@@ -93,7 +96,7 @@ class RenderHelper():
         camera = UsdGeom.Camera(camera_prim)
         camera.GetFocalLengthAttr().Set(14)
     
-    def set_cameras(self, camera_paths):
+    def set_cameras(self):
         """
         Set cameras from task types
         """
@@ -105,10 +108,10 @@ class RenderHelper():
         self.handles = []
         self.sd_helpers = []
 
-        for i in range(len(camera_paths)):
+        for i in range(len(self.camera_paths)):
             viewport_handle = viewport_interface.create_instance()
             viewport = viewport_interface.get_viewport_window(viewport_handle)
-            viewport.set_active_camera(camera_paths[i])
+            viewport.set_active_camera(self.camera_paths[i])
             viewport.set_window_pos(1000, 400)
             viewport.set_window_size(420, 420)
             viewport.set_texture_resolution(*self.resolution)
