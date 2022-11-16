@@ -39,7 +39,7 @@ class ArrangeScene():
 
         # asset
         self.load_nucleus = load_nucleus
-        self.asset_path = ASSET_PATH if not load_nucleus else "omniverse://localhost/Users/yizhou/Asset"
+        self.asset_path = ASSET_PATH if not load_nucleus else NUCLEUS_FOLDER_PATH
     
 
     def add_base_asset(self):

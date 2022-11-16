@@ -12,6 +12,7 @@ APP_VERION = str(carb.settings.get_settings().get("/app/version"))
 if IS_IN_ISAAC_SIM or IS_PYTHON:
     if getpass.getuser() == 'yizhou': 
         EXTENSION_FOLDER_PATH = "/home/yizhou/Research/DeepArrange"
+        NUCLEUS_FOLDER_PATH = "omniverse://localhost/Users/yizhou/Asset"
     else:
         EXTENSION_FOLDER_PATH = "/home/danny/Documents/omni-proj/DeepArrange"
 else:

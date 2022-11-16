@@ -19,6 +19,7 @@ import omni.ui as ui
 from .params import *
 from .layout.randomizer import Randomizer
 from .task.scene import ArrangeScene
+from task.config import ASSET_PATH
 
 
 class MyExtension(omni.ext.IExt):
