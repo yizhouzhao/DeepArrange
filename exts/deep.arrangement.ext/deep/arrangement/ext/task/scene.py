@@ -107,7 +107,7 @@ class ArrangeScene():
         elif self.task_choice in ["Table", "Desk"]:
             self.object_mean[2] = self.base_bboxes[1][2]
         
-        print("object_mean", self.object_mean)
+        # print("object_mean", self.object_mean)
     
     def load_obj_info(self, object_type:str, amount:int = 1):
         """
@@ -133,10 +133,12 @@ class ArrangeScene():
             object_info = {
                 "type": object_type,
                 "name": object_name,
-                "file_path": os.path.join(self.asset_path, "I", object_type, object_name),
-                "image_path": os.path.join(self.asset_path, "I", object_type, ".thumbs/256x256", object_name + ".png"),
+                "file_path": os.path.join("I", object_type, object_name),
+                "image_path": os.path.join("I", object_type, ".thumbs/256x256", object_name + ".png"),
                 "prim_path": "",
                 "xform_name": "",
+                "transform": {}, 
+                "reward": {}, # the key part of Utility and Value Driven Env
             }
             
             # modify size 
@@ -169,7 +171,7 @@ class ArrangeScene():
         object_prim_path = f"/World/objects/{object_type}" 
 
         # import 
-        object_prim = import_asset_to_stage(self.stage, object_prim_path, object_info["file_path"])
+        object_prim = import_asset_to_stage(self.stage, object_prim_path, os.path.join(self.asset_path, object_info["file_path"]))
         object_info["prim_path"] = object_prim.GetPath().pathString
 
         # get rotation
@@ -209,15 +211,20 @@ class ArrangeScene():
         
         return rot
 
-    def move_object(self, object_prim, position = (0, 200, 0), rotation = (1, 0, 0, 0)):
+    def move_object(self, object_prim, position = (0, 200, 0)): 
         """
-        Move object
+        Move object 
+        In phase one: we don't change the rotation of the object
+        # rotation = (1, 0, 0, 0) 
+        # Gf.Quatd(float(rotation[0]), float(rotation[1]), float(rotation[2]), float(rotation[3]))
         """
         # scale
         scale = object_prim.GetAttribute("xformOp:scale").Get()[0]
+        # rot
+        rotation = object_prim.GetAttribute("xformOp:orient").Get()
         # xform
         xform_mat = Gf.Matrix4d().SetScale(scale) *  \
-                Gf.Matrix4d().SetRotate(Gf.Quatd(float(rotation[0]), float(rotation[1]), float(rotation[2]), float(rotation[3]))) * \
+                Gf.Matrix4d().SetRotate(rotation) * \
             Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
 
         # move to correct position and rotation
@@ -243,7 +250,58 @@ class ArrangeScene():
         object_position = self.object_mean + 2 * self.object_sd * offset
         # print("object_position", object_position)
         # move object
-        self.move_object(object_prim, object_position, rot)
+        self.move_object(object_prim, object_position) # disable rotation 
+
+    ######################### record ################################################
+    
+    def get_scene_record(self):
+        """
+        Record scene information / save 
+        """
+
+        # 1. get base information
+        base_transform = omni.usd.get_world_transform_matrix(self.stage.GetPrimAtPath("/World/base"))
+        base_translation = base_transform.ExtractTranslation()
+        base_rotation = eval(str(base_transform.ExtractRotationQuat()))
+        
+        base_record = {
+            "task_choice": self.task_choice,
+            "side_choice": self.side_choice,
+            "base_asset_id": self.base_asset_id,
+            "base_file_path": self.base_file_path,
+            "transform":{
+                "translation": [base_translation[0], base_translation[1], base_translation[2]],
+                "rotation": [base_rotation[0], base_rotation[1], base_rotation[2], base_rotation[3]], # W, X, Y, Z
+                "scale": 1,
+            }
+        }
+
+        # 2.get obeject information
+        objects_record = self.objects
+        for object_info in objects_record:
+            object_prim_path = object_info["prim_path"]
+            object_prim = self.stage.GetPrimAtPath(object_prim_path)
+            object_transform = omni.usd.get_world_transform_matrix(object_prim)
+            translation = object_transform.ExtractTranslation()
+            rotation = eval(str(object_transform.ExtractRotationQuat()))
+            scale = object_prim.GetAttribute("xformOp:scale").Get()
+            object_info["transform"] = {
+                "translation": [translation[0], translation[1], translation[2]], 
+                "rotation":[rotation[0], rotation[1], rotation[2], rotation[3]],
+                "scale": scale[0],
+            }
+
+        all_record = {
+            "base": base_record,
+            "objects":objects_record,
+        }
+        
+        return all_record
+
+
+
+
+
         
         
 

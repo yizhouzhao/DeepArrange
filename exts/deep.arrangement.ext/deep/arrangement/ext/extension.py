@@ -59,7 +59,7 @@ class MyExtension(omni.ext.IExt):
                     ui.Button("Uva Reset", clicked_fn = self.uva_reset)
                     ui.Button("Uva Clean", clicked_fn = self.uva_clean)
                 with ui.HStack(height = 20):
-                    ui.Button("Add force field", clicked_fn = self.add_force_field)
+                    ui.Button("Uva Record", clicked_fn = self.uva_record)
                 with ui.HStack(height = 20):
                     ui.Button("Debug", clicked_fn = self.debug)
 
@@ -199,10 +199,10 @@ class MyExtension(omni.ext.IExt):
         print("uva_clean")
         self.env.clean()
 
-    def add_force_field(self):
-        pass
-    #    from task.utils import add_force_field
-    #    add_force_field()
+
+    def uva_record(self):
+        print("uva_record")
+        print("record: ", self.env.scene.get_scene_record())
     
     #####################################################################################################
 
