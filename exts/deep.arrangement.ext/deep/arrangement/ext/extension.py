@@ -203,39 +203,47 @@ class MyExtension(omni.ext.IExt):
         physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)
 
     def yuan_hong_debug(self):
-        """
-        Effect: put a magazine/book into a shelf.
-        """
-        object = self.task_scene.objects[-1]
-        object_prim_path = object["prim_path"]  
-        type = object["type"]
+        # """
+        # Effect: put a magazine/book into a shelf.
+        # """
+        # object = self.task_scene.objects[-1]
+        # object_prim_path = object["prim_path"]  
+        # type = object["type"]
 
-        print(self.task_scene.objects[-1])
+        # print(self.task_scene.objects[-1])
         
-        if "Magazine" in type:
-            print("magazine")
-            quatd_rot = [-0.5, -0.5, 0.5, 0.5]
-        elif "Book" in type:
-            print("book")
-            quatd_rot = [0.5, -0.5, -0.5, 0.5]
-        else:
-            return 
+        # if "Magazine" in type:
+        #     print("magazine")
+        #     quatd_rot = [-0.5, -0.5, 0.5, 0.5]
+        # elif "Book" in type:
+        #     print("book")
+        #     quatd_rot = [0.5, -0.5, -0.5, 0.5]
+        # else:
+        #     return 
 
-        # do not position stacked or open books
-        name = object["name"]
-        if "Stack" in name or "Open" in name:
-            return
+        # # do not position stacked or open books
+        # name = object["name"]
+        # if "Stack" in name or "Open" in name:
+        #     return
         
-        from pxr.Gf import Matrix4d, Quatd
+        # from pxr.Gf import Matrix4d, Quatd
 
-        xform_mat = Matrix4d().SetRotate(Quatd(*quatd_rot))
+        # xform_mat = Matrix4d().SetRotate(Quatd(*quatd_rot))
     
-        omni.kit.commands.execute(
-            "TransformPrimCommand",
-            path=object_prim_path,
-            new_transform_matrix=xform_mat,
-        )
+        # omni.kit.commands.execute(
+        #     "TransformPrimCommand",
+        #     path=object_prim_path,
+        #     new_transform_matrix=xform_mat,
+        # )
         
-        # self.task_scene.map_object(object_prim_path, 
-        #                            (0, 0), 
-        #                            [ 0.5, -0.5, -0.5, 0.5 ])
+        # # self.task_scene.map_object(object_prim_path, 
+        # #                            (0, 0), 
+        # #                            [ 0.5, -0.5, -0.5, 0.5 ])
+
+        # load data
+
+        # type and id
+        self.load_nucleus = self.load_nucleus_checkbox.model.get_value_as_bool()
+
+
+        self.task_scene = ArrangeScene.load_scene_data(file_path="YH Debug?")

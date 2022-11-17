@@ -1,0 +1,47 @@
+{
+    "base": {
+        "task_choice": "Desk",
+        "side_choice": "Border",
+        "base_asset_id": 0,
+        "base_file_path": "D/Desk/Desk_01.usd",
+        "transform": {
+            "translation": [
+                0.0,
+                32.044395446777344,
+                0.054203033447265625
+            ],
+            "rotation": [
+                0.7071068184017502,
+                0,
+                0,
+                0.7071068282650331
+            ],
+            "scale": 1
+        }
+    },
+    "objects": [
+        {
+            "type": "TableLamp",
+            "name": "Jackson.usd",
+            "file_path": "I/TableLamp/Jackson.usd",
+            "image_path": "I/TableLamp/.thumbs/256x256/Jackson.usd.png",
+            "prim_path": "/World/objects/TableLamp",
+            "xform_name": "xform_prim",
+            "transform": {
+                "translation": [
+                    13.332195573990832,
+                    51.44182224942697,
+                    78.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        }
+    ]
+}
