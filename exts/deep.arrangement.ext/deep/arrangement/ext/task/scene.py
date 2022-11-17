@@ -349,8 +349,32 @@ class ArrangeScene():
 
         with open(save_file_path, "w") as f:
             f.write(json.dumps(data, indent=4))
+    
+    @staticmethod
+    def load_scene_data(file_path = "", load_nucleus = False):
+        """
+        Load scene data from file
+        """
+        # task_scene = ArrangeScene(task_type, side_choice, asset_id, "/World/base", load_nucleus=load_nucleus)
+        
+        # scale
+        # scale = object_prim.GetAttribute("xformOp:scale").Get()[0]
+        # # rot
+        # rotation = mat.ExtractRotationQuat()
+        # # xform
+        # # print("rotation:" , rotation, "scale", scale)
+        # xform_mat = Gf.Matrix4d().SetScale(scale) *  \
+        #         Gf.Matrix4d().SetRotate(rotation) * \
+        #     Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
 
-
+        # # move to correct position and rotation
+        # omni.kit.commands.execute(
+        #     "TransformPrimCommand",
+        #     path=object_prim.GetPath(),
+        #     new_transform_matrix=xform_mat,
+        )
+        
+        return task_scene
 
 
 
