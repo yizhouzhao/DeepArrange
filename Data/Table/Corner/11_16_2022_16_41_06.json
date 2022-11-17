@@ -1,0 +1,93 @@
+{
+    "base": {
+        "task_choice": "Table",
+        "side_choice": "Corner",
+        "base_asset_id": 0,
+        "base_file_path": "T/Appleseed/Appleseed_EndTable.usd",
+        "transform": {
+            "translation": [
+                -348.96644926071167,
+                27.93999901134623,
+                -1.52587890625e-05
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0
+            ],
+            "scale": 1
+        }
+    },
+    "objects": [
+        {
+            "type": "GadgetsAndTool",
+            "name": "coffee_grinder.usd",
+            "file_path": "I/GadgetsAndTool/coffee_grinder.usd",
+            "image_path": "I/GadgetsAndTool/.thumbs/256x256/coffee_grinder.usd.png",
+            "prim_path": "/World/objects/GadgetsAndTool",
+            "xform_name": "xform_prim",
+            "transform": {
+                "translation": [
+                    -301.5807481572769,
+                    83.96073134817281,
+                    63.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        },
+        {
+            "type": "Fruit",
+            "name": "Kiwi01.usd",
+            "file_path": "I/Fruit/Kiwi01.usd",
+            "image_path": "I/Fruit/.thumbs/256x256/Kiwi01.usd.png",
+            "prim_path": "/World/objects/Fruit",
+            "xform_name": "",
+            "transform": {
+                "translation": [
+                    -452.870739874833,
+                    -61.03627151363917,
+                    63.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        },
+        {
+            "type": "Tchotchke",
+            "name": "Orange_02.usd",
+            "file_path": "I/Tchotchke/Orange_02.usd",
+            "image_path": "I/Tchotchke/.thumbs/256x256/Orange_02.usd.png",
+            "prim_path": "/World/objects/Tchotchke",
+            "xform_name": "",
+            "transform": {
+                "translation": [
+                    -417.9667232838549,
+                    25.001693240181016,
+                    63.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        }
+    ]
+}

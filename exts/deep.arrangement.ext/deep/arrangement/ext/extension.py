@@ -33,8 +33,10 @@ class MyExtension(omni.ext.IExt):
         self._window = ui.Window("Deep Arrangement", width=300, height=300)
         with self._window.frame:
             with ui.VStack():
+                # with ui.HStack(height = 20):
+                #     ui.Button("Add Task Base", clicked_fn = self.add_task_base)
                 with ui.HStack(height = 20):
-                    ui.Button("Add Task Base", clicked_fn = self.add_task_base)
+                    ui.Button("Init Uva Env", clicked_fn = self.uva_test)
                 with ui.HStack(height = 20):
                     ui.Label("Load nucleus", width = 100)
                     self.load_nucleus_checkbox = omni.ui.CheckBox(width=20, style={"font_size": 16})
@@ -53,8 +55,6 @@ class MyExtension(omni.ext.IExt):
                 with ui.HStack(height = 20):
                     ui.Button("Set camera", clicked_fn = self.set_camera)
                     ui.Button("Capture image", clicked_fn = self.capture_image)          
-                with ui.HStack(height = 20):
-                    ui.Button("Uva test", clicked_fn = self.uva_test)
                     ui.Button("Uva Play", clicked_fn = self.uva_play)
                 with ui.HStack(height = 20):
                     ui.Button("Uva Reset", clicked_fn = self.uva_reset)
@@ -68,36 +68,13 @@ class MyExtension(omni.ext.IExt):
                 with ui.HStack(height = 20):
                     ui.Button("YH Debug", clicked_fn = self.yuan_hong_debug)
 
-
-                
-                    
     ################################ scene #########################################
 
     def add_room(self):
-        # self.task_scene.add_layout()
         """
-        Add house layout background
+        Add room background
         """
-        from task.utils import import_asset_to_stage
-        # scene
-        self.stage = omni.usd.get_context().get_stage() 
-        self.layer = self.stage.GetRootLayer()
-        house_prim_path = "/World/layout"
-        house_path = os.path.join(ASSET_PATH, "S", "0", "layout.usd")  
-        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
-
-        """
-        Add ground
-        """
-        from omni.physx.scripts import physicsUtils
-        from pxr import Gf, UsdPhysics, Sdf
-        ground_path = physicsUtils.add_ground_plane(self.stage, "/World/groundPlane", "Z", 750.0, Gf.Vec3f(0, 0, 0), Gf.Vec3f(0.2))
-        ground_prim = self.stage.GetPrimAtPath(ground_path)
-        ground_prim.GetAttribute('visibility').Set('invisible')
-
-        physicsScene = UsdPhysics.Scene.Define(self.stage, Sdf.Path("/World/physicsScene"))
-        physicsScene.CreateGravityDirectionAttr().Set(Gf.Vec3f(0.0, 0.0, -1.0))
-        physicsScene.CreateGravityMagnitudeAttr().Set(9.81)
+        self.task_scene.add_room()
  
     def randomize_scene(self, rand = True):
         """
@@ -200,10 +177,11 @@ class MyExtension(omni.ext.IExt):
         print("uva_clean")
         self.env.clean()
 
-
     def uva_record(self):
         print("uva_record")
-        print("record: ", self.env.scene.get_scene_record())
+        record = self.env.scene.get_scene_data()
+        self.env.scene.save_scene_data()
+        print("record: ", record)
     
     #####################################################################################################
 

@@ -1,0 +1,139 @@
+{
+    "base": {
+        "task_choice": "Table",
+        "side_choice": "Border",
+        "base_asset_id": 0,
+        "base_file_path": "T/Appleseed/Appleseed_CoffeeTable.usd",
+        "transform": {
+            "translation": [
+                0.0,
+                37.46500015258789,
+                -9.5367431640625e-06
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0
+            ],
+            "scale": 1
+        }
+    },
+    "objects": [
+        {
+            "type": "Fruit",
+            "name": "Lychee01.usd",
+            "file_path": "I/Fruit/Lychee01.usd",
+            "image_path": "I/Fruit/.thumbs/256x256/Lychee01.usd.png",
+            "prim_path": "/World/objects/Fruit",
+            "xform_name": "xform_prim",
+            "transform": {
+                "translation": [
+                    16.589061163659398,
+                    29.055423700966347,
+                    45.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        },
+        {
+            "type": "GadgetsAndTool",
+            "name": "brass_grinder.usd",
+            "file_path": "I/GadgetsAndTool/brass_grinder.usd",
+            "image_path": "I/GadgetsAndTool/.thumbs/256x256/brass_grinder.usd.png",
+            "prim_path": "/World/objects/GadgetsAndTool",
+            "xform_name": "",
+            "transform": {
+                "translation": [
+                    35.935445248650474,
+                    38.07457849684055,
+                    45.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        },
+        {
+            "type": "Tchotchke",
+            "name": "Orange_02.usd",
+            "file_path": "I/Tchotchke/Orange_02.usd",
+            "image_path": "I/Tchotchke/.thumbs/256x256/Orange_02.usd.png",
+            "prim_path": "/World/objects/Tchotchke",
+            "xform_name": "",
+            "transform": {
+                "translation": [
+                    -83.26715677751942,
+                    45.91096205692127,
+                    45.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        },
+        {
+            "type": "GadgetsAndTool",
+            "name": "brass_grinder.usd",
+            "file_path": "I/GadgetsAndTool/brass_grinder.usd",
+            "image_path": "I/GadgetsAndTool/.thumbs/256x256/brass_grinder.usd.png",
+            "prim_path": "/World/objects/GadgetsAndTool_01",
+            "xform_name": "",
+            "transform": {
+                "translation": [
+                    -18.055446029657176,
+                    33.0641993655668,
+                    45.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        },
+        {
+            "type": "Flatware",
+            "name": "Fork_Big.usd",
+            "file_path": "I/Flatware/Fork_Big.usd",
+            "image_path": "I/Flatware/.thumbs/256x256/Fork_Big.usd.png",
+            "prim_path": "/World/objects/Flatware",
+            "xform_name": "",
+            "transform": {
+                "translation": [
+                    84.75682869885885,
+                    39.30901083794106,
+                    45.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        }
+    ]
+}

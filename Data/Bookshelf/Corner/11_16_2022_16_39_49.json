@@ -1,0 +1,47 @@
+{
+    "base": {
+        "task_choice": "Bookshelf",
+        "side_choice": "Corner",
+        "base_asset_id": 0,
+        "base_file_path": "B/Shelve/CornerShelf_Square.usd",
+        "transform": {
+            "translation": [
+                -366.5699977874756,
+                11.430001258850098,
+                0.0
+            ],
+            "rotation": [
+                0.7071068184017502,
+                0,
+                0,
+                0.7071068282650331
+            ],
+            "scale": 1
+        }
+    },
+    "objects": [
+        {
+            "type": "Plant",
+            "name": "Plant_Succulent_02.usd",
+            "file_path": "I/Plant/Plant_Succulent_02.usd",
+            "image_path": "I/Plant/.thumbs/256x256/Plant_Succulent_02.usd.png",
+            "prim_path": "/World/objects/Plant",
+            "xform_name": "xform_prim",
+            "transform": {
+                "translation": [
+                    -361.5640447227455,
+                    15.905867387542727,
+                    50.0
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        }
+    ]
+}

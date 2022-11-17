@@ -139,7 +139,7 @@ OBJS_PLACEMENT_CONFIGS = {
             "mean": (0, -1, 100),
             "sd": (50, 0, 50),
         },
-        "Corder":{
+        "Corner":{
             "mean":(-378, -1, 100),
             "sd": (50, 0, 50),
         }
@@ -149,7 +149,7 @@ OBJS_PLACEMENT_CONFIGS = {
             "mean": (0, 0, -1),
             "sd": (50, 50, 0),
         },
-        "Corder":{
+        "Corner":{
             "mean":(-378, 0, -1),
             "sd": (50, 50, 0),
         },

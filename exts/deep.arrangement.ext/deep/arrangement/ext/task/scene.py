@@ -2,13 +2,14 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-import os
 import numpy as np
 import random
+import json
 
 import omni.usd
 from pxr import Gf, Sdf, UsdPhysics
 from omni.physx.scripts.utils import setStaticCollider, setRigidBody
+from omni.physx.scripts import physicsUtils
 
 # from params import 
 
@@ -40,6 +41,30 @@ class ArrangeScene():
         # asset
         self.load_nucleus = load_nucleus
         self.asset_path = ASSET_PATH if not load_nucleus else NUCLEUS_FOLDER_PATH
+
+    def add_room(self):
+        # self.task_scene.add_layout()
+        """
+        Add house layout background
+        """
+        # scene
+        self.stage = omni.usd.get_context().get_stage() 
+        self.layer = self.stage.GetRootLayer()
+        house_prim_path = "/World/layout"
+        house_path = os.path.join(self.asset_path, "S", "0", "layout.usd")  
+        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
+
+        """
+        Add ground
+        """
+
+        ground_path = physicsUtils.add_ground_plane(self.stage, "/World/groundPlane", "Z", 750.0, Gf.Vec3f(0, 0, 0), Gf.Vec3f(0.2))
+        ground_prim = self.stage.GetPrimAtPath(ground_path)
+        ground_prim.GetAttribute('visibility').Set('invisible')
+
+        physicsScene = UsdPhysics.Scene.Define(self.stage, Sdf.Path("/World/physicsScene"))
+        physicsScene.CreateGravityDirectionAttr().Set(Gf.Vec3f(0.0, 0.0, -1.0))
+        physicsScene.CreateGravityMagnitudeAttr().Set(9.81)
     
 
     def add_base_asset(self):
@@ -52,8 +77,8 @@ class ArrangeScene():
         
         # asset 
         self.stage = omni.usd.get_context().get_stage() 
-        self.base_file_path = os.path.join(self.asset_path, self.base_asset_file_paths[self.base_asset_id])
-        self.base_prim = import_asset_to_stage(self.stage, self.base_prim_path, self.base_file_path)
+        self.base_file_path = self.base_asset_file_paths[self.base_asset_id]
+        self.base_prim = import_asset_to_stage(self.stage, self.base_prim_path, os.path.join(self.asset_path, self.base_file_path))
 
         # update path
         self.base_prim_path = self.base_prim.GetPath().pathString
@@ -218,11 +243,14 @@ class ArrangeScene():
         # rotation = (1, 0, 0, 0) 
         # Gf.Quatd(float(rotation[0]), float(rotation[1]), float(rotation[2]), float(rotation[3]))
         """
+        mat = omni.usd.get_world_transform_matrix(object_prim)
+
         # scale
         scale = object_prim.GetAttribute("xformOp:scale").Get()[0]
         # rot
-        rotation = object_prim.GetAttribute("xformOp:orient").Get()
+        rotation = mat.ExtractRotationQuat()
         # xform
+        # print("rotation:" , rotation, "scale", scale)
         xform_mat = Gf.Matrix4d().SetScale(scale) *  \
                 Gf.Matrix4d().SetRotate(rotation) * \
             Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
@@ -252,9 +280,9 @@ class ArrangeScene():
         # move object
         self.move_object(object_prim, object_position) # disable rotation 
 
-    ######################### record ################################################
+    ######################################### Get / Save / Load data ################################################
     
-    def get_scene_record(self):
+    def get_scene_data(self):
         """
         Record scene information / save 
         """
@@ -291,12 +319,36 @@ class ArrangeScene():
                 "scale": scale[0],
             }
 
-        all_record = {
+        data = {
             "base": base_record,
             "objects":objects_record,
         }
         
-        return all_record
+        return data
+
+    def save_scene_data(self, save_file_path = ""):
+        """
+        Save scene data to folder
+        """
+        if len(save_file_path) == 0:
+            # if no folder is specified generate automatically
+            from datetime import datetime
+            now = datetime.now() 
+            date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
+            task_folder = os.path.join(DATA_PATH, self.task_choice)
+            if not os.path.exists(task_folder):
+                os.mkdir(task_folder)
+            side_folder = os.path.join(task_folder, self.side_choice)
+            if not os.path.exists(side_folder):
+                os.mkdir(side_folder)
+                
+            save_file_path = os.path.join(side_folder, date_time) + ".json"
+
+
+        data = self.get_scene_data()
+
+        with open(save_file_path, "w") as f:
+            f.write(json.dumps(data, indent=4))
 
 
 
