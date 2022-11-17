@@ -355,6 +355,7 @@ class ArrangeScene():
         """
         Load scene data from file
         """
+        pass 
         # task_scene = ArrangeScene(task_type, side_choice, asset_id, "/World/base", load_nucleus=load_nucleus)
         
         # scale
