@@ -372,9 +372,8 @@ class ArrangeScene():
         #     "TransformPrimCommand",
         #     path=object_prim.GetPath(),
         #     new_transform_matrix=xform_mat,
-        )
         
-        return task_scene
+        # return task_scene
 
 
 
