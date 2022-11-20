@@ -15,7 +15,7 @@ if IS_IN_ISAAC_SIM or IS_PYTHON:
         NUCLEUS_FOLDER_PATH = "omniverse://localhost/Users/yizhou/Asset"
     else:
         EXTENSION_FOLDER_PATH = "/home/danny/Documents/omni-proj/DeepArrange"
-        NUCLEUS_FOLDER_PATH = "YH Debug?"
+        NUCLEUS_FOLDER_PATH = "omniverse://localhost/Projects/DeepArrange/Asset"
 else:
     EXTENSION_FOLDER_PATH = str(Path(
         omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)

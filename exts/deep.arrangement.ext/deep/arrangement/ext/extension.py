@@ -203,6 +203,55 @@ class MyExtension(omni.ext.IExt):
         physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)
 
     def yuan_hong_debug(self):
+        """
+        Load asset to scene
+        """
+        import json
+        from .task.config import DATA_PATH
+
+        self.load_nucleus = self.load_nucleus_checkbox.model.get_value_as_bool()
+        print(self.load_nucleus)
+
+        # randomly pick a json file under data
+        def pick_random_json(path):
+            result = []
+            for root, _, files in os.walk(path):
+                for name in files:
+                    if "json" in name:
+                        result.append(os.path.join(root, name))
+            return result[random.randint(0, len(result)-1)]
+        
+        json_file = open(pick_random_json(DATA_PATH))
+        scene = json.load(json_file)
+                
+        # add task base
+        base = scene["base"]
+        self.task_scene = ArrangeScene(
+            task_choice=base["task_choice"], 
+            side_choice=base["side_choice"], 
+            base_asset_id=base["base_asset_id"], 
+            base_prim_path="/World/base", 
+            load_nucleus=self.load_nucleus)
+        
+        self.task_scene.add_base_asset()
+
+        # add objects
+        for object in scene["objects"]:
+            self.task_scene.add_object(
+                object_info=object,
+                position=object["transform"]["translation"],
+                rotation=object["transform"]["rotation"],
+                scale=object["transform"]["scale"]
+            )
+
+        json_file.close()
+        
+
+
+
+
+
+
         # """
         # Effect: put a magazine/book into a shelf.
         # """
@@ -243,7 +292,3 @@ class MyExtension(omni.ext.IExt):
         # load data
 
         # type and id
-        self.load_nucleus = self.load_nucleus_checkbox.model.get_value_as_bool()
-
-
-        self.task_scene = ArrangeScene.load_scene_data(file_path="YH Debug?")
