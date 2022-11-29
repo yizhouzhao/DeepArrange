@@ -355,26 +355,30 @@ class ArrangeScene():
         """
         Load scene data from file
         """
-        pass 
-        # task_scene = ArrangeScene(task_type, side_choice, asset_id, "/World/base", load_nucleus=load_nucleus)
+        json_file = open(file_path)
+        scene = json.load(json_file)
+                
+        # add task base
+        base = scene["base"]
+        task_scene = ArrangeScene(
+            task_choice=base["task_choice"], 
+            side_choice=base["side_choice"], 
+            base_asset_id=base["base_asset_id"], 
+            base_prim_path="/World/base", 
+            load_nucleus=load_nucleus)
         
-        # scale
-        # scale = object_prim.GetAttribute("xformOp:scale").Get()[0]
-        # # rot
-        # rotation = mat.ExtractRotationQuat()
-        # # xform
-        # # print("rotation:" , rotation, "scale", scale)
-        # xform_mat = Gf.Matrix4d().SetScale(scale) *  \
-        #         Gf.Matrix4d().SetRotate(rotation) * \
-        #     Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
+        task_scene.add_base_asset()
 
-        # # move to correct position and rotation
-        # omni.kit.commands.execute(
-        #     "TransformPrimCommand",
-        #     path=object_prim.GetPath(),
-        #     new_transform_matrix=xform_mat,
-        
-        # return task_scene
+        # add objects
+        for object in scene["objects"]:
+            task_scene.add_object(
+                object_info=object,
+                position=object["transform"]["translation"],
+                rotation=object["transform"]["rotation"],
+                scale=object["transform"]["scale"]
+            )
+
+        json_file.close()
 
 
 
