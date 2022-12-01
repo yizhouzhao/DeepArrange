@@ -53,6 +53,7 @@ class MyExtension(omni.ext.IExt):
                     ui.Button("Add Object", clicked_fn = self.add_task_object)
                     ui.Button("Move Object", clicked_fn = self.move_task_object)
                 with ui.HStack(height = 20):
+                    ui.Button("Get selected camera", clicked_fn = self.get_camera)
                     ui.Button("Set camera", clicked_fn = self.set_camera)
                     ui.Button("Capture image", clicked_fn = self.capture_image)          
                     ui.Button("Uva Play", clicked_fn = self.uva_play)
@@ -128,9 +129,14 @@ class MyExtension(omni.ext.IExt):
         """
         Get camera position debug
         """
+
+        selection = omni.usd.get_context().get_selection()
+        prim_path = selection.get_selected_prim_paths()[0]
+        print("selected prim: ", prim_path)
+
         from .render.helper import RenderHelper
         stage = omni.usd.get_context().get_stage()
-        camera_prim = stage.GetPrimAtPath("/World/layout/Camera_Bookshelf_Border_0")
+        camera_prim = stage.GetPrimAtPath(prim_path) # Camera_Table_Border_0 # Camera_Bookshelf_Border_0
 
         mat = omni.usd.get_world_transform_matrix(camera_prim)
         pos = mat.ExtractTranslation()

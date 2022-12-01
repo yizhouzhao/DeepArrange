@@ -6,14 +6,29 @@ import numpy as np
 from pxr import Gf, UsdPhysics, Sdf
 
 import omni.usd
+import omni.timeline
+from omni.isaac.core import World
 
 from params import IS_IN_PYTHON, IS_IN_ISAAC_SIM
 
 class Rewarder():
-    def __init__(self) -> None:
+    def __init__(self, world: World) -> None:
         self.stage = omni.usd.get_context().get_stage()
+        self.world = world
+        self.timeline = omni.timeline.get_timeline_interface()
+    
+    def step(self, render = False):
+        """
+        Step env
+        """
+        if IS_IN_PYTHON:
+            self.world.step(render=render)        
 
-
+    def reset(self):
+        self.world.reset()
+        if not IS_IN_PYTHON:
+            self.timeline.stop()
+            
     ## ---------------------------------------- Reward ---------------------------------------------
     def reward_basic(self, object_prim_path, simulation_step = 60):
         """

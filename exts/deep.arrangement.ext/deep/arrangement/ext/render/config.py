@@ -48,5 +48,19 @@ TASK_CAMERA_INFO = {
 
             }
         }
-    }
+    },
+    "Table":{
+        "Border":{
+            # 0 for main camera
+            "main": {
+                "position": [0, 56, 200],
+                "rotation": (0, 0, 0, 1),
+                "focal_length": 14,
+            },
+            # side camera
+            "left": {
+
+            }
+        }
+    },
 }

@@ -15,6 +15,7 @@ from pxr import UsdGeom, Sdf, Gf, UsdPhysics
 # from pxr import ForceFieldSchema
 
 from task.scene import ArrangeScene
+from uv.reward import Rewarder
 from render.helper import RenderHelper
 from params import IS_IN_PYTHON, IS_IN_ISAAC_SIM
 
@@ -24,19 +25,23 @@ class UvaEnv():
         self.world = World()
 
         # if IS_IN_PYTHON:
-        self.world.reset()
+        # self.world.reset()
             
         self.stage = self.world.scene.stage
         self.stage = omni.usd.get_context().get_stage()
         self.timeline = omni.timeline.get_timeline_interface()
 
-        # record
+        # scene
         self.scene: ArrangeScene = None
-        self.scene_record = {}
 
-        # 
+        # reward
+        self.rewarder: Rewarder = None
 
-        # force
+        # render
+        self.render: RenderHelper = None
+
+
+        # force # doesn't work in current version
         # self.create_force_field()
         
     def create_force_field(self):
@@ -57,13 +62,12 @@ class UvaEnv():
             add_force_field()
             self.force_prim = self.stage.GetPrimAtPath("/World/forcefield")
 
-    def register_scene(self, scene):
-        self.scene = scene
-    
     def clean(self):
         """
         Reset scene to key layout and camera only
         """
+        self.world.reset()
+
         # clean base
         base_prim = self.stage.GetPrimAtPath("/World/base")
         if base_prim.IsValid():
@@ -74,36 +78,70 @@ class UvaEnv():
         if object_prim.IsValid():
             omni.kit.commands.execute("DeletePrims", paths=["/World/objects"])
 
+        # clean render
+        render_prim = self.stage.GetPrimAtPath("/World/render")
+        if render_prim.IsValid():
+            omni.kit.commands.execute("DeletePrims", paths=["/World/render"])
+
         if self.scene:
             for object_info in self.scene.objects:
                 self.world.scene.remove_object(object_info["xform_name"])
         
-        self.world.reset()
-
+        
     def add_scene_obj(self, mode = "random"):
         # object
         object_type = random.choice(self.scene.object_candidates)
         self.scene.load_obj_info(object_type, 1)
+
+    
+    def put_last_object(self, pos):
+        """
+        Put the last added object in to position
+        """
         # modify scene and object info
         object_info = self.scene.objects[-1]
         object_prim_path = object_info["prim_path"]
-        obj_xform_prim = XFormPrim(object_prim_path) 
 
-        self.world.scene.add(obj_xform_prim)
-
-        object_info["xform_name"] = obj_xform_prim.name
-    
-    def move_object_to(self, object_prim_path, pos):
+        # move object
         self.scene.map_object(object_prim_path, pos) 
+
+        obj_xform_prim = XFormPrim(object_prim_path)  # RigidPrim
+        self.world.scene.add(obj_xform_prim)
+        object_info["xform_name"] = obj_xform_prim.name
 
     def step(self, render = False):
         """
-        Step env
+        Env world step
         """
         if IS_IN_PYTHON:
             self.world.step(render=render)        
 
     def reset(self):
+        """
+        Env world reset
+        """
         self.world.reset()
         if not IS_IN_PYTHON:
             self.timeline.stop()
+
+    ##################################################### REWARD ####################################################
+    def calculate_last_reward(self, option = "U"):
+        """
+        Calculate the reward for the object recent added
+        ::params:
+            option: Utility or Value
+        """
+        
+        # Utility: affordance
+        last_object_prim = self.scene.objects[-1]["prim_path"]
+        reward_affordance = self.rewarder.reward_basic(last_object_prim)
+        self.scene.objects[-1]["reward"]["affordance"] = reward_affordance
+
+        # Utility: perturbation
+        last_object_prim = self.scene.objects[-1]["prim_path"]
+        reward_affordance = self.rewarder.reward_basic(last_object_prim)
+        self.scene.objects[-1]["reward"]["perturbation"] = reward_affordance
+
+
+
+
