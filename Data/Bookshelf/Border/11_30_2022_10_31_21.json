@@ -1,0 +1,47 @@
+{
+    "base": {
+        "task_choice": "Bookshelf",
+        "side_choice": "Border",
+        "base_asset_id": 0,
+        "base_file_path": "B/Bookshelve/Clayton.usd",
+        "transform": {
+            "translation": [
+                0.0,
+                20.000004891529443,
+                0.00018310546875
+            ],
+            "rotation": [
+                0.7071068184017502,
+                0,
+                0,
+                0.7071068282650331
+            ],
+            "scale": 1
+        }
+    },
+    "objects": [
+        {
+            "type": "Magazine",
+            "name": "Magazine01.usd",
+            "file_path": "I/Magazine/Magazine01.usd",
+            "image_path": "I/Magazine/.thumbs/256x256/Magazine01.usd.png",
+            "prim_path": "/World/objects/Magazine",
+            "xform_name": "xform_prim",
+            "transform": {
+                "translation": [
+                    -86.47925594917088,
+                    20.0,
+                    185.56577535301057
+                ],
+                "rotation": [
+                    -0.49999999999999983,
+                    -0.5000000000000001,
+                    0.5000000000000001,
+                    0.4999999999999999
+                ],
+                "scale": 1.0
+            },
+            "reward": {}
+        }
+    ]
+}

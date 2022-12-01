@@ -122,14 +122,14 @@ class RenderHelper():
             self.viewports.append(viewport)
             self.handles.append(viewport_handle)
     
-    def get_images(self): 
+    def get_images(self, data_path = DATA_PATH): 
         """
         Get images from cameras
         """
         assert IS_PYTHON, "Only works in Python driven environment"
         for i in range(len(self.sd_helpers)):
             sensor_data = self.sd_helpers[i].get_groundtruth(["rgb"], self.viewports[i])
-            self.save_rgb(sensor_data["rgb"], f"{DATA_PATH}/{i}")
+            self.save_rgb(sensor_data["rgb"], f"{data_path}/{i}")
 
 
     def capture_image_debug(self, camera_prim_path = "", image_name = "test"):

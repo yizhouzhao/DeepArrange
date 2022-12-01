@@ -177,7 +177,7 @@ class ArrangeScene():
             self.objects.append(object_info)
 
 
-    def add_object(self, object_info, position = (0, 200, 0), rotation = (1, 0, 0, 0), scale = 1.0):
+    def add_object(self, object_info, position = (0, 200, 0), rotation = None, scale = None):
         """
         Add object to scene
         """
@@ -200,12 +200,16 @@ class ArrangeScene():
         object_info["prim_path"] = object_prim.GetPath().pathString
 
         # get rotation
-        rot = self.get_object_rotation_and_scale(object_info)
-
+        if rotation is None:
+            rotation, scale = self.get_object_rotation_and_scale(object_info)
+        else:
+            rotation = Gf.Quatd(*rotation)
+            scale = scale
        
-        # xform  # Gf.Matrix4d().SetScale(scale) * \
-        xform_mat = Gf.Matrix4d().SetRotate(rot) * \
-                Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
+        # xform  #  \
+        xform_mat = Gf.Matrix4d().SetScale(scale) * \
+            Gf.Matrix4d().SetRotate(rotation) * \
+            Gf.Matrix4d().SetTranslate([float(position[0]), float(position[1]), float(position[2])])
 
         # move to correct position and rotation
         omni.kit.commands.execute(
@@ -227,14 +231,15 @@ class ArrangeScene():
         Get object rotation from task type and object type, name
         """
         # rotation config
-        rot = Gf.Quatd(1.0)
+        rotation = Gf.Quatd(1.0)
 
         # book and magazine rotation
         if object_info["type"] in OBJS_SHAPE_CONFIGS[self.task_choice]:
             if not ("Stack" in object_info["name"] or "Open" in object_info["name"]): 
-                rot = Gf.Quatd(*OBJS_SHAPE_CONFIGS[self.task_choice][object_info["type"]])
-        
-        return rot
+                rotation = Gf.Quatd(*OBJS_SHAPE_CONFIGS[self.task_choice][object_info["type"]])
+
+        scale = 1.0
+        return rotation, scale
 
     def move_object(self, object_prim, position = (0, 200, 0)): 
         """

@@ -124,6 +124,21 @@ class MyExtension(omni.ext.IExt):
         x, y = np.tanh(np.random.randn()), np.tanh(np.random.randn())
         self.task_scene.map_object(object_prim_path, (x, y)) 
 
+    def get_camera(self):
+        """
+        Get camera position debug
+        """
+        from .render.helper import RenderHelper
+        stage = omni.usd.get_context().get_stage()
+        camera_prim = stage.GetPrimAtPath("/World/layout/Camera_Bookshelf_Border_0")
+
+        mat = omni.usd.get_world_transform_matrix(camera_prim)
+        pos = mat.ExtractTranslation()
+        rot = mat.ExtractRotationQuat()
+        print("camera trans: ", pos, rot)
+
+        RenderHelper.add_camera(camera_path = "/World/render/Camera_0", position = pos, rotation=rot)
+
     def set_camera(self):
         """
         Set up camera
@@ -135,15 +150,7 @@ class MyExtension(omni.ext.IExt):
         # rot = [0, 0, -0.7071068, 0.7071068]
 
         self.render_helper.add_task_cameras()
-        # stage = omni.usd.get_context().get_stage()
-        # camera_prim = stage.GetPrimAtPath("/World/layout/Camera_Bookshelf_Border_0")
 
-        # mat = omni.usd.get_world_transform_matrix(camera_prim)
-        # pos = mat.ExtractTranslation()
-        # rot = mat.ExtractRotationQuat()
-        # print("camera trans: ", pos, rot)
-
-        # RenderHelper.add_camera(camera_path = "/World/render/Camera_0", position = pos, rotation=rot)
 
     def capture_image(self):
         self.render_helper.capture_image_debug()
