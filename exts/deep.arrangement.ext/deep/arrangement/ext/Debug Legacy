@@ -1,0 +1,9 @@
+# import omni.kit
+# omni.kit.commands.execute("CreatePrimWithDefaultXform", prim_type="Cube", prim_path = "/World/Cube")
+
+# import omni.kit
+# omni.kit.commands.execute("DeletePrims", paths=["/World/Camera2"])
+
+# mobility_obj = XFormPrim("/World/Cube")
+# world.scene.add(mobility_obj)
+# world.reset()

@@ -1,5 +1,22 @@
 import omni.kit.commands
-from pxr import UsdGeom, Usd, Gf
+import omni.usd
+from pxr import UsdGeom, Usd, Gf, UsdLux, Sdf
+
+def add_scene_default():
+    """
+    add default prim '/World' and '/DistantLight' to scene
+    """
+    stage = omni.usd.get_context().get_stage()
+    if not stage.GetDefaultPrim():
+        rootPrim = UsdGeom.Xform.Define(stage, "/World")
+        stage.SetDefaultPrim(rootPrim.GetPrim())
+
+    light_prim = stage.GetPrimAtPath("/World/defaultLight")
+    if not light_prim.IsValid():
+        # Adds a light to the scene
+        distantLight = UsdLux.DistantLight.Define(stage, Sdf.Path("/World/defaultLight"))
+        distantLight.CreateIntensityAttr(3000)
+        distantLight.AddOrientOp().Set(Gf.Quatf(0.65328, 0.2706, 0.2706, 0.65328))
 
 def get_prim_bbox(stage, prim):
     """
