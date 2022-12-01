@@ -2,7 +2,13 @@
 ~/.local/share/ov/pkg/isaac_sim-2022.1.1/python.sh 
 ~/.local/share/ov/pkg/isaac_sim-2022.1.1/jupyter_notebook.sh
 
+# Dependencies
+
+python -m pip install torch
+
 exts/deep.arrangement.ext/deep/arrangement/ext
+
+
 
 # DeepArrange
 
