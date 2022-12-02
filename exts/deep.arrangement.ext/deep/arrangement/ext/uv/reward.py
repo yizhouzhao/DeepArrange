@@ -88,11 +88,15 @@ class Rewarder():
 
         print("object_prim_path: ", object_prim_path)
 
+        # Q1: no object mass 
         linVelocity = Gf.Vec3f(list(8 * np.random.randn(3)))
         angularVelocity = Gf.Vec3f(list(10 * np.random.randn(3)))
         physicsAPI = UsdPhysics.RigidBodyAPI.Get(self.stage, Sdf.Path(object_prim_path))
         physicsAPI.CreateVelocityAttr().Set(linVelocity)
         physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)
+
+        # Q2: revert 
+        # linVelocity = 0, angularVelocity = 0
 
         if IS_IN_PYTHON:
             reward = self.reward_basic(object_prim_path)
