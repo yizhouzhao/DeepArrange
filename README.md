@@ -4,6 +4,9 @@ cd exts/deep.arrangement.ext/deep/arrangement/ext
 ~/.local/share/ov/pkg/isaac_sim-2022.1.1/python.sh 
 ~/.local/share/ov/pkg/isaac_sim-2022.1.1/jupyter_notebook.sh
 
+## link folder
+ln -s learning exts/deep.arrangement.ext/deep/arrangement/ext/learning
+
 # Dependencies
 
 python -m pip install torch
