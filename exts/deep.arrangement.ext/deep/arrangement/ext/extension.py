@@ -216,10 +216,26 @@ class MyExtension(omni.ext.IExt):
         physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)
 
     def yuan_hong_debug(self):
+
         """
-        Load asset to scene
+        debug reward function
         """
-        pass
+        from uva_env import UvaEnv
+        self.env = UvaEnv()
+
+        self.add_task_base()
+
+        # self.add_task_object()
+        print("hello")
+        object_type = self.task_scene.object_candidates[3]
+        print(self.task_scene.object_candidates[3])
+        self.task_scene.load_obj_info(object_type, 1)
+        print("hello")
+
+        object = self.task_scene.objects[-1]
+        from uv import reward
+        r = reward.Rewarder(self.env.world)
+        print(r.reward_perturbation(object["prim_path"], mode="debug"))
 
 
 
