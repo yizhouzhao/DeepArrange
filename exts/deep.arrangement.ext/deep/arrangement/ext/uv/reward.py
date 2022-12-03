@@ -88,14 +88,50 @@ class Rewarder():
 
         print("object_prim_path: ", object_prim_path)
 
-        # Q1: no object mass 
-        linVelocity = Gf.Vec3f(list(8 * np.random.randn(3)))
-        angularVelocity = Gf.Vec3f(list(10 * np.random.randn(3)))
-        physicsAPI = UsdPhysics.RigidBodyAPI.Get(self.stage, Sdf.Path(object_prim_path))
-        physicsAPI.CreateVelocityAttr().Set(linVelocity)
-        physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)
+        # rigidBodyAPI = UsdPhysics.RigidBodyAPI.Apply(object_prim_path)
+        # rigidBodyAPI.CreateVelocityAttr().Set(linVelocity)
+        # rigidBodyAPI.CreateAngularVelocityAttr().Set(angularVelocity)
 
-        # Q2: revert 
+        # massAPI = UsdPhysics.MassAPI.Apply(object_prim_path)
+        # massAPI.CreateCenterOfMassAttr().Set(Gf.Vec3f(0.0, 0.0, 10.0))
+
+
+        # Q1: no object mass 
+        # linVelocity = Gf.Vec3f(list(8 * np.random.randn(3)))
+        # angularVelocity = Gf.Vec3f(list(10 * np.random.randn(3)))
+        if mode == "debug":
+            linVelocity = Gf.Vec3f(0, 0, 10.0)
+            angularVelocity = Gf.Vec3f(0, 0, 0)
+        else:
+            linVelocity = Gf.Vec3f(list(8 * np.random.randn(3)))
+            angularVelocity = Gf.Vec3f(list(10 * np.random.randn(3)))
+
+        def get_size(prim):
+            from pxr import Usd, UsdGeom
+            bbox_cache = UsdGeom.BBoxCache(Usd.TimeCode.Default(), includedPurposes=[UsdGeom.Tokens.default_])
+            bbox_cache.Clear()
+            prim_bbox = bbox_cache.ComputeWorldBound(prim)
+            prim_range = prim_bbox.ComputeAlignedRange()
+            prim_size = prim_range.GetSize()
+            return prim_size
+
+        size = get_size(self.stage.GetPrimAtPath(object_prim_path))
+        print(f"Size: {size}")
+
+        mass = np.prod(size) / 1e4
+
+        physicsAPI = UsdPhysics.RigidBodyAPI.Get(self.stage, Sdf.Path(object_prim_path))
+        
+        massAPI = UsdPhysics.MassAPI.Get(self.stage, Sdf.Path(object_prim_path))
+        massAPI.CreateMassAttr().Set(mass)
+
+        physicsAPI.CreateVelocityAttr().Set(linVelocity)
+        physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)    
+
+        # Q2: revert
+        print("revert")
+        physicsAPI.CreateVelocityAttr().Set(Gf.Vec3f(0, 0, 0))
+        physicsAPI.CreateAngularVelocityAttr().Set(Gf.Vec3f(0, 0, 0))    
         # linVelocity = 0, angularVelocity = 0
 
         if IS_IN_PYTHON:
@@ -104,7 +140,6 @@ class Rewarder():
             return reward
         else:
             asyncio.ensure_future(self.reward_basic_async(object_prim_path))
-
         
 
 
