@@ -1,9 +1,13 @@
 import os
 import torch
-from torchvision.io import read_image
-from PIL import image
+from torchvision.io import ImageReadMode, read_image
 
-from task.config import ASSET_PATH, FEATURE_PATH
+EXTENSION_FOLDER_PATH = "/home/yizhou/Research/DeepArrange/"
+
+ASSET_PATH = EXTENSION_FOLDER_PATH + "/Asset"
+DATA_PATH = EXTENSION_FOLDER_PATH + "/Data"
+FEATURE_PATH = DATA_PATH + "/ObjectFeature"
+
 from learning.network.resnet import ResNetFeatureExtractor
 
 class ObjectFeatureParser():
@@ -37,7 +41,11 @@ class ObjectFeatureParser():
         print("Extracting feature for object: ", self.object_list[idx])
         image_file = os.path.join(self.image_folder, obj + ".png")
 
-        x = read_image(image_file)
-        x = x.to(self.device)
+        x = read_image(image_file, mode=ImageReadMode.RGB)
+        x = x.unsqueeze(0).float().to(self.device)
         x_feature = self.model(x).squeeze()
         torch.save(x_feature, os.path.join(self.save_path, obj_name + ".pt"))
+
+    def parse_all_features(self):
+        for idx in range(len(self.object_list)):
+            self.parse_one_feature(idx)
