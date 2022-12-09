@@ -4,7 +4,7 @@ import torch.nn as nn
 from torchvision import models
 
 class ResNetFeatureExtractor(nn.Module):
-    def __init__(self,output_layer = None):
+    def __init__(self, output_layer = None, model = "resnet18"):
         super().__init__()
         self.pretrained = models.resnet18(pretrained=True)
         self.output_layer = output_layer
