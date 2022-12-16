@@ -62,7 +62,7 @@ class UvaEnv():
             add_force_field()
             self.force_prim = self.stage.GetPrimAtPath("/World/forcefield")
 
-    def clean(self):
+    def clean(self, clean_all = True):
         """
         Reset scene to key layout and camera only
         """
@@ -74,20 +74,22 @@ class UvaEnv():
                 self.world.scene.remove_object(object_info["xform_name"])
             self.scene.objects.clear()
 
-        # clean base
-        base_prim = self.stage.GetPrimAtPath("/World/base")
-        if base_prim.IsValid():
-            omni.kit.commands.execute("DeletePrims", paths=["/World/base"])
-        
         # clean object
         object_prim = self.stage.GetPrimAtPath("/World/objects")
         if object_prim.IsValid():
             omni.kit.commands.execute("DeletePrims", paths=["/World/objects"])
 
-        # clean render
-        render_prim = self.stage.GetPrimAtPath("/World/render")
-        if render_prim.IsValid():
-            omni.kit.commands.execute("DeletePrims", paths=["/World/render"])
+        
+        if clean_all:
+            # clean base
+            base_prim = self.stage.GetPrimAtPath("/World/base")
+            if base_prim.IsValid():
+                omni.kit.commands.execute("DeletePrims", paths=["/World/base"])
+            
+            # clean render
+            render_prim = self.stage.GetPrimAtPath("/World/render")
+            if render_prim.IsValid():
+                omni.kit.commands.execute("DeletePrims", paths=["/World/render"])
 
 
         

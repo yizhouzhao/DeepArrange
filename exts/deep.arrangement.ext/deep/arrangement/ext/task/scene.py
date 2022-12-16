@@ -18,15 +18,15 @@ from .config import *
 
 
 class ArrangeScene():
-    def __init__(self, task_choice, side_choice, base_asset_id, base_prim_path, traj_id = 0, load_nucleus = True) -> None:
+    def __init__(self, task_choice, side_choice, base_asset_id, traj_id = 0, load_nucleus = True) -> None:
         # task/side choice
         self.task_choice = task_choice
         self.side_choice = side_choice    
-        self.traj_id = str(traj_id)
+        self.traj_id = traj_id
 
         # base asset path
         self.base_asset_id = base_asset_id
-        self.base_prim_path = base_prim_path
+        self.base_prim_path = "/World/base"
         self.base_asset_file_paths = BASE_ASSET_PATHS[self.task_choice][self.side_choice]
         self.base_pos = BASE_TASK_POSITION[self.side_choice]
 
@@ -346,7 +346,7 @@ class ArrangeScene():
             side_folder = os.path.join(task_folder, self.side_choice)
             if not os.path.exists(side_folder):
                 os.mkdir(side_folder)
-            traj_folder = os.path.join(side_folder, self.traj_id)
+            traj_folder = os.path.join(side_folder, str(self.traj_id))
             if not os.path.exists(traj_folder):
                 os.mkdir(traj_folder)
                 
