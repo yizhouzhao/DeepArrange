@@ -1,5 +1,6 @@
 import asyncio
 import numpy as np
+import os
 from PIL import Image
 
 
@@ -122,18 +123,17 @@ class RenderHelper():
             self.viewports.append(viewport)
             self.handles.append(viewport_handle)
     
-    def get_images(self, save_data = True, data_path = DATA_PATH): 
+    def get_images(self): 
         """
         Get images from cameras
         """
-        assert IS_PYTHON, "Only works in Python driven environment"
+        assert IS_PYTHON, "Only works in Python driven enviDATA_PATHronment"
+        sensor_datas = []
         for i in range(len(self.sd_helpers)):
             sensor_data = self.sd_helpers[i].get_groundtruth(["rgb"], self.viewports[i])
-            if save_data:
-                self.save_rgb(sensor_data["rgb"], f"{data_path}/{i}")
+            sensor_datas.append(sensor_data)
         
-        return sensor_data
-
+        return sensor_datas
 
 
     def capture_image_debug(self, camera_prim_path = "", image_name = "test"):
@@ -169,10 +169,15 @@ class RenderHelper():
             # self.save_rgb(sensor_data["rgb"], f"{DATA_PATH}/{image_name}")
             asyncio.ensure_future(get_synthetic_data())
         
-    def save_rgb(self, rgb_data, file_name):
+    def save_rgb(self, rgb_data, folder_name, image_name):
         """
         Save image to path
         """
+        file_name = os.path.join(folder_name, image_name)
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
         rgb_image_data = np.frombuffer(rgb_data, dtype=np.uint8).reshape(*rgb_data.shape, -1)
         rgb_img = Image.fromarray(rgb_image_data, "RGBA")
         rgb_img.save(file_name + ".png")
+

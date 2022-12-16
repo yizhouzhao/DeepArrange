@@ -18,10 +18,11 @@ from .config import *
 
 
 class ArrangeScene():
-    def __init__(self, task_choice, side_choice, base_asset_id, base_prim_path, load_nucleus = True) -> None:
+    def __init__(self, task_choice, side_choice, base_asset_id, base_prim_path, traj_id = 0, load_nucleus = True) -> None:
         # task/side choice
         self.task_choice = task_choice
         self.side_choice = side_choice    
+        self.traj_id = str(traj_id)
 
         # base asset path
         self.base_asset_id = base_asset_id
@@ -163,6 +164,7 @@ class ArrangeScene():
                 "prim_path": "",
                 "xform_name": "",
                 "transform": {}, 
+                "action": {}, # action part in reinforcement learning
                 "reward": {}, # the key part of Utility and Value Driven Env
             }
             
@@ -337,17 +339,18 @@ class ArrangeScene():
         """
         if len(save_file_path) == 0:
             # if no folder is specified generate automatically
-            from datetime import datetime
-            now = datetime.now() 
-            date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
+           
             task_folder = os.path.join(DATA_PATH, self.task_choice)
             if not os.path.exists(task_folder):
                 os.mkdir(task_folder)
             side_folder = os.path.join(task_folder, self.side_choice)
             if not os.path.exists(side_folder):
                 os.mkdir(side_folder)
+            traj_folder = os.path.join(side_folder, self.traj_id)
+            if not os.path.exists(traj_folder):
+                os.mkdir(traj_folder)
                 
-            save_file_path = os.path.join(side_folder, date_time) + ".json"
+            save_file_path = os.path.join(traj_folder, "scene") + ".json"
 
 
         data = self.get_scene_data()

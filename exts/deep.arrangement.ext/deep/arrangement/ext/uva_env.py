@@ -67,6 +67,12 @@ class UvaEnv():
         Reset scene to key layout and camera only
         """
         self.world.reset()
+        
+        # Disable object prim in world
+        if self.scene:
+            for object_info in self.scene.objects:
+                self.world.scene.remove_object(object_info["xform_name"])
+            self.scene.objects.clear()
 
         # clean base
         base_prim = self.stage.GetPrimAtPath("/World/base")
@@ -83,10 +89,7 @@ class UvaEnv():
         if render_prim.IsValid():
             omni.kit.commands.execute("DeletePrims", paths=["/World/render"])
 
-        if self.scene:
-            for object_info in self.scene.objects:
-                self.world.scene.remove_object(object_info["xform_name"])
-        
+
         
     def add_scene_obj(self, mode = "random"):
         # object
@@ -101,12 +104,21 @@ class UvaEnv():
         # modify scene and object info
         object_info = self.scene.objects[-1]
         object_prim_path = object_info["prim_path"]
+        object_info["action"] = pos
 
         # move object
         self.scene.map_object(object_prim_path, pos) 
 
-        obj_xform_prim = XFormPrim(object_prim_path)  # RigidPrim
+    def register_last_object(self):
+        """
+        Register last object to scene
+        """
+        object_info = self.scene.objects[-1]
+        object_prim_path = object_info["prim_path"]
+        object_name = object_prim_path.split("/")[-1]
+        obj_xform_prim = XFormPrim(object_prim_path, name = object_name)  # RigidPrim
         self.world.scene.add(obj_xform_prim)
+        # obj_xform_prim.name = object_info["name"]
         object_info["xform_name"] = obj_xform_prim.name
 
     def step(self, render = False):
