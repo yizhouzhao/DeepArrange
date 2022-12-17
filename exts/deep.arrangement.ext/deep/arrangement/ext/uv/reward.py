@@ -30,7 +30,7 @@ class Rewarder():
             self.timeline.stop()
             
     ## ---------------------------------------- Reward ---------------------------------------------
-    def reward_basic(self, object_prim_path, simulation_step = 60):
+    def reward_basic(self, object_prim_path, simulation_step = 30):
         """
         Get reward from affordance: play the timeline for seconds to see whether the object moves
         """
@@ -50,8 +50,8 @@ class Rewarder():
         transform = transform = omni.usd.get_world_transform_matrix(object_prim, timecode)
         end_translation = transform.ExtractTranslation() # record beginning translation
 
-        if IS_IN_PYTHON:
-            self.reset()
+        # if IS_IN_PYTHON:
+        #     self.reset()
 
         print(object_prim_path, "begin_translation", begin_translation, "timecode", timecode, "end_translation", end_translation)
         

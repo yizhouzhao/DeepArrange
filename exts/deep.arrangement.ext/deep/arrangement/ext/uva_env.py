@@ -139,7 +139,7 @@ class UvaEnv():
             self.timeline.stop()
 
     ##################################################### REWARD ####################################################
-    def calculate_last_reward(self, option = "U"):
+    def calculate_last_reward(self, option = "U",  simulation_step = 30):
         """
         Calculate the reward for the object recent added
         ::params:
@@ -148,13 +148,13 @@ class UvaEnv():
         
         # Utility: affordance
         last_object_prim = self.scene.objects[-1]["prim_path"]
-        reward_affordance = self.rewarder.reward_basic(last_object_prim)
+        reward_affordance = self.rewarder.reward_basic(last_object_prim, simulation_step=simulation_step)
         self.scene.objects[-1]["reward"]["affordance"] = reward_affordance
 
-        # Utility: perturbation
-        last_object_prim = self.scene.objects[-1]["prim_path"]
-        reward_affordance = self.rewarder.reward_basic(last_object_prim)
-        self.scene.objects[-1]["reward"]["perturbation"] = reward_affordance
+        # # Utility: perturbation
+        # last_object_prim = self.scene.objects[-1]["prim_path"]
+        # reward_affordance = self.rewarder.reward_basic(last_object_prim)
+        # self.scene.objects[-1]["reward"]["perturbation"] = reward_affordance
 
 
 
