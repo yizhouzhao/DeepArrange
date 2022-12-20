@@ -302,6 +302,7 @@ class ArrangeScene():
         base_record = {
             "task_choice": self.task_choice,
             "side_choice": self.side_choice,
+            "id": self.traj_id, 
             "base_asset_id": self.base_asset_id,
             "base_file_path": self.base_file_path,
             "transform":{
