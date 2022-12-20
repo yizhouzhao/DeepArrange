@@ -24,3 +24,5 @@ class ResNetFeatureExtractor(nn.Module):
     def forward(self,x):
         x = self.net(x)
         return x
+
+    

@@ -26,7 +26,7 @@ SIDE_CHOICES = ["Border", "Corner", "Center"]
 
 ASSET_PATH = EXTENSION_FOLDER_PATH + "/Asset"
 DATA_PATH = EXTENSION_FOLDER_PATH + "/Data"
-FEATURE_PATH = DATA_PATH + "/ObjectFeature"
+FEATURE_PATH = EXTENSION_FOLDER_PATH + "/ObjectFeature"
 
 # ASSET_PATH = str(EXTENSION_FOLDER_PATH.parent.parent.resolve()) + "/Asset"
 # DATA_PATH = str(EXTENSION_FOLDER_PATH.parent.parent.resolve()) + "/Data"

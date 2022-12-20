@@ -2,11 +2,11 @@ import os
 import torch
 from torchvision.io import ImageReadMode, read_image
 
-EXTENSION_FOLDER_PATH = "/home/yizhou/Research/DeepArrange/"
+EXTENSION_FOLDER_PATH = "/home/yizhou/Research/DeepArrange"
 
 ASSET_PATH = EXTENSION_FOLDER_PATH + "/Asset"
 DATA_PATH = EXTENSION_FOLDER_PATH + "/Data"
-FEATURE_PATH = DATA_PATH + "/ObjectFeature"
+FEATURE_PATH = EXTENSION_FOLDER_PATH + "/ObjectFeature"
 
 from learning.network.resnet import ResNetFeatureExtractor
 

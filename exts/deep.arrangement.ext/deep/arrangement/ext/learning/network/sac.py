@@ -3,6 +3,7 @@ import torch.nn as nn
 from torchvision import models
 
 from learning.network.resnet import ResNetFeatureExtractor
+from learning.distributions import TanhNormal
 
 class Policy(nn.Module):
     def __init__(self, image_feature_dim = 512, object_feature_dim = 512) -> None:
@@ -11,14 +12,26 @@ class Policy(nn.Module):
             nn.Flatten(),
             nn.Linear(image_feature_dim + object_feature_dim, 256),
             nn.ReLU(),
-            nn.Linear(256, 32),
+            nn.Linear(256, 128),
             nn.ReLU(),
-            nn.Linear(32, 2)
         )
+
+        self.mean_fc = nn.Linear(128, 2)
+        self.std_fc = nn.Linear(128, 2)
     
     def forward(self, image_feature, object_feature):
         x = torch.cat([image_feature, object_feature], dim = 1)
-        return self.layers(x)
+        x = self.layers(x)
+        
+        # get mean
+        mean = self.mean_fc(x)
+
+        # get sd
+        log_std = self.std_fc(x)
+        log_std = torch.clamp(log_std, -5, 2)
+        std = torch.exp(log_std)
+
+        return TanhNormal(mean, std)
 
 class QFunction(nn.Module):
     def __init__(self, image_feature_dim = 512, object_feature_dim = 512, action_dim = 2) -> None:
