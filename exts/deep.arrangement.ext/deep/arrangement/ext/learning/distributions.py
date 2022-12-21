@@ -325,7 +325,7 @@ class TanhNormal(Distribution):
     def log_prob(self, value, pre_tanh_value=None):
         if pre_tanh_value is None:
             # errors or instability at values near 1
-            value = torch.clamp(value, -0.999999, 0.999999)
+            value = torch.clamp(value, -0.999, 0.999)
             pre_tanh_value = torch.log(1+value) / 2 - torch.log(1-value) / 2
         return self._log_prob_from_pre_tanh(pre_tanh_value)
 

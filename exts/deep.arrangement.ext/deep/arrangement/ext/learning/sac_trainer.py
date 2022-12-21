@@ -5,6 +5,7 @@ import numpy as np
 from collections import namedtuple
 
 from learning.utils import soft_update_from_to
+from learning.config import TARGET_ACTION_SPACE_ENTROPY
 
 
 SACLosses = namedtuple(
@@ -33,8 +34,7 @@ class SACTrainer():
         if self.use_automatic_entropy_tuning:
             if target_entropy is None:
                 # Use heuristic value from SAC paper
-                self.target_entropy = -np.prod(
-                    self.env.action_space.shape).item()
+                self.target_entropy = TARGET_ACTION_SPACE_ENTROPY
             else:
                 self.target_entropy = target_entropy
             self.log_alpha = torch.zeros(1, requires_grad=True)
@@ -67,7 +67,7 @@ class SACTrainer():
         self.eval_statistics = {}
 
     def update(self, batch):
-        losses, stats = self.compute_loss(
+        losses = self.compute_loss(
             batch,
             skip_statistics= not self._need_to_update_eval_statistics,
         )
@@ -113,12 +113,14 @@ class SACTrainer():
         actions = batch['actions']
         next_obs = batch['next_observations']
 
+        obj_features = batch['object_features']
+
         """
         Policy and Alpha Loss
         """
-        dist = self.policy(obs)
+        dist = self.policy(obs, obj_features)
         new_obs_actions, log_pi = dist.rsample_and_logprob()
-        log_pi = log_pi.unsqueeze(-1)
+        log_pi = log_pi.unsqueeze(-1).float()
         if self.use_automatic_entropy_tuning:
             alpha_loss = -(self.log_alpha * (log_pi + self.target_entropy).detach()).mean()
             alpha = self.log_alpha.exp()
@@ -126,23 +128,25 @@ class SACTrainer():
             alpha_loss = 0
             alpha = 1
 
+
         q_new_actions = torch.min(
-            self.qf1(obs, new_obs_actions),
-            self.qf2(obs, new_obs_actions),
+            self.qf1(obs, obj_features, new_obs_actions),
+            self.qf2(obs, obj_features, new_obs_actions),
         )
         policy_loss = (alpha*log_pi - q_new_actions).mean()
 
         """
         QF Loss
         """
-        q1_pred = self.qf1(obs, actions)
-        q2_pred = self.qf2(obs, actions)
-        next_dist = self.policy(next_obs)
+        q1_pred = self.qf1(obs, obj_features, actions)
+        q2_pred = self.qf2(obs, obj_features, actions)
+        next_dist = self.policy(next_obs, obj_features)
+
         new_next_actions, new_log_pi = next_dist.rsample_and_logprob()
-        new_log_pi = new_log_pi.unsqueeze(-1)
+        new_log_pi = new_log_pi.unsqueeze(-1).float()
         target_q_values = torch.min(
-            self.target_qf1(next_obs, new_next_actions),
-            self.target_qf2(next_obs, new_next_actions),
+            self.target_qf1(next_obs, obj_features, new_next_actions),
+            self.target_qf2(next_obs, obj_features, new_next_actions),
         ) - alpha * new_log_pi
 
         q_target = self.reward_scale * rewards + (1. - terminals) * self.discount * target_q_values

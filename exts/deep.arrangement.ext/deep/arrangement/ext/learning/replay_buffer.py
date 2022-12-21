@@ -7,7 +7,7 @@ import torch
 from collections import deque
 
 
-from learning.config import ONE_SCENE_STEPS
+from learning.config import ONE_SCENE_STEPS, REWARD_SCALE
 from task.config import DATA_PATH, FEATURE_PATH
 
 class ReplayBuffer():
@@ -37,6 +37,7 @@ class ReplayBuffer():
             reward = object_info["reward"]["affordance"]
 
             # TODO: post process reward
+            reward = REWARD_SCALE - reward
 
             self.add_sample(scene_feature, object_feature, next_scene_feature, action, reward)
 
@@ -51,13 +52,13 @@ class ReplayBuffer():
             a.append(action)
             r.append(reward)
 
-        s = torch.stack(s, dim = 0)
-        so = torch.stack(so, dim = 0)
-        s_next = torch.stack(s_next, dim = 0)
+        s = torch.stack(s, dim = 0).float()
+        so = torch.stack(so, dim = 0).float()
+        s_next = torch.stack(s_next, dim = 0).float()
 
         a = torch.tensor(a).float()
-        r = torch.tensor(r).float()
-        t = torch.zeros(batch_size)
+        r = torch.tensor(r).float().view(batch_size, -1)
+        t = torch.zeros((batch_size, 1)).float()
 
         return {
             "rewards": r,
