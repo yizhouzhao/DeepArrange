@@ -58,7 +58,7 @@ class ObjectFeatureParser():
             # clip
             image = Image.open(image_file).convert('RGB')
             inputs = self.processor(images=image, return_tensors="pt").to(self.device)
-            x_feature = self.model.get_image_features(**inputs).cpu().data
+            x_feature = self.model.get_image_features(**inputs).squeeze().cpu().data
             
         torch.save(x_feature, os.path.join(self.save_path, obj_name + ".pt"))
 
