@@ -229,110 +229,111 @@ total_step = 0
 
 
 # traj config
-for traj_id in range(500):
-    total_traj += 1
-    
-    base_asset_id = 0
-    env.scene.base_asset_id = base_asset_id
-    env.scene.traj_id = traj_id
-    image_folder = os.path.join(DATA_PATH, task_type, side_choice, str(traj_id))
+for epoch in range(1):
+    for traj_id in range(100):
+        total_traj += 1
+        
+        base_asset_id = 0
+        env.scene.base_asset_id = base_asset_id
+        env.scene.traj_id = traj_id
+        image_folder = os.path.join(DATA_PATH, task_type, side_choice, str(traj_id))
 
-    # base
-    # scene.add_base_asset()
-    env.world.step(render = True)
-
-    # get images
-    env.world.render()
-    images = render.get_images()
-    render.save_rgb(images[0]['rgb'], image_folder, "0")
-    
-    ## extract feature
-    
-#     extract_image_feature_and_save(images[0]['rgb'][:,:,:3], 
-#         feature_extractor, os.path.join(image_folder, str(0) + ".pt"))
-    extract_image_clip_feature_and_save(f"{image_folder}/{0}.png", feature_model, feature_processor, 
-        f"{image_folder}/{0}.pt",)
-    
-
-    # trajectory
-    for step in range(5):
-        total_step += 1
-        
-        # sample an object
-        env.add_scene_obj(mode = "random")
-        
-        # TODO: get action from sampling
-        if not use_network or total_traj < 10 or np.random.rand() < 0.2:
-            x, y = np.tanh(np.random.randn()), np.tanh(np.random.randn())
-        else:
-            image_feature_file = f"{image_folder}/{step}.pt"
-            
-            object_info = env.scene.objects[-1]
-            object_type = object_info["type"]
-            obj_name = object_info["name"][:-4]
-            object_feature_file = os.path.join(FEATURE_PATH, object_type, obj_name + ".pt")
-            x, y = obtain_action_from_trainer(image_feature_file, object_feature_file, trainer, 
-                                              scaler=np.exp(- total_traj / 100))
-            object_info["use_network"] = True
-        
-        # load the object into the scene
-        env.put_last_object((x, y)) 
-        env.world.step(render=True)
-        
-        # register the object to the world for physics update
-        env.register_last_object()
-        env.world.step(render=True)
+        # base
+        # scene.add_base_asset()
+        env.world.step(render = True)
 
         # get images
         env.world.render()
         images = render.get_images()
-        render.save_rgb(images[0]['rgb'], image_folder, str(step + 1))
-
-        ## calculate reward
-        env.calculate_last_reward(simulation_step = 30)
+        render.save_rgb(images[0]['rgb'], image_folder, "0")
         
         ## extract feature
-#         extract_image_feature_and_save(images[0]['rgb'][:,:,:3], 
-#             feature_extractor, os.path.join(image_folder, str(step + 1) + ".pt"))
-        extract_image_clip_feature_and_save(f"{image_folder}/{step + 1}.png", feature_model, feature_processor, 
-            f"{image_folder}/{step + 1}.pt",)
-    
-
-        ## reset
-        env.world.reset()
-        env.world.step(render=True)
         
-        ## trainer nework
-        if use_network and total_step % UPDATE_TRAINER_STEPS == 0 and total_traj > 5:
-            batch = buffer.sample_batch(batch_size = BATCH_SIZE)
-            trainer.update(batch)
+    #     extract_image_feature_and_save(images[0]['rgb'][:,:,:3], 
+    #         feature_extractor, os.path.join(image_folder, str(0) + ".pt"))
+        extract_image_clip_feature_and_save(f"{image_folder}/{0}.png", feature_model, feature_processor, 
+            f"{image_folder}/{0}.pt",)
+        
+
+        # trajectory
+        for step in range(5):
+            total_step += 1
             
-            if debug and total_step % 10 == 0:
-                rewards = batch['rewards'].to(device)
-                terminals = batch['terminals'].to(device)
-                obs = batch['observations'].to(device)
-                actions = batch['actions'].to(device)
-                next_obs = batch['next_observations'].to(device)
-                obj_features = batch['object_features'].to(device)
+            # sample an object
+            env.add_scene_obj(mode = "random")
+            
+            # TODO: get action from sampling
+            if not use_network or total_traj < 10 or np.random.rand() < 0.2:
+                x, y = np.tanh(np.random.randn()), np.tanh(np.random.randn())
+            else:
+                image_feature_file = f"{image_folder}/{step}.pt"
                 
-                dist = trainer.policy(obs, obj_features)
-                pred = trainer.qf1(obs, obj_features, actions)
-                print(f"debug {total_traj}/{total_step}", #"\n dist: ", dist.mean.flatten().tolist(), dist.stddev.flatten().tolist(),
-                      "\n pred:", pred.flatten().tolist(),
-                      "\n rewards: ", rewards.flatten().tolist())
+                object_info = env.scene.objects[-1]
+                object_type = object_info["type"]
+                obj_name = object_info["name"][:-4]
+                object_feature_file = os.path.join(FEATURE_PATH, object_type, obj_name + ".pt")
+                x, y = obtain_action_from_trainer(image_feature_file, object_feature_file, trainer, 
+                                                scaler=np.exp(- total_traj / 100))
+                object_info["use_network"] = True
+            
+            # load the object into the scene
+            env.put_last_object((x, y)) 
+            env.world.step(render=True)
+            
+            # register the object to the world for physics update
+            env.register_last_object()
+            env.world.step(render=True)
+
+            # get images
+            env.world.render()
+            images = render.get_images()
+            render.save_rgb(images[0]['rgb'], image_folder, str(step + 1))
+
+            ## calculate reward
+            env.calculate_last_reward(simulation_step = 30)
+            
+            ## extract feature
+    #         extract_image_feature_and_save(images[0]['rgb'][:,:,:3], 
+    #             feature_extractor, os.path.join(image_folder, str(step + 1) + ".pt"))
+            extract_image_clip_feature_and_save(f"{image_folder}/{step + 1}.png", feature_model, feature_processor, 
+                f"{image_folder}/{step + 1}.pt",)
+        
+
+            ## reset
+            env.world.reset()
+            env.world.step(render=True)
+            
+            ## trainer nework
+            if use_network and total_step % UPDATE_TRAINER_STEPS == 0 and total_traj > 5:
+                batch = buffer.sample_batch(batch_size = BATCH_SIZE)
+                trainer.update(batch)
+                
+                if debug and total_step % 10 == 0:
+                    rewards = batch['rewards'].to(device)
+                    terminals = batch['terminals'].to(device)
+                    obs = batch['observations'].to(device)
+                    actions = batch['actions'].to(device)
+                    next_obs = batch['next_observations'].to(device)
+                    obj_features = batch['object_features'].to(device)
+                    
+                    dist = trainer.policy(obs, obj_features)
+                    pred = trainer.qf1(obs, obj_features, actions)
+                    print(f"debug {total_traj}/{total_step}", #"\n dist: ", dist.mean.flatten().tolist(), dist.stddev.flatten().tolist(),
+                        "\n pred:", pred.flatten().tolist(),
+                        "\n rewards: ", rewards.flatten().tolist())
 
 
-    # Record
-    record = env.scene.get_scene_data()
-    env.scene.save_scene_data()
-    # print("record: ", record)
-    
-    # Add record to buffer
-    buffer.add_scene_sample(record)
+        # Record
+        record = env.scene.get_scene_data()
+        env.scene.save_scene_data()
+        # print("record: ", record)
+        
+        # Add record to buffer
+        buffer.add_scene_sample(record)
 
-    # Reset (env clean)
-    env.clean(clean_all = False)
-    env.step(render = True)
+        # Reset (env clean)
+        env.clean(clean_all = False)
+        env.step(render = True)
 
 
 
