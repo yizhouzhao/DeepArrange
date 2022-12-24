@@ -26,9 +26,27 @@ def extract_image_clip_feature_and_save(image_file, model, processor, save_path,
     x_feature = model.get_image_features(**inputs).squeeze().cpu().data
     torch.save(x_feature.cpu().data, save_path)
 
+def obtain_action_from_trainer(image_feature_file, object_feature_file, trainer, device = torch.device("cuda")):
+    """
+    Obtain action from Trainer
+    ::params:
+        image_feature_file: image file
+        object_feature_file: object feature file
+        trainer: a trainer has policy
+    """
+    image_feature = torch.load(image_feature_file).unsqueeze(0).to(device)
+    object_feature = torch.load(object_feature_file).unsqueeze(0).to(device)
+
+    dist = trainer.policy(image_feature, object_feature)
+    action = dist.sample()
+    action = action.flatten().tolist()
+    return action
+
 
 def soft_update_from_to(source, target, tau):
     for target_param, param in zip(target.parameters(), source.parameters()):
         target_param.data.copy_(
             target_param.data * (1.0 - tau) + param.data * tau
         )
+
+    

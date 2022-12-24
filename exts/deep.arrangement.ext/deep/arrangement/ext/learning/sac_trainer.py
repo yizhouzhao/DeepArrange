@@ -20,14 +20,18 @@ class SACTrainer():
         soft_target_tau=1e-2, target_update_period=1, 
         use_automatic_entropy_tuning=True,
         target_entropy=None,
+        device = torch.device("cuda"),
         ) -> None:
-        self.policy = policy
-        self.qf1 = qf1 
-        self.qf2 = qf2
-        self.target_qf1 = target_qf1
-        self.target_qf2 = target_qf2
+        self.device = device
+
+        self.policy = policy.to(self.device)
+        self.qf1 = qf1.to(self.device)
+        self.qf2 = qf2.to(self.device)
+        self.target_qf1 = target_qf1.to(self.device)
+        self.target_qf2 = target_qf2.to(self.device)
         self.soft_target_tau = soft_target_tau
         self.target_update_period = target_update_period
+        
 
         # automatic entropy tuning
         self.use_automatic_entropy_tuning = use_automatic_entropy_tuning
@@ -119,6 +123,7 @@ class SACTrainer():
         Policy and Alpha Loss
         """
         dist = self.policy(obs, obj_features)
+
         new_obs_actions, log_pi = dist.rsample_and_logprob()
         log_pi = log_pi.unsqueeze(-1).float()
         if self.use_automatic_entropy_tuning:

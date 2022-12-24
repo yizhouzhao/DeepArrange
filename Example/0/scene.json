@@ -1,0 +1,170 @@
+{
+    "base": {
+        "task_choice": "Table",
+        "side_choice": "Border",
+        "id": 0,
+        "base_asset_id": 0,
+        "base_file_path": "T/Appleseed/Appleseed_CoffeeTable.usd",
+        "transform": {
+            "translation": [
+                0.0,
+                37.46500015258789,
+                -9.5367431640625e-06
+            ],
+            "rotation": [
+                1,
+                0,
+                0,
+                0
+            ],
+            "scale": 1
+        }
+    },
+    "objects": [
+        {
+            "type": "Tchotchke",
+            "name": "PumpkinLarge.usd",
+            "file_path": "I/Tchotchke/PumpkinLarge.usd",
+            "image_path": "I/Tchotchke/.thumbs/256x256/PumpkinLarge.usd.png",
+            "prim_path": "/World/objects/Tchotchke",
+            "xform_name": "Tchotchke",
+            "transform": {
+                "translation": [
+                    15.814214706420898,
+                    -95.3069839477539,
+                    44.994529724121094
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "action": [
+                0.15814214881045693,
+                -0.9530698121353168
+            ],
+            "reward": {
+                "affordance": 1.4306259155273438
+            }
+        },
+        {
+            "type": "Fruit",
+            "name": "Apple.usd",
+            "file_path": "I/Fruit/Apple.usd",
+            "image_path": "I/Fruit/.thumbs/256x256/Apple.usd.png",
+            "prim_path": "/World/objects/Fruit",
+            "xform_name": "Fruit",
+            "transform": {
+                "translation": [
+                    83.60908508300781,
+                    70.89173126220703,
+                    44.994529724121094
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "action": [
+                0.836090835915209,
+                0.708917330305351
+            ],
+            "reward": {
+                "affordance": 1.4306259155273438
+            }
+        },
+        {
+            "type": "Fruit",
+            "name": "Pomegranate01.usd",
+            "file_path": "I/Fruit/Pomegranate01.usd",
+            "image_path": "I/Fruit/.thumbs/256x256/Pomegranate01.usd.png",
+            "prim_path": "/World/objects/Fruit_01",
+            "xform_name": "Fruit_01",
+            "transform": {
+                "translation": [
+                    51.80127716064453,
+                    -6.535174369812012,
+                    44.994529724121094
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "action": [
+                0.5180127870117874,
+                -0.06535174420319009
+            ],
+            "reward": {
+                "affordance": 1.4306259155273438
+            }
+        },
+        {
+            "type": "Magazine",
+            "name": "OpenMagazine.usd",
+            "file_path": "I/Magazine/OpenMagazine.usd",
+            "image_path": "I/Magazine/.thumbs/256x256/OpenMagazine.usd.png",
+            "prim_path": "/World/objects/Magazine",
+            "xform_name": "Magazine",
+            "transform": {
+                "translation": [
+                    22.971223831176758,
+                    77.01960754394531,
+                    45.01898193359375
+                ],
+                "rotation": [
+                    0.999998152256012,
+                    -0.0013605798727480275,
+                    -0.0013572150977612695,
+                    4.76880508954156e-05
+                ],
+                "scale": 1.0
+            },
+            "action": [
+                0.22972651003804476,
+                0.7701797483183885
+            ],
+            "reward": {
+                "affordance": 0.18951280440008347
+            }
+        },
+        {
+            "type": "Magazine",
+            "name": "MagazineStack02.usd",
+            "file_path": "I/Magazine/MagazineStack02.usd",
+            "image_path": "I/Magazine/.thumbs/256x256/MagazineStack02.usd.png",
+            "prim_path": "/World/objects/Magazine_01",
+            "xform_name": "Magazine_01",
+            "transform": {
+                "translation": [
+                    -66.67377471923828,
+                    81.0294418334961,
+                    44.99449920654297
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "action": [
+                -0.6667377415784371,
+                0.8102944263980457
+            ],
+            "reward": {
+                "affordance": 0.7087481572930079
+            }
+        }
+    ]
+}
