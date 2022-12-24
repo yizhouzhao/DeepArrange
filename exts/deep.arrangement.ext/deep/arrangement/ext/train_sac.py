@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# # Start Simulation
+
+# In[1]:
+
+
 import random
 import numpy as np
 import os
@@ -8,24 +16,59 @@ import torch
 torch.__version__
 device = torch.device("cuda")
 
+
+# In[2]:
+
+
 import getpass
 user = getpass.getuser()
 print(user)
 
+
+# In[3]:
+
+
 usd_path = f"omniverse://localhost/Users/{user}/uva_sac.usd"
+
+
+# In[4]:
+
+
 from omni.isaac.kit import SimulationApp    
 simulation_app = SimulationApp({"headless": True, "open_usd": usd_path,  "livesync_usd": usd_path}) 
 
-from uva_env import UvaEnv
-env = UvaEnv()
 
-from task.utils import add_scene_default
-add_scene_default()
+# In[5]:
 
-print(list(env.stage.TraverseAll()))
 
-env.clean()
-env.world.step(render=True)
+# set log level
+import logging
+import carb
+
+logging.getLogger("omni.hydra").setLevel(logging.ERROR)
+logging.getLogger("omni.isaac.urdf").setLevel(logging.ERROR)
+logging.getLogger("omni.physx.plugin").setLevel(logging.ERROR)
+
+logging.getLogger("omni.isaac.synthetic_utils").setLevel(logging.ERROR)
+logging.getLogger("omni.isaac.synthetic_utils.syntheticdata").setLevel(logging.ERROR)
+logging.getLogger("omni.hydra.scene_delegate.plugin").setLevel(logging.ERROR)
+
+
+l = carb.logging.LEVEL_ERROR
+carb.settings.get_settings().set("/log/level", l)
+carb.settings.get_settings().set("/log/fileLogLevel", l)
+carb.settings.get_settings().set("/log/outputStreamLevel", l)
+
+# # This logged error is printed as it should
+# carb.log_error("ERROR")
+# # This warning is printed but should not
+# carb.log_warn("WARNING")
+
+
+# # Config
+
+# In[6]:
+
 
 from task.config import DATA_PATH, FEATURE_PATH
 task_type = "Table"
@@ -33,17 +76,91 @@ side_choice = "Border"
 base_asset_id = 0
 load_nucleus = True
 
+
+# In[7]:
+
+
+pause
+
+
+# # Init Env
+
+# In[8]:
+
+
+from uva_env import UvaEnv
+env = UvaEnv()
+
+
+# In[9]:
+
+
+from task.utils import add_scene_default
+add_scene_default()
+
+
+# In[10]:
+
+
+print(list(env.stage.TraverseAll()))
+
+
+# In[11]:
+
+
+env.clean()
+env.world.step(render=True)
+
+
+# # Scene
+
+# In[12]:
+
+
 from task.scene import ArrangeScene
 scene = ArrangeScene(task_type, side_choice, base_asset_id = 0, traj_id = 0, load_nucleus = load_nucleus)
 env.scene = scene
 
+
+# In[13]:
+
+
 # add base
 scene.add_base_asset()
+
+
+# In[14]:
+
+
+# add room
+# scene.add_room()
+
+
+# In[15]:
+
+
 env.world.step(render=True)
 
+
+# # Reward
+
+# In[16]:
+
+
 from uv.reward import Rewarder
+
+
+# In[17]:
+
+
 rewarder = Rewarder(env.world)
 env.rewarder = rewarder
+
+
+# # Render
+
+# In[18]:
+
 
 from render.helper import RenderHelper
 render = RenderHelper(task_type, side_choice)
@@ -51,7 +168,8 @@ render = RenderHelper(task_type, side_choice)
 render.add_task_cameras()
 render.set_cameras()
 
-# Learning
+# from learning.network.resnet import ResNetFeatureExtractor
+
 # feature extraction
 from learning.utils import extract_image_clip_feature_and_save, obtain_action_from_trainer
 from transformers import CLIPProcessor, CLIPModel
@@ -65,6 +183,10 @@ from learning.replay_buffer import ReplayBuffer
 from learning.config import *
 
 buffer = ReplayBuffer(max_size=2000)
+
+
+# In[22]:
+
 
 # trainer
 from learning.network.sac import *
@@ -84,16 +206,30 @@ trainer = SACTrainer(policy, qf1, qf2, target_qf1, target_qf2,
      qf_lr=1e-3,
      target_update_period = 5)
 
-# main
+
+# # Trajectory
+
+# In[23]:
+
 
 use_network = True
 debug = True
 
+
+# In[24]:
+
+
 total_traj = 0
 total_step = 0
 
+
+# ---------------------
+
+# In[25]:
+
+
 # traj config
-for traj_id in range(200):
+for traj_id in range(500):
     total_traj += 1
     
     base_asset_id = 0
@@ -135,7 +271,9 @@ for traj_id in range(200):
             object_type = object_info["type"]
             obj_name = object_info["name"][:-4]
             object_feature_file = os.path.join(FEATURE_PATH, object_type, obj_name + ".pt")
-            x, y = obtain_action_from_trainer(image_feature_file, object_feature_file, trainer)
+            x, y = obtain_action_from_trainer(image_feature_file, object_feature_file, trainer, 
+                                              scaler=np.exp(- total_traj / 100))
+            object_info["use_network"] = True
         
         # load the object into the scene
         env.put_last_object((x, y)) 
@@ -169,7 +307,7 @@ for traj_id in range(200):
             batch = buffer.sample_batch(batch_size = BATCH_SIZE)
             trainer.update(batch)
             
-            if debug:
+            if debug and total_step % 10 == 0:
                 rewards = batch['rewards'].to(device)
                 terminals = batch['terminals'].to(device)
                 obs = batch['observations'].to(device)
@@ -195,3 +333,7 @@ for traj_id in range(200):
     # Reset (env clean)
     env.clean(clean_all = False)
     env.step(render = True)
+
+
+
+

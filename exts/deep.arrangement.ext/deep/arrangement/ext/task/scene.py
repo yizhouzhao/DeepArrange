@@ -164,6 +164,7 @@ class ArrangeScene():
                 "prim_path": "",
                 "xform_name": "",
                 "transform": {}, 
+                "use_network": False,
                 "action": {}, # action part in reinforcement learning
                 "reward": {}, # the key part of Utility and Value Driven Env
             }
