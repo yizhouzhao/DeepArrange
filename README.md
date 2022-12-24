@@ -7,6 +7,9 @@ cd exts/deep.arrangement.ext/deep/arrangement/ext
 ## new version isaac-sim doesn't work
 ~/.local/share/ov/pkg/isaac_sim-2022.2.0/jupyter_notebook.sh
 
+## windows
+C:\Users\zhaoy\AppData\Local\ov\pkg\isaac_sim-2022.1.1\python.bat
+
 
 ## link folder
 ln -s learning exts/deep.arrangement.ext/deep/arrangement/ext/learning

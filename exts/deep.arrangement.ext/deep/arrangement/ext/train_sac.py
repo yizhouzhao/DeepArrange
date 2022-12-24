@@ -219,7 +219,7 @@ total_step = 0
 
 
 # traj config
-for epoch in range(1):
+for epoch in range(2):
     for traj_id in range(100):
         total_traj += 1
         
