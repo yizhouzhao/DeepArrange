@@ -53,7 +53,7 @@ class Rewarder():
         # if IS_IN_PYTHON:
         #     self.reset()
 
-        print(object_prim_path, "begin_translation", begin_translation, "timecode", timecode, "end_translation", end_translation)
+        # print(object_prim_path, "begin_translation", begin_translation, "timecode", timecode, "end_translation", end_translation)
         
         return Gf.GetLength(end_translation - begin_translation)
 

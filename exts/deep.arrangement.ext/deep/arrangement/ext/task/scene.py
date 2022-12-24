@@ -146,13 +146,13 @@ class ArrangeScene():
 
         if self.load_nucleus:
             r = omni.client.list(os.path.join(self.asset_path, "I", object_type))    
-            print("loading asset from omni nucleus")
+            # print("loading asset from omni nucleus")
             object_folder = sorted([e.relative_path for e in r[1]])
         else:
             object_folder = [obj for obj in os.listdir(os.path.join(self.asset_path, "I", object_type))]
         
         object_folder = list(filter(lambda x: x.endswith(".usd"), object_folder))
-        print("object_folder", object_folder)
+        # print("object_folder", object_folder)
         object_name = random.choice(object_folder)
 
         for i in range(amount):
