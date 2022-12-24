@@ -77,16 +77,6 @@ base_asset_id = 0
 load_nucleus = True
 
 
-# In[7]:
-
-
-pause
-
-
-# # Init Env
-
-# In[8]:
-
 
 from uva_env import UvaEnv
 env = UvaEnv()
