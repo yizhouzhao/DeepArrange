@@ -3,7 +3,7 @@ import torch.nn as nn
 from torchvision import models
 
 from learning.network.resnet import ResNetFeatureExtractor
-from learning.distributions import TanhNormal
+from learning.distributions import *
 
 class Policy(nn.Module):
     def __init__(self, image_feature_dim = 512, object_feature_dim = 512) -> None:

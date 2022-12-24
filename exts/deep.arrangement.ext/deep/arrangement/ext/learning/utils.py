@@ -26,7 +26,7 @@ def extract_image_clip_feature_and_save(image_file, model, processor, save_path,
     x_feature = model.get_image_features(**inputs).squeeze().cpu().data
     torch.save(x_feature.cpu().data, save_path)
 
-def obtain_action_from_trainer(image_feature_file, object_feature_file, trainer, device = torch.device("cuda")):
+def obtain_action_from_trainer(image_feature_file, object_feature_file, trainer, device = torch.device("cuda"), scaler = 1.0):
     """
     Obtain action from Trainer
     ::params:
@@ -38,7 +38,7 @@ def obtain_action_from_trainer(image_feature_file, object_feature_file, trainer,
     object_feature = torch.load(object_feature_file).unsqueeze(0).to(device)
 
     dist = trainer.policy(image_feature, object_feature)
-    action = dist.sample()
+    action = dist.sample(scaler = scaler)
     action = action.flatten().tolist()
     return action
 

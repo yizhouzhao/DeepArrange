@@ -332,11 +332,11 @@ class TanhNormal(Distribution):
             pre_tanh_value = pre_tanh_value.to(self.device)
         return self._log_prob_from_pre_tanh(pre_tanh_value)
 
-    def rsample_with_pretanh(self):
+    def rsample_with_pretanh(self, scaler = 1.0):
         
         z = (
                 self.normal_mean +
-                self.normal_std *
+                scaler * self.normal_std *
                 MultivariateDiagonalNormal(
                     torch.zeros(self.normal_mean.size()).to(self.device),
                     torch.ones(self.normal_std.size()).to(self.device)
@@ -344,12 +344,12 @@ class TanhNormal(Distribution):
         )
         return torch.tanh(z), z
 
-    def sample(self):
+    def sample(self, scaler = 1.0):
         """
         Gradients will and should *not* pass through this operation.
         See https://github.com/pytorch/pytorch/issues/4620 for discussion.
         """
-        value, pre_tanh_value = self.rsample_with_pretanh()
+        value, pre_tanh_value = self.rsample_with_pretanh(scaler)
         return value.detach()
 
     def rsample(self):
@@ -382,3 +382,4 @@ class TanhNormal(Distribution):
     @property
     def stddev(self):
         return self.normal_std
+
