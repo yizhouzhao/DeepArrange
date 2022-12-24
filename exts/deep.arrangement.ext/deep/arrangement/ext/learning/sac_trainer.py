@@ -66,7 +66,7 @@ class SACTrainer():
         # other statistics
         self.discount = discount
         self.reward_scale = reward_scale
-        self._n_train_steps_total = 0
+        self.n_train_steps_total = 0
         self._need_to_update_eval_statistics = True
         self.eval_statistics = {}
 
@@ -92,10 +92,10 @@ class SACTrainer():
         losses.qf2_loss.backward()
         self.qf2_optimizer.step()
 
-        self._n_train_steps_total += 1
+        self.n_train_steps_total += 1
 
         # update target network
-        if self._n_train_steps_total % self.target_update_period == 0:
+        if self.n_train_steps_total % self.target_update_period == 0:
             self.update_target_networks()
 
     def update_target_networks(self):
