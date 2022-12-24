@@ -41,7 +41,7 @@ class SACTrainer():
                 self.target_entropy = TARGET_ACTION_SPACE_ENTROPY
             else:
                 self.target_entropy = target_entropy
-            self.log_alpha = torch.zeros(1, requires_grad=True)
+            self.log_alpha = torch.zeros(1, requires_grad=True, device = self.device)
             self.alpha_optimizer = optimizer_class(
                 [self.log_alpha],
                 lr=policy_lr,
