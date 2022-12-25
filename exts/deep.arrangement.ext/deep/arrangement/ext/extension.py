@@ -46,7 +46,7 @@ class MyExtension(omni.ext.IExt):
                     ui.Button("Add room", clicked_fn=self.add_room)
                     ui.Button("Randomize scene", clicked_fn=self.randomize_scene)
                 with ui.HStack(height = 20):
-                    self.task_type_ui = ui.ComboBox( 0, *TASK_CHOICES)
+                    self.task_type_ui = ui.ComboBox(3, *TASK_CHOICES)
                     self.side_choice_ui = ui.ComboBox( 0, *SIDE_CHOICES)
                     self.task_base_id_ui = omni.ui.IntField()   
                 with ui.HStack(height = 20):
@@ -105,7 +105,8 @@ class MyExtension(omni.ext.IExt):
         self.load_nucleus = self.load_nucleus_checkbox.model.get_value_as_bool()
 
         self.task_scene = ArrangeScene(self.task_type, self.side_choice, asset_id, "/World/base", load_nucleus=self.load_nucleus)
-        self.task_scene.add_base_asset()
+        if self.task_type != "Wall":
+            self.task_scene.add_base_asset()
  
     def add_task_object(self, mode = "random"):
         """
@@ -167,7 +168,7 @@ class MyExtension(omni.ext.IExt):
         self.env = UvaEnv()
 
         self.add_task_base()
-        self.env.register_scene(self.task_scene)
+        self.env.scene = self.task_scene
         self.env.add_scene_obj()
 
         
