@@ -187,6 +187,6 @@ OBJS_SHAPE_CONFIGS = {
 
     },
     "Wall": {
-
+        "Picture": []
     },
 }

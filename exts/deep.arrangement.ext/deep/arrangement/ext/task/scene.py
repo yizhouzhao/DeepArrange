@@ -236,10 +236,14 @@ class ArrangeScene():
         # rotation config
         rotation = Gf.Quatd(1.0)
 
-        # book and magazine rotation
+        # rotation modification
         if object_info["type"] in OBJS_SHAPE_CONFIGS[self.task_choice]:
+            # book and magazine rotation
             if not ("Stack" in object_info["name"] or "Open" in object_info["name"]): 
                 rotation = Gf.Quatd(*OBJS_SHAPE_CONFIGS[self.task_choice][object_info["type"]])
+            # picture and clock
+            
+            
 
         scale = 1.0
         return rotation, scale
