@@ -36,7 +36,7 @@ class MyExtension(omni.ext.IExt):
                 # with ui.HStack(height = 20):
                 #     ui.Button("Add Task Base", clicked_fn = self.add_task_base)
                 with ui.HStack(height = 20):
-                    ui.Button("Init Uva Env", clicked_fn = self.uva_test)
+                    ui.Button("Init Uva Env", clicked_fn = self.uva_init)
                 with ui.HStack(height = 20):
                     ui.Label("Load nucleus", width = 100)
                     self.load_nucleus_checkbox = omni.ui.CheckBox(width=20, style={"font_size": 16})
@@ -152,7 +152,7 @@ class MyExtension(omni.ext.IExt):
         """
         from .render.helper import RenderHelper
 
-        self.render_helper = RenderHelper("Bookshelf", "Border")
+        self.render_helper = RenderHelper(self.task_type, self.side_choice)
         # pos = (0, 500, 80)
         # rot = [0, 0, -0.7071068, 0.7071068]
 
@@ -162,8 +162,8 @@ class MyExtension(omni.ext.IExt):
     def capture_image(self):
         self.render_helper.capture_image_debug()
 
-    def uva_test(self):
-        print("uva_test")
+    def uva_init(self):
+        print("uva_init test")
         from uva_env import UvaEnv
         self.env = UvaEnv()
 

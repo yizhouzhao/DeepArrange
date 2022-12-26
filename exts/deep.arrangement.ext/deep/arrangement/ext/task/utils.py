@@ -16,7 +16,9 @@ def add_scene_default():
         # Adds a light to the scene
         distantLight = UsdLux.DistantLight.Define(stage, Sdf.Path("/World/defaultLight"))
         distantLight.CreateIntensityAttr(3000)
-        distantLight.AddOrientOp().Set(Gf.Quatf(0.65328, 0.2706, 0.2706, 0.65328))
+
+        # (0.98079, -0.19509, 0, 0) # (0.65328, 0.2706, 0.2706, 0.65328)
+        distantLight.AddOrientOp().Set(Gf.Quatf(0.96593, -0.25882, 0, 0))
 
 def get_prim_bbox(stage, prim):
     """

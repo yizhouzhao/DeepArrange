@@ -63,4 +63,18 @@ TASK_CAMERA_INFO = {
             }
         }
     },
+    "Wall":{
+        "Border":{
+            # 0 for main camera
+            "main": {
+                "position": [0, 175, 125], # [0, 340, 115],
+                "rotation": (0, 0, 0.7071, 0.7071),
+                "focal_length": 14,
+            },
+            # side camera
+            "left": {
+
+            }
+        }
+    },
 }
