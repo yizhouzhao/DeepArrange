@@ -53,7 +53,7 @@ class ArrangeScene():
         self.layer = self.stage.GetRootLayer()
         house_prim_path = "/World/layout"
         house_path = os.path.join(self.asset_path, "S", "0", "layout.usd")  
-        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
+        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 450, 0), rotation=(0.7071068, 0.7071068, 0, 0))
 
         """
         Add ground
@@ -165,6 +165,7 @@ class ArrangeScene():
                 "xform_name": "",
                 "transform": {}, 
                 "use_network": False,
+                "bounding_box": [],
                 "action": {}, # action part in reinforcement learning
                 "reward": {}, # the key part of Utility and Value Driven Env
             }
@@ -228,6 +229,11 @@ class ArrangeScene():
         setRigidBody(object_prim, "convexHull", False)
         mass_api = UsdPhysics.MassAPI.Apply(object_prim)
         mass_api.CreateDensityAttr(1.0)
+
+        # wall scene disable gravity
+        if self.task_choice == "Wall":
+            object_prim.GetAttribute("physxRigidBody:disableGravity").Set(True)
+
 
     def get_object_rotation_and_scale(self, object_info):
         """
