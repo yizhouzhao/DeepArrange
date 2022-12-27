@@ -46,7 +46,7 @@ class MyExtension(omni.ext.IExt):
                     ui.Button("Add room", clicked_fn=self.add_room)
                     ui.Button("Randomize scene", clicked_fn=self.randomize_scene)
                 with ui.HStack(height = 20):
-                    self.task_type_ui = ui.ComboBox(3, *TASK_CHOICES)
+                    self.task_type_ui = ui.ComboBox(1, *TASK_CHOICES)
                     self.side_choice_ui = ui.ComboBox( 0, *SIDE_CHOICES)
                     self.task_base_id_ui = omni.ui.IntField()   
                 with ui.HStack(height = 20):
@@ -207,14 +207,16 @@ class MyExtension(omni.ext.IExt):
     #############################################################################
 
     def debug(self):
-        from pxr import Gf, UsdPhysics, Sdf
-        self.stage = omni.usd.get_context().get_stage()
-        object_prim_path = "/World/objects/Book"
-        linVelocity = Gf.Vec3f(2.0, 1.0, 2.0)
-        angularVelocity = Gf.Vec3f(0, 0, 45)
-        physicsAPI = UsdPhysics.RigidBodyAPI.Get(self.stage, Sdf.Path(object_prim_path))
-        physicsAPI.CreateVelocityAttr().Set(linVelocity)
-        physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)
+        # from pxr import Gf, UsdPhysics, Sdf
+        # self.stage = omni.usd.get_context().get_stage()
+        # object_prim_path = "/World/objects/Book"
+        # linVelocity = Gf.Vec3f(2.0, 1.0, 2.0)
+        # angularVelocity = Gf.Vec3f(0, 0, 45)
+        # physicsAPI = UsdPhysics.RigidBodyAPI.Get(self.stage, Sdf.Path(object_prim_path))
+        # physicsAPI.CreateVelocityAttr().Set(linVelocity)
+        # physicsAPI.CreateAngularVelocityAttr().Set(angularVelocity)
+        self.env.get_last_object_box()
+        print("boudning box", self.env.scene.objects)
 
     def yuan_hong_debug(self):
 

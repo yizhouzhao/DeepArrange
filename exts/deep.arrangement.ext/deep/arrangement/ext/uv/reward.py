@@ -10,6 +10,7 @@ import omni.timeline
 from omni.isaac.core import World
 
 from params import IS_IN_PYTHON, IS_IN_ISAAC_SIM
+from .utils import is_boxes_overlap
 
 class Rewarder():
     def __init__(self, world: World) -> None:
@@ -142,5 +143,17 @@ class Rewarder():
             asyncio.ensure_future(self.reward_basic_async(object_prim_path))
         
 
+    def reward_collision(self, objects):
+        """
+        Calculate the collision information for the last object in objects
+        """
+        last_object_boxes = objects[-1]["bounding_box"]
+        is_overlap = False
+        for obj_info in objects[:-1]:
+            boxes = obj_info["bounding_box"]
+            if is_boxes_overlap(last_object_boxes, boxes):
+                is_overlap = True
+                break
 
+        return 1.0 if is_overlap else 0.0
 

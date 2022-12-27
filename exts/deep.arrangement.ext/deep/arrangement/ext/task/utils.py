@@ -146,3 +146,19 @@ def add_force_field():
     sphericalPrimApi.GetEnabledAttr().Set(False) 
     noisePrimApi.GetEnabledAttr().Set(False)
     windPrimApi.GetEnabledAttr().Set(True)
+
+
+def get_bounding_box(prim_path: str):
+    """
+    Get the bounding box of a prim
+    """
+    stage = omni.usd.get_context().get_stage()
+
+    purposes = [UsdGeom.Tokens.default_]
+    bboxcache = UsdGeom.BBoxCache(Usd.TimeCode.Default(), purposes)
+    prim = stage.GetPrimAtPath(prim_path)
+    bboxes = bboxcache.ComputeWorldBound(prim)
+    # print("bboxes", bboxes)
+    game_bboxes = [bboxes.ComputeAlignedRange().GetMin(),bboxes.ComputeAlignedRange().GetMax()]
+    
+    return game_bboxes

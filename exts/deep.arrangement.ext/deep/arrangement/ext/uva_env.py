@@ -15,6 +15,7 @@ from pxr import UsdGeom, Sdf, Gf, UsdPhysics
 # from pxr import ForceFieldSchema
 
 from task.scene import ArrangeScene
+from task.utils import get_bounding_box
 from uv.reward import Rewarder
 from render.helper import RenderHelper
 from params import IS_IN_PYTHON, IS_IN_ISAAC_SIM
@@ -129,6 +130,17 @@ class UvaEnv():
         # obj_xform_prim.name = object_info["name"]
         object_info["xform_name"] = obj_xform_prim.name
 
+    
+    def get_last_object_box(self):
+        """
+        Get the boudning box for the last object
+        """
+        object_info = self.scene.objects[-1]
+        object_prim_path = object_info["prim_path"]
+        boxes = get_bounding_box(object_prim_path)
+        object_info["bounding_box"] = [[boxes[0][0], boxes[0][1], boxes[0][2]], [boxes[1][0], boxes[1][1], boxes[1][2]]]
+
+
     def step(self, render = False):
         """
         Env world step
@@ -161,6 +173,11 @@ class UvaEnv():
         # last_object_prim = self.scene.objects[-1]["prim_path"]
         # reward_affordance = self.rewarder.reward_basic(last_object_prim)
         # self.scene.objects[-1]["reward"]["perturbation"] = reward_affordance
+
+        # Utility: collision
+        self.get_last_object_box()
+        reward_collision = self.rewarder.reward_collision(self.scene.objects)
+        self.scene.objects[-1]["reward"]["collision"] = reward_collision
 
 
 
