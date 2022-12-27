@@ -82,16 +82,30 @@ class UvaEnv():
 
         
         if clean_all:
+            delete_paths = []
+
             # clean base
             base_prim = self.stage.GetPrimAtPath("/World/base")
             if base_prim.IsValid():
-                omni.kit.commands.execute("DeletePrims", paths=["/World/base"])
+                delete_paths.append("/World/base")
             
             # clean render
             render_prim = self.stage.GetPrimAtPath("/World/render")
             if render_prim.IsValid():
-                omni.kit.commands.execute("DeletePrims", paths=["/World/render"])
+                delete_paths.append("/World/render")
 
+            # clean layout 
+            layout_prim = self.stage.GetPrimAtPath("/World/layout")
+            if layout_prim.IsValid():
+                delete_paths.append("/World/layout")
+                # omni.kit.commands.execute("DeletePrims", paths=["/World/layout"])
+
+            # clean look 
+            looks_prim = self.stage.GetPrimAtPath("/World/Looks")
+            if looks_prim.IsValid():
+                delete_paths.append("/World/Looks")
+            
+            omni.kit.commands.execute("DeletePrims", paths=delete_paths)
 
         
     def add_scene_obj(self, mode = "random"):

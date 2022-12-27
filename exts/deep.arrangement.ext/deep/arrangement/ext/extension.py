@@ -84,12 +84,10 @@ class MyExtension(omni.ext.IExt):
         self.stage = omni.usd.get_context().get_stage()
         if not self.stage.GetPrimAtPath("/World/layout"):
             carb.log_error("Please add /World/layout (load scene) first!")
-            self.task_desc_ui.model.set_value(f"Please `Load Scene`")
             return 
 
         self.randomizer = Randomizer()
         self.randomizer.randomize_house(rand = rand)
-        self.task_desc_ui.model.set_value("Added floor/wall material")
 
 
     def add_task_base(self):
