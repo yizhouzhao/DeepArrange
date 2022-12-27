@@ -1,0 +1,99 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 18
+    },
+    "objects": [
+        {
+            "type": "Clock",
+            "name": "Industrial_Clock.usd",
+            "file_path": "I/Clock/Industrial_Clock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/Industrial_Clock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    -67.71083068847656,
+                    -0.9999998807907104,
+                    59.37438201904297
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.6771082976013675,
+                -0.4062289528964017
+            ],
+            "reward": {
+                "affordance": 1.4306259155273438
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "Industrial_Clock.usd",
+            "file_path": "I/Clock/Industrial_Clock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/Industrial_Clock.usd.png",
+            "prim_path": "/World/objects/Clock_01",
+            "xform_name": "Clock_01",
+            "transform": {
+                "translation": [
+                    59.990901947021484,
+                    -0.9999998807907104,
+                    185.9637451171875
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.5999090289232997,
+                0.8596648007919789
+            ],
+            "reward": {
+                "affordance": 1.430633544921875
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "OversizedClock.usd",
+            "file_path": "I/Clock/OversizedClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/OversizedClock.usd.png",
+            "prim_path": "/World/objects/Clock_02",
+            "xform_name": "Clock_02",
+            "transform": {
+                "translation": [
+                    79.0497817993164,
+                    -1.000000238418579,
+                    40.323055267333984
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.7904978486552525,
+                -0.5967422244614866
+            ],
+            "reward": {
+                "affordance": 1.5123748779296875
+            }
+        }
+    ]
+}

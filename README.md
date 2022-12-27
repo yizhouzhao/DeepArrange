@@ -7,6 +7,19 @@ cd exts/deep.arrangement.ext/deep/arrangement/ext
 ## new version isaac-sim doesn't work
 ~/.local/share/ov/pkg/isaac_sim-2022.2.0/jupyter_notebook.sh
 
+
+# Data Labeling question
+1. How natural/real does the synthesized image look like?
+(Great, good, normal, Bad, Poor)
+1. How does the synthesized image look like a wall decoration (desk arangement, table arangement, bookshelf)?
+(Great, good, normal, Bad, Poor)
+
+Task:
+Wall decoration:
+1000 Trajectories x 3 objects(image .png) x 2 questions x 3 samples x $0.01 = 180 dollars
+
+
+
 ## windows
 C:\Users\zhaoy\AppData\Local\ov\pkg\isaac_sim-2022.1.1\python.bat
 

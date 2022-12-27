@@ -96,6 +96,12 @@ class UvaEnv():
     def add_scene_obj(self, mode = "random"):
         # object
         object_type = random.choice(self.scene.object_candidates)
+
+        # resample for edge cases
+        if self.scene.task_choice == "Wall" and object_type == "Clock":
+            if np.random.rand() < 0.5:
+                object_type = random.choice(self.scene.object_candidates)
+
         self.scene.load_obj_info(object_type, 1)
 
     

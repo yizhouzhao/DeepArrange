@@ -1,0 +1,99 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 21
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Tall03.usd",
+            "file_path": "I/Picture/FramedPicture_Tall03.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Tall03.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    24.28714942932129,
+                    -1.0,
+                    195.21693420410156
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.24287150068578087,
+                0.9521962574422764
+            ],
+            "reward": {
+                "affordance": 1.5123748779296875
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Wide04.usd",
+            "file_path": "I/Picture/FramedPicture_Wide04.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Wide04.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    -83.36507415771484,
+                    -1.0,
+                    132.21861267089844
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.8336507558816068,
+                0.3222130501140126
+            ],
+            "reward": {
+                "affordance": 1.5123748779296875
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "Clock_Hucksbee.usd",
+            "file_path": "I/Clock/Clock_Hucksbee.usd",
+            "image_path": "I/Clock/.thumbs/256x256/Clock_Hucksbee.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    82.47345733642578,
+                    -0.9999998211860657,
+                    120.4632568359375
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.82473456373756,
+                0.20465944324643978
+            ],
+            "reward": {
+                "affordance": 1.4305419921875
+            }
+        }
+    ]
+}

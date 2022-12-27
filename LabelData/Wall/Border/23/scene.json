@@ -1,0 +1,99 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 23
+    },
+    "objects": [
+        {
+            "type": "Clock",
+            "name": "OversizedClock.usd",
+            "file_path": "I/Clock/OversizedClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/OversizedClock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    -66.23431396484375,
+                    -1.000000238418579,
+                    140.2939910888672
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.6623431765076709,
+                0.40296728597992454
+            ],
+            "reward": {
+                "affordance": 1.5123748779296875
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Wide03.usd",
+            "file_path": "I/Picture/FramedPicture_Wide03.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Wide03.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    62.73533248901367,
+                    -1.0,
+                    30.99087142944336
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.6273533186649606,
+                -0.6900640229279519
+            ],
+            "reward": {
+                "affordance": 1.5123748779296875
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Wide03.usd",
+            "file_path": "I/Picture/FramedPicture_Wide03.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Wide03.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    -82.20250701904297,
+                    -1.0,
+                    73.53804016113281
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.8220250820681818,
+                -0.264592364615787
+            ],
+            "reward": {
+                "affordance": 1.5123748779296875
+            }
+        }
+    ]
+}

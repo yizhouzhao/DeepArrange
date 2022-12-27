@@ -1,0 +1,99 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 16
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Square04.usd",
+            "file_path": "I/Picture/FramedPicture_Square04.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Square04.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    64.1085205078125,
+                    -1.0000004768371582,
+                    26.997417449951172
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.641085205770102,
+                -0.7299986646436224
+            ],
+            "reward": {
+                "affordance": 1.5123748779296875
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPoster02.usd",
+            "file_path": "I/Picture/FramedPoster02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPoster02.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    -94.72328186035156,
+                    -0.9992377758026123,
+                    17.680953979492188
+                ],
+                "rotation": [
+                    0.9999999997618044,
+                    -2.1682522765808913e-05,
+                    -2.5018630088145486e-06,
+                    6.057235196686709e-09
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.9472319385355962,
+                -0.824030454893046
+            ],
+            "reward": {
+                "affordance": 2.5167698719188856
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FunHouse_Poster02.usd",
+            "file_path": "I/Picture/FunHouse_Poster02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FunHouse_Poster02.usd.png",
+            "prim_path": "/World/objects/Picture_02",
+            "xform_name": "Picture_02",
+            "transform": {
+                "translation": [
+                    91.4986801147461,
+                    -1.0000001192092896,
+                    197.0513916015625
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.9149867650839842,
+                0.9705408288444624
+            ],
+            "reward": {
+                "affordance": 1.512451171875
+            }
+        }
+    ]
+}

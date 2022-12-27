@@ -1,0 +1,99 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 17
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "Poster_Holodeck.usd",
+            "file_path": "I/Picture/Poster_Holodeck.usd",
+            "image_path": "I/Picture/.thumbs/256x256/Poster_Holodeck.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    -74.35963439941406,
+                    -0.9163721203804016,
+                    101.75569152832031
+                ],
+                "rotation": [
+                    0.999999999051932,
+                    -4.120006112640752e-05,
+                    -1.3610851576718784e-07,
+                    1.4095118009459196e-05
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.7435961712407967,
+                0.01755731029107133
+            ],
+            "reward": {
+                "affordance": 1.3738305954124843
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "OversizedClock.usd",
+            "file_path": "I/Clock/OversizedClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/OversizedClock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    -50.656158447265625,
+                    -0.9946861267089844,
+                    188.82994079589844
+                ],
+                "rotation": [
+                    0.9999999403953552,
+                    0.00011411605816155549,
+                    -1.8704590479857855e-06,
+                    -0.0003258578104797948
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.5065362733927256,
+                0.8883362018653399
+            ],
+            "reward": {
+                "affordance": 1.512451171875
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FunHouse_Poster02.usd",
+            "file_path": "I/Picture/FunHouse_Poster02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FunHouse_Poster02.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    -89.46656036376953,
+                    -1.0383044481277466,
+                    170.27976989746094
+                ],
+                "rotation": [
+                    0.9999998146304362,
+                    0.00047887201385708164,
+                    -1.3657068028175145e-06,
+                    -0.0003760569404322614
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.8946407096758631,
+                0.7028346959791621
+            ],
+            "reward": {
+                "affordance": 0.5071336874249701
+            }
+        }
+    ]
+}

@@ -1,0 +1,99 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 82
+    },
+    "objects": [
+        {
+            "type": "Clock",
+            "name": "Clock_Hucksbee.usd",
+            "file_path": "I/Clock/Clock_Hucksbee.usd",
+            "image_path": "I/Clock/.thumbs/256x256/Clock_Hucksbee.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    53.66902542114258,
+                    -0.835523784160614,
+                    142.1395263671875
+                ],
+                "rotation": [
+                    0.9999999877442963,
+                    -1.8988328759704524e-05,
+                    -2.2828965317412606e-06,
+                    -0.000155388670605059
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.5366983966236853,
+                0.421398087656856
+            ],
+            "reward": {
+                "affordance": 1.4306640625
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "Industrial_Clock.usd",
+            "file_path": "I/Clock/Industrial_Clock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/Industrial_Clock.usd.png",
+            "prim_path": "/World/objects/Clock_01",
+            "xform_name": "Clock_01",
+            "transform": {
+                "translation": [
+                    79.1136474609375,
+                    -1.0029659271240234,
+                    14.91505241394043
+                ],
+                "rotation": [
+                    0.9999999936418557,
+                    9.985350371260756e-05,
+                    -5.2398099990701634e-05,
+                    -7.457856582129347e-08
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.7911519476780621,
+                -0.8516971217542337
+            ],
+            "reward": {
+                "affordance": 2.538203276773539
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "MetalClock.usd",
+            "file_path": "I/Clock/MetalClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/MetalClock.usd.png",
+            "prim_path": "/World/objects/Clock_02",
+            "xform_name": "Clock_02",
+            "transform": {
+                "translation": [
+                    60.08415603637695,
+                    -0.9142517447471619,
+                    142.3672332763672
+                ],
+                "rotation": [
+                    0.9999999919684012,
+                    -0.0001264514300733704,
+                    -7.142913091820755e-07,
+                    -8.527790846217208e-06
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.6008415871319551,
+                0.4236737541402774
+            ],
+            "reward": {
+                "affordance": 2.5205384726255593
+            }
+        }
+    ]
+}

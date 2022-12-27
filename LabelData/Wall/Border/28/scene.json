@@ -1,0 +1,99 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 28
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "StillLife01.usd",
+            "file_path": "I/Picture/StillLife01.usd",
+            "image_path": "I/Picture/.thumbs/256x256/StillLife01.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    54.1875,
+                    -0.9163368940353394,
+                    89.33696746826172
+                ],
+                "rotation": [
+                    0.9999999999807746,
+                    1.9198424844440343e-06,
+                    -5.978535273866975e-08,
+                    -5.895882346791271e-06
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.5418748087629117,
+                -0.10663030852758718
+            ],
+            "reward": {
+                "affordance": 1.6770607638927673
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "Clock_Hucksbee.usd",
+            "file_path": "I/Clock/Clock_Hucksbee.usd",
+            "image_path": "I/Clock/.thumbs/256x256/Clock_Hucksbee.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    -89.71623229980469,
+                    -0.9999998211860657,
+                    169.24732971191406
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.8971623405904033,
+                0.6925001730301227
+            ],
+            "reward": {
+                "affordance": 1.4306640625
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Square02.usd",
+            "file_path": "I/Picture/FramedPicture_Square02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Square02.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    62.67831039428711,
+                    -0.8975661993026733,
+                    16.00128173828125
+                ],
+                "rotation": [
+                    0.9999948208196122,
+                    -0.003218390917186572,
+                    1.714209338595248e-05,
+                    6.678331842931635e-08
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.6267779416245617,
+                -0.841012467397434
+            ],
+            "reward": {
+                "affordance": 4.119838887846158
+            }
+        }
+    ]
+}

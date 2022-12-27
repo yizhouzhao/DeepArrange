@@ -1,0 +1,99 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 7
+    },
+    "objects": [
+        {
+            "type": "Clock",
+            "name": "MetalClock.usd",
+            "file_path": "I/Clock/MetalClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/MetalClock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    93.87411499023438,
+                    -0.9151479601860046,
+                    154.38592529296875
+                ],
+                "rotation": [
+                    0.9999999963960337,
+                    -5.284709979561519e-05,
+                    -1.7021945308674853e-07,
+                    -6.64461266793928e-05
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.9387402629408493,
+                0.5438597802464281
+            ],
+            "reward": {
+                "affordance": 2.507046718044605
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "PictureFrame03.usd",
+            "file_path": "I/Picture/PictureFrame03.usd",
+            "image_path": "I/Picture/.thumbs/256x256/PictureFrame03.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    -52.456016540527344,
+                    -0.9149869680404663,
+                    195.85092163085938
+                ],
+                "rotation": [
+                    0.999996046917685,
+                    0.0028117439317394606,
+                    -2.469169023292219e-07,
+                    1.5652622396358117e-05
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.5245598633641758,
+                0.9584787229589945
+            ],
+            "reward": {
+                "affordance": 2.5528221631657764
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Wide04.usd",
+            "file_path": "I/Picture/FramedPicture_Wide04.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Wide04.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    84.45362091064453,
+                    -1.0,
+                    70.08975982666016
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.8445361902524309,
+                -0.29907551163451307
+            ],
+            "reward": {
+                "affordance": 1.5123291015625
+            }
+        }
+    ]
+}

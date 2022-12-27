@@ -1,0 +1,99 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 15
+    },
+    "objects": [
+        {
+            "type": "Clock",
+            "name": "MetalClock.usd",
+            "file_path": "I/Clock/MetalClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/MetalClock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    52.07925033569336,
+                    -0.9031229019165039,
+                    147.3820037841797
+                ],
+                "rotation": [
+                    0.9999994039592557,
+                    0.0005790170506930126,
+                    -1.1423755038599385e-05,
+                    0.000925575435172835
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.5208033891853473,
+                0.4738132571002185
+            ],
+            "reward": {
+                "affordance": 2.5071149486709565
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Wide01.usd",
+            "file_path": "I/Picture/FramedPicture_Wide01.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Wide01.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    -1.497498631477356,
+                    -0.9593479633331299,
+                    171.72320556640625
+                ],
+                "rotation": [
+                    0.9999993814425638,
+                    0.0006062929667063915,
+                    -1.4809267065062502e-05,
+                    0.0009323647429194218
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                -0.014957632302567199,
+                0.7172425071437758
+            ],
+            "reward": {
+                "affordance": 3.034119251445967
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FunHouse_Poster03.usd",
+            "file_path": "I/Picture/FunHouse_Poster03.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FunHouse_Poster03.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    7.589591979980469,
+                    -1.000000238418579,
+                    47.83547592163086
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "action": [
+                0.0758959160028565,
+                -0.521617797755359
+            ],
+            "reward": {
+                "affordance": 1.51239013671875
+            }
+        }
+    ]
+}
