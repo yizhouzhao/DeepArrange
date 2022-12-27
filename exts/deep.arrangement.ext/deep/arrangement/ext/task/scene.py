@@ -300,23 +300,30 @@ class ArrangeScene():
         """
 
         # 1. get base information
-        base_transform = omni.usd.get_world_transform_matrix(self.stage.GetPrimAtPath("/World/base"))
-        base_translation = base_transform.ExtractTranslation()
-        base_rotation = eval(str(base_transform.ExtractRotationQuat()))
-        
-        base_record = {
-            "task_choice": self.task_choice,
-            "side_choice": self.side_choice,
-            "id": self.traj_id, 
-            "base_asset_id": self.base_asset_id,
-            "base_file_path": self.base_file_path,
-            "transform":{
-                "translation": [base_translation[0], base_translation[1], base_translation[2]],
-                "rotation": [base_rotation[0], base_rotation[1], base_rotation[2], base_rotation[3]], # W, X, Y, Z
-                "scale": 1,
+        if self.task_choice != "Wall":
+            base_transform = omni.usd.get_world_transform_matrix(self.stage.GetPrimAtPath("/World/base"))
+            base_translation = base_transform.ExtractTranslation()
+            base_rotation = eval(str(base_transform.ExtractRotationQuat()))
+            
+            base_record = {
+                "task_choice": self.task_choice,
+                "side_choice": self.side_choice,
+                "id": self.traj_id, 
+                "base_asset_id": self.base_asset_id,
+                "base_file_path": self.base_file_path,
+                "transform":{
+                    "translation": [base_translation[0], base_translation[1], base_translation[2]],
+                    "rotation": [base_rotation[0], base_rotation[1], base_rotation[2], base_rotation[3]], # W, X, Y, Z
+                    "scale": 1,
+                }
             }
-        }
-
+        else:
+            base_record = {
+                "task_choice": self.task_choice,
+                "side_choice": self.side_choice,
+                "id": self.traj_id, 
+            }
+            
         # 2.get obeject information
         objects_record = self.objects
         for object_info in objects_record:
