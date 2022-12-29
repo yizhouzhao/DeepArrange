@@ -18,8 +18,8 @@ import omni.ui as ui
 # deep arrangement import
 from .params import *
 from .layout.randomizer import Randomizer
-from .task.scene import ArrangeScene
-from task.config import ASSET_PATH
+from .task.scene import ArrangeScene 
+from .task.config import ASSET_PATH
 
 
 class MyExtension(omni.ext.IExt):
@@ -161,7 +161,7 @@ class MyExtension(omni.ext.IExt):
         self.render_helper.capture_image_debug()
 
     def uva_init(self):
-        print("uva_init test")
+        print("uva_init test") 
         from uva_env import UvaEnv
         self.env = UvaEnv()
 

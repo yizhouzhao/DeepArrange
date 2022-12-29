@@ -8,9 +8,6 @@ import asyncio
 import omni.usd
 import omni.kit
 
-from omni.isaac.core import World
-from omni.isaac.core.prims.xform_prim import XFormPrim
-
 from pxr import UsdGeom, Sdf, Gf, UsdPhysics
 # from pxr import ForceFieldSchema
 
@@ -20,17 +17,24 @@ from uv.reward import Rewarder
 from render.helper import RenderHelper
 from params import IS_IN_PYTHON, IS_IN_ISAAC_SIM
 
+if IS_IN_ISAAC_SIM or IS_IN_PYTHON: 
+    from omni.isaac.core import World
+    from omni.isaac.core.prims.xform_prim import XFormPrim
+
 class UvaEnv():
     def __init__(self) -> None:
-        # init world
-        self.world = World()
+        
+        if IS_IN_ISAAC_SIM or IS_IN_PYTHON: 
+            # init world
+            self.world = World()
 
-        # if IS_IN_PYTHON:
-        # self.world.reset()
-            
-        self.stage = self.world.scene.stage
-        self.stage = omni.usd.get_context().get_stage()
-        self.timeline = omni.timeline.get_timeline_interface()
+            # if IS_IN_PYTHON:
+            # self.world.reset()
+                
+            self.stage = self.world.scene.stage
+        else:
+            self.stage = omni.usd.get_context().get_stage()
+            self.timeline = omni.timeline.get_timeline_interface()
 
         # scene
         self.scene: ArrangeScene = None

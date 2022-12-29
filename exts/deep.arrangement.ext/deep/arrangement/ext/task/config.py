@@ -17,9 +17,9 @@ if IS_IN_ISAAC_SIM or IS_PYTHON:
         EXTENSION_FOLDER_PATH = "/home/danny/Documents/omni-proj/DeepArrange"
         NUCLEUS_FOLDER_PATH = "omniverse://localhost/Projects/DeepArrange/Asset"
 else:
-    EXTENSION_FOLDER_PATH = str(Path(
-        omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)
-    ).parent.parent.resolve())
+    # omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)
+    EXTENSION_FOLDER_PATH = str(Path(os.path.realpath(__file__)).parent.parent.parent.parent.parent.parent.parent.resolve())
+    print("EXTENSION_FOLDER_PATH", EXTENSION_FOLDER_PATH)  
 
 TASK_CHOICES = ["Bookshelf", "Table", "Desk", "Wall"]
 SIDE_CHOICES = ["Border", "Corner", "Center"]

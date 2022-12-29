@@ -7,13 +7,16 @@ from pxr import Gf, UsdPhysics, Sdf
 
 import omni.usd
 import omni.timeline
-from omni.isaac.core import World
 
 from params import IS_IN_PYTHON, IS_IN_ISAAC_SIM
+
+if IS_IN_PYTHON or IS_IN_ISAAC_SIM:
+    from omni.isaac.core import World
+
 from .utils import is_boxes_overlap
 
 class Rewarder():
-    def __init__(self, world: World) -> None:
+    def __init__(self, world) -> None:
         self.stage = omni.usd.get_context().get_stage()
         self.world = world
         self.timeline = omni.timeline.get_timeline_interface()

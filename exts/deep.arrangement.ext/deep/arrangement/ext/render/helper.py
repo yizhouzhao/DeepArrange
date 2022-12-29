@@ -11,6 +11,13 @@ import omni.usd
 from pxr import Gf, UsdGeom
 
 if IS_IN_CREAT:
+    import omni.kit
+    # enable forcefield
+    manager = omni.kit.app.get_app().get_extension_manager()
+    api_was_enabled = manager.is_extension_enabled("omni.syntheticdata")
+    if not api_was_enabled:
+        manager.set_extension_enabled_immediate("omni.syntheticdata", True)
+
     import omni.syntheticdata as syn
     from omni.kit.viewport.utility import get_active_viewport
 
