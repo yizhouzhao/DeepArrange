@@ -37,7 +37,10 @@ class ReplayBuffer():
             reward = object_info["reward"]["affordance"]
 
             # TODO: post process reward
-            reward = REWARD_SCALE - reward
+            if task_type == "Wall":
+                reward = 0.5 - reward # collision reward only
+            else:
+                reward = REWARD_SCALE - reward
 
             self.add_sample(scene_feature, object_feature, next_scene_feature, action, reward)
 

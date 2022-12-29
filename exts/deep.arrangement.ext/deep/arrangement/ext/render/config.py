@@ -39,7 +39,7 @@ TASK_CAMERA_INFO = {
         "Border":{
             # 0 for main camera
             "main": {
-                "position": [0, 260, 100],
+                "position": [0, 180, 100],
                 "rotation": (0, 0, 0.7071, 0.7071),
                 "focal_length": 14,
             },
