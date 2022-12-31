@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 122
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Wide01.usd",
+            "file_path": "I/Picture/FramedPicture_Wide01.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Wide01.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    58.22507095336914,
+                    -1.0,
+                    35.865699768066406
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    8.7592701911963,
+                    -0.999981533240209,
+                    13.397090911868311
+                ],
+                [
+                    107.69087266922364,
+                    2.1822008010955254,
+                    58.334309048002666
+                ]
+            ],
+            "action": [
+                0.5822507080743697,
+                -0.6413429921056262
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "MetalClock.usd",
+            "file_path": "I/Clock/MetalClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/MetalClock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    74.89395141601562,
+                    -1.0216010808944702,
+                    164.03892517089844
+                ],
+                "rotation": [
+                    0.9999998211860657,
+                    -0.00038272592980271295,
+                    -4.163256030019309e-06,
+                    0.0004594903335586049
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    41.90594757938922,
+                    -4.24064643091701,
+                    131.4412420457229
+                ],
+                [
+                    102.82025422001422,
+                    1.409453919462941,
+                    192.35657501220703
+                ]
+            ],
+            "action": [
+                0.7489329536218348,
+                0.6403815935702991
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Tall01.usd",
+            "file_path": "I/Picture/FramedPicture_Tall01.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Tall01.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    58.319210052490234,
+                    -0.9579828381538391,
+                    127.63127136230469
+                ],
+                "rotation": [
+                    0.9999993443489075,
+                    -0.0007539356114893514,
+                    -7.720981047806955e-06,
+                    0.0008618719367516709
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    35.75431513437394,
+                    -1.9788413278379333,
+                    78.10478396473866
+                ],
+                [
+                    80.81522531101271,
+                    4.377792359131779,
+                    177.085719244848
+                ]
+            ],
+            "action": [
+                0.5831758170062591,
+                0.27630110791639895
+            ],
+            "reward": {
+                "affordance": 0.5137615988750424,
+                "collision": 1.0
+            }
+        }
+    ]
+}

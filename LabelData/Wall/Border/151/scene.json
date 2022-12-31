@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 151
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Wide03.usd",
+            "file_path": "I/Picture/FramedPicture_Wide03.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Wide03.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    -51.26529312133789,
+                    -1.0012900829315186,
+                    6.418405055999756
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -100.73130835241545,
+                    -1.17528038656081,
+                    -13.390557424345158
+                ],
+                [
+                    -1.7984686069200846,
+                    2.2666753459831286,
+                    31.56700454802666
+                ]
+            ],
+            "action": [
+                -0.5126529948237194,
+                -0.9374805884242237
+            ],
+            "reward": {
+                "affordance": 2.494828899271398,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "MetalClock.usd",
+            "file_path": "I/Clock/MetalClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/MetalClock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    -95.57245635986328,
+                    -1.0,
+                    83.3261489868164
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -128.55980406856,
+                    -4.24064643091701,
+                    50.729228801093996
+                ],
+                [
+                    -67.645497427935,
+                    1.409453919462941,
+                    111.64456176757812
+                ]
+            ],
+            "action": [
+                -0.9557245299881757,
+                -0.1667385129210638
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "StillLife01.usd",
+            "file_path": "I/Picture/StillLife01.usd",
+            "image_path": "I/Picture/.thumbs/256x256/StillLife01.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    88.88780212402344,
+                    -1.0008108615875244,
+                    20.93189811706543
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    19.883865356445312,
+                    -3.0736207962036133,
+                    -44.18865954875946
+                ],
+                [
+                    157.8904571533203,
+                    0.2117290496826172,
+                    93.84365093708038
+                ]
+            ],
+            "action": [
+                0.88887821615458,
+                -0.7923480110598369
+            ],
+            "reward": {
+                "affordance": 2.500381723791078,
+                "collision": 0.0
+            }
+        }
+    ]
+}

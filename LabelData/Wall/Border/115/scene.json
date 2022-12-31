@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 115
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Square05.usd",
+            "file_path": "I/Picture/FramedPicture_Square05.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Square05.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    7.085330963134766,
+                    -1.0335185527801514,
+                    93.2392807006836
+                ],
+                "rotation": [
+                    0.9999989867210388,
+                    0.00020592104328183804,
+                    1.6908943841971951e-06,
+                    0.001408598793283215
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -17.14263823349029,
+                    -0.9882826957530374,
+                    69.0113803006152
+                ],
+                [
+                    31.30340668838471,
+                    2.1939103754779086,
+                    117.46878242371409
+                ]
+            ],
+            "action": [
+                0.0708038481012314,
+                -0.06759909086164541
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Square01.usd",
+            "file_path": "I/Picture/FramedPicture_Square01.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Square01.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    17.00617218017578,
+                    -1.0754526853561401,
+                    68.99166107177734
+                ],
+                "rotation": [
+                    0.9999982118606567,
+                    0.001415907565823011,
+                    -1.3436937848087876e-05,
+                    0.0012535153380902645
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -7.235974210220395,
+                    -1.163671589054523,
+                    44.76555836639713
+                ],
+                [
+                    41.22450571379135,
+                    2.214623612839982,
+                    93.23319160225518
+                ]
+            ],
+            "action": [
+                0.1699838940239634,
+                -0.3100359983116892
+            ],
+            "reward": {
+                "affordance": 0.019791121029620485,
+                "collision": 1.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "Painting_03.usd",
+            "file_path": "I/Picture/Painting_03.usd",
+            "image_path": "I/Picture/.thumbs/256x256/Painting_03.usd.png",
+            "prim_path": "/World/objects/Picture_02",
+            "xform_name": "Picture_02",
+            "transform": {
+                "translation": [
+                    -21.745559692382812,
+                    -0.9774259328842163,
+                    77.6035385131836
+                ],
+                "rotation": [
+                    0.9999996945580961,
+                    -0.00011804649782412452,
+                    5.195252963810893e-06,
+                    0.0007726071111273453
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -54.77239286577476,
+                    -1.3934081687535724,
+                    35.616212231228026
+                ],
+                [
+                    11.260606875159224,
+                    4.538168703034224,
+                    119.59034686130016
+                ]
+            ],
+            "action": [
+                -0.2174792818909624,
+                -0.22396994186659258
+            ],
+            "reward": {
+                "affordance": 0.01858604155557454,
+                "collision": 1.0
+            }
+        }
+    ]
+}

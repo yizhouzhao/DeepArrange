@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 188
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "FramedPoster.usd",
+            "file_path": "I/Picture/FramedPoster.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPoster.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    -54.215576171875,
+                    -1.0000004768371582,
+                    146.03314208984375
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -108.8179702758789,
+                    -1.018505334854126,
+                    108.90393829345703
+                ],
+                [
+                    0.3820343017578125,
+                    4.225242376327515,
+                    183.1628189086914
+                ]
+            ],
+            "action": [
+                -0.5421557576164104,
+                0.46033145753759724
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "OversizedClock.usd",
+            "file_path": "I/Clock/OversizedClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/OversizedClock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    94.96587371826172,
+                    -0.9832136631011963,
+                    9.275598526000977
+                ],
+                "rotation": [
+                    0.9999999403953552,
+                    1.7403716374707966e-05,
+                    -0.00013323884244488535,
+                    -0.00031804686371408116
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    62.491166645116394,
+                    -1.5751130774548798,
+                    -19.940530485187942
+                ],
+                [
+                    126.28577653092013,
+                    6.118945324702515,
+                    43.92794994246956
+                ]
+            ],
+            "action": [
+                0.9497078581225371,
+                -0.908930582957793
+            ],
+            "reward": {
+                "affordance": 2.518387333830988,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "MetalClock.usd",
+            "file_path": "I/Clock/MetalClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/MetalClock.usd.png",
+            "prim_path": "/World/objects/Clock_01",
+            "xform_name": "Clock_01",
+            "transform": {
+                "translation": [
+                    91.22691345214844,
+                    -1.1051820516586304,
+                    6.171722412109375
+                ],
+                "rotation": [
+                    0.9999997019767761,
+                    0.00028971037178797886,
+                    -0.00012799468672294658,
+                    -0.0007040821113941398
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    58.13941668760097,
+                    -5.985648603408645,
+                    -23.78434729339768
+                ],
+                [
+                    119.20301341921112,
+                    2.5557952168493694,
+                    37.24851643267809
+                ]
+            ],
+            "action": [
+                0.9123522041458119,
+                -0.9399778570503899
+            ],
+            "reward": {
+                "affordance": 2.554401098353147,
+                "collision": 1.0
+            }
+        }
+    ]
+}

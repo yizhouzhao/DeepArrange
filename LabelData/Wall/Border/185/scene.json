@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 185
+    },
+    "objects": [
+        {
+            "type": "Clock",
+            "name": "OversizedClock.usd",
+            "file_path": "I/Clock/OversizedClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/OversizedClock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    95.04216003417969,
+                    -0.9858415126800537,
+                    28.92856216430664
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    62.756673348511924,
+                    -1.1182378892771998,
+                    -0.2679020735559092
+                ],
+                [
+                    126.4349635209866,
+                    6.3846653287736554,
+                    63.459368306696476
+                ]
+            ],
+            "action": [
+                0.9504120166553292,
+                -0.712402387689426
+            ],
+            "reward": {
+                "affordance": 2.533406391718599,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPoster.usd",
+            "file_path": "I/Picture/FramedPoster.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPoster.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    17.232471466064453,
+                    -0.9944069385528564,
+                    138.47900390625
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -37.36997032165527,
+                    -1.018505334854126,
+                    101.34944915771484
+                ],
+                [
+                    71.83003425598145,
+                    4.225242376327515,
+                    175.60832977294922
+                ]
+            ],
+            "action": [
+                0.17232423346376752,
+                0.3847865191200862
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "Clock_Hucksbee.usd",
+            "file_path": "I/Clock/Clock_Hucksbee.usd",
+            "image_path": "I/Clock/.thumbs/256x256/Clock_Hucksbee.usd.png",
+            "prim_path": "/World/objects/Clock_01",
+            "xform_name": "Clock_01",
+            "transform": {
+                "translation": [
+                    83.65192413330078,
+                    -1.0541784763336182,
+                    152.80613708496094
+                ],
+                "rotation": [
+                    0.9999964237213135,
+                    -0.00016358572841289047,
+                    -2.4624767212978967e-06,
+                    0.002669415334665187
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    62.14704938406065,
+                    -6.617293062840294,
+                    134.79025627441487
+                ],
+                [
+                    105.64646108360068,
+                    1.885857182548872,
+                    177.8725178529409
+                ]
+            ],
+            "action": [
+                0.8364933094941628,
+                0.5280515637266745
+            ],
+            "reward": {
+                "affordance": 0.5574817922717392,
+                "collision": 1.0
+            }
+        }
+    ]
+}

@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 175
+    },
+    "objects": [
+        {
+            "type": "Clock",
+            "name": "Industrial_Clock.usd",
+            "file_path": "I/Clock/Industrial_Clock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/Industrial_Clock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    83.0587387084961,
+                    -0.8344689011573792,
+                    188.52322387695312
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    52.9835119148301,
+                    -4.132183501078781,
+                    158.27011413971707
+                ],
+                [
+                    113.27150617024098,
+                    8.717211799223602,
+                    235.6953980659015
+                ]
+            ],
+            "action": [
+                0.8305939854715484,
+                0.8852297161273044
+            ],
+            "reward": {
+                "affordance": 1.2357265871952483,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "Painting_02.usd",
+            "file_path": "I/Picture/Painting_02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/Painting_02.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    -6.92840576171875,
+                    -1.0000004768371582,
+                    180.365478515625
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -29.532949832049695,
+                    -0.9907139539718715,
+                    155.93837893009186
+                ],
+                [
+                    15.70298156443468,
+                    2.359056830406197,
+                    207.44749414920807
+                ]
+            ],
+            "action": [
+                -0.0692840569264729,
+                0.8036547756901667
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "MetalClock.usd",
+            "file_path": "I/Clock/MetalClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/MetalClock.usd.png",
+            "prim_path": "/World/objects/Clock_01",
+            "xform_name": "Clock_01",
+            "transform": {
+                "translation": [
+                    -96.52373504638672,
+                    -1.0,
+                    142.54754638671875
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -129.51108275508344,
+                    -4.24064643091701,
+                    109.95062620099634
+                ],
+                [
+                    -68.59677611445844,
+                    1.409453919462941,
+                    170.86595916748047
+                ]
+            ],
+            "action": [
+                -0.9652373627471632,
+                0.4254753926636551
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        }
+    ]
+}

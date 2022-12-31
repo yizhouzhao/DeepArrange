@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 103
+    },
+    "objects": [
+        {
+            "type": "Clock",
+            "name": "Clock_Hucksbee.usd",
+            "file_path": "I/Clock/Clock_Hucksbee.usd",
+            "image_path": "I/Clock/.thumbs/256x256/Clock_Hucksbee.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    2.2291622161865234,
+                    -0.9999997019767761,
+                    174.75843811035156
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -19.27036079019308,
+                    -4.484939074259864,
+                    156.73665924149407
+                ],
+                [
+                    23.959440214769472,
+                    1.0199488997459505,
+                    199.7837574012841
+                ]
+            ],
+            "action": [
+                0.022291627129876097,
+                0.7475843236885773
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Square02.usd",
+            "file_path": "I/Picture/FramedPicture_Square02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Square02.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    67.96040344238281,
+                    -1.0000004768371582,
+                    152.8753204345703
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    43.7373804775998,
+                    -0.9882826957530374,
+                    128.64661131868158
+                ],
+                [
+                    92.1834253994748,
+                    2.1939103754779086,
+                    177.10401344178047
+                ]
+            ],
+            "action": [
+                0.6796040407679942,
+                0.5287531953422966
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FunHouse_Poster02.usd",
+            "file_path": "I/Picture/FunHouse_Poster02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FunHouse_Poster02.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    39.16767501831055,
+                    -0.9999278783798218,
+                    28.93975067138672
+                ],
+                "rotation": [
+                    0.9999999999991188,
+                    -1.2517063568975813e-06,
+                    -4.4224612713312405e-07,
+                    -4.19385587909287e-09
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -3.4836372625985534,
+                    -1.1055321050835436,
+                    0.3199828748496536
+                ],
+                [
+                    81.91480686140812,
+                    0.9855866693569475,
+                    59.21822216409139
+                ]
+            ],
+            "action": [
+                0.39167707908810034,
+                -0.7114357654651444
+            ],
+            "reward": {
+                "affordance": 0.5664914658351691,
+                "collision": 0.0
+            }
+        }
+    ]
+}

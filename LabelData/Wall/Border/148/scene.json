@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 148
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Wide01.usd",
+            "file_path": "I/Picture/FramedPicture_Wide01.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Wide01.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    -94.63745880126953,
+                    -1.0,
+                    195.142822265625
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -144.10325956344235,
+                    -0.999981533240209,
+                    172.6742134094269
+                ],
+                [
+                    -45.17165708541502,
+                    2.1822008010955254,
+                    217.61143154556126
+                ]
+            ],
+            "action": [
+                -0.9463745804447814,
+                0.9514282610850072
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Wide02.usd",
+            "file_path": "I/Picture/FramedPicture_Wide02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Wide02.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    -59.243080139160156,
+                    -1.0,
+                    24.804363250732422
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -108.708880901333,
+                    -0.999981533240209,
+                    2.3357543945343267
+                ],
+                [
+                    -9.777278423305653,
+                    2.1822008010955254,
+                    47.27297253066868
+                ]
+            ],
+            "action": [
+                -0.5924308000450051,
+                -0.751956365555571
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "Poster_Holodeck.usd",
+            "file_path": "I/Picture/Poster_Holodeck.usd",
+            "image_path": "I/Picture/.thumbs/256x256/Poster_Holodeck.usd.png",
+            "prim_path": "/World/objects/Picture_02",
+            "xform_name": "Picture_02",
+            "transform": {
+                "translation": [
+                    88.06709289550781,
+                    -1.0,
+                    103.2899398803711
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    42.29280471801758,
+                    -1.8395723700523376,
+                    72.80993843078613
+                ],
+                [
+                    133.78709411621094,
+                    0.11932849884033203,
+                    133.76994132995605
+                ]
+            ],
+            "action": [
+                0.8806709473960372,
+                0.0328993937630053
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        }
+    ]
+}

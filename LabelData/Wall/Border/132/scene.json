@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 132
+    },
+    "objects": [
+        {
+            "type": "Clock",
+            "name": "OversizedClock.usd",
+            "file_path": "I/Clock/OversizedClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/OversizedClock.usd.png",
+            "prim_path": "/World/objects/Clock",
+            "xform_name": "Clock",
+            "transform": {
+                "translation": [
+                    4.063683986663818,
+                    -0.997758150100708,
+                    25.003196716308594
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -28.220791946196254,
+                    -1.1342212590510246,
+                    -4.103643230718788
+                ],
+                [
+                    35.30622019010149,
+                    6.236635801658512,
+                    59.464016568709354
+                ]
+            ],
+            "action": [
+                0.040626003492569944,
+                -0.7516561916999254
+            ],
+            "reward": {
+                "affordance": 2.5380278899047646,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "MetalClock.usd",
+            "file_path": "I/Clock/MetalClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/MetalClock.usd.png",
+            "prim_path": "/World/objects/Clock_01",
+            "xform_name": "Clock_01",
+            "transform": {
+                "translation": [
+                    -68.64375305175781,
+                    -1.0,
+                    42.91578674316406
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -101.63110076045453,
+                    -4.24064643091701,
+                    10.318866557441652
+                ],
+                [
+                    -40.71679411982953,
+                    1.409453919462941,
+                    71.23419952392578
+                ]
+            ],
+            "action": [
+                -0.6864375362605233,
+                -0.5708421265143986
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Clock",
+            "name": "OversizedClock.usd",
+            "file_path": "I/Clock/OversizedClock.usd",
+            "image_path": "I/Clock/.thumbs/256x256/OversizedClock.usd.png",
+            "prim_path": "/World/objects/Clock_02",
+            "xform_name": "Clock_02",
+            "transform": {
+                "translation": [
+                    -20.025074005126953,
+                    -1.0000004768371582,
+                    162.31883239746094
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -52.307054260270775,
+                    -1.098789077340418,
+                    130.56882953887373
+                ],
+                [
+                    11.192947647077855,
+                    5.884702164591504,
+                    194.068833353571
+                ]
+            ],
+            "action": [
+                -0.20025074084025485,
+                0.6231883033827698
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        }
+    ]
+}

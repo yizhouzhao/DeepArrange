@@ -1,0 +1,138 @@
+{
+    "base": {
+        "task_choice": "Wall",
+        "side_choice": "Border",
+        "id": 170
+    },
+    "objects": [
+        {
+            "type": "Picture",
+            "name": "FramedPicture_Square02.usd",
+            "file_path": "I/Picture/FramedPicture_Square02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPicture_Square02.usd.png",
+            "prim_path": "/World/objects/Picture",
+            "xform_name": "Picture",
+            "transform": {
+                "translation": [
+                    -56.055419921875,
+                    -1.0000009536743164,
+                    106.98512268066406
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    -80.27844288665801,
+                    -0.9882826957530374,
+                    82.75641356477536
+                ],
+                [
+                    -31.832397964783013,
+                    2.1939103754779086,
+                    131.21381568787424
+                ]
+            ],
+            "action": [
+                -0.5605542166595961,
+                0.06985124307106008
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "FramedPoster02.usd",
+            "file_path": "I/Picture/FramedPoster02.usd",
+            "image_path": "I/Picture/.thumbs/256x256/FramedPoster02.usd.png",
+            "prim_path": "/World/objects/Picture_01",
+            "xform_name": "Picture_01",
+            "transform": {
+                "translation": [
+                    90.27297973632812,
+                    -0.9836151599884033,
+                    178.47508239746094
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    10.272933959960938,
+                    -1.4130067473692152,
+                    99.70446395874023
+                ],
+                [
+                    170.27293395996094,
+                    5.871114373207102,
+                    259.70446395874023
+                ]
+            ],
+            "action": [
+                0.9027293618106134,
+                0.7847594445495139
+            ],
+            "reward": {
+                "affordance": 0.0,
+                "collision": 0.0
+            }
+        },
+        {
+            "type": "Picture",
+            "name": "StillLife01.usd",
+            "file_path": "I/Picture/StillLife01.usd",
+            "image_path": "I/Picture/.thumbs/256x256/StillLife01.usd.png",
+            "prim_path": "/World/objects/Picture_02",
+            "xform_name": "Picture_02",
+            "transform": {
+                "translation": [
+                    92.43687438964844,
+                    -1.0814863443374634,
+                    112.6468276977539
+                ],
+                "rotation": [
+                    1,
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 1.0
+            },
+            "use_network": false,
+            "bounding_box": [
+                [
+                    23.429546159590178,
+                    -4.482089839351609,
+                    44.81710670961296
+                ],
+                [
+                    161.44114615363154,
+                    -0.020435330818549535,
+                    182.87491632075367
+                ]
+            ],
+            "action": [
+                0.9243688731934467,
+                0.1264870729586625
+            ],
+            "reward": {
+                "affordance": 0.6554863339239514,
+                "collision": 1.0
+            }
+        }
+    ]
+}
