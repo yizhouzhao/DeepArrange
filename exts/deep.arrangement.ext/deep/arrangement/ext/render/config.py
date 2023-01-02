@@ -43,10 +43,6 @@ TASK_CAMERA_INFO = {
                 "rotation": (0, 0, 0.7071, 0.7071),
                 "focal_length": 14,
             },
-            # side camera
-            "left": {
-
-            }
         }
     },
     "Table":{
@@ -58,8 +54,10 @@ TASK_CAMERA_INFO = {
                 "focal_length": 14,
             },
             # side camera
-            "left": {
-
+            "side": {
+                "position": [75, 175, 150],
+                "rotation": (0.19860587196943386, 0.0970421786241807, 0.4281531387629506, 0.8762553811781653),
+                "focal_length": 14,
             }
         }
     },

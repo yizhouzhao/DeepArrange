@@ -64,7 +64,7 @@ class RenderHelper():
             
             # asyncio.ensure_future(init_helper_async())
     
-    def add_task_cameras(self):
+    def add_task_cameras(self, camera_type = "main"):
         """
         Add camera for current task
         """
@@ -72,14 +72,14 @@ class RenderHelper():
         self.camera_paths = []
         # add main camera
         
-        main_camera_path = f"/World/render/camera_main"
-        camera_prim = self.stage.GetPrimAtPath(main_camera_path)
+        camera_path = f"/World/render/camera_{camera_type}"
+        camera_prim = self.stage.GetPrimAtPath(camera_path)
         if not camera_prim.IsValid():
-            pos = Gf.Vec3d(*camera_info["main"]["position"])
-            rot = Gf.Quatd(*camera_info["main"]["rotation"])
-            RenderHelper.add_camera(main_camera_path, pos, rot)
+            pos = Gf.Vec3d(*camera_info[camera_type]["position"])
+            rot = Gf.Quatd(*camera_info[camera_type]["rotation"])
+            RenderHelper.add_camera(camera_path, pos, rot)
         
-        self.camera_paths.append(main_camera_path)
+        self.camera_paths.append(camera_path)
 
     @staticmethod
     def add_camera(camera_path, position, rotation):
