@@ -105,8 +105,10 @@ class UvaEnv():
             layout_prim = self.stage.GetPrimAtPath("/World/layout")
             if layout_prim.IsValid():
                 delete_paths.append("/World/layout")
+                delete_paths.append("/World/groundPlane")
                 # omni.kit.commands.execute("DeletePrims", paths=["/World/layout"])
 
+        if clean_all or clean_base:
             # clean look 
             looks_prim = self.stage.GetPrimAtPath("/World/Looks")
             if looks_prim.IsValid():
