@@ -9,6 +9,8 @@ import json
 
 from omni.kit.material.library import get_material_prim_path, create_mdl_material
 
+from task.config import EXTENSION_FOLDER_PATH
+
 class Randomizer():
     def __init__(self, task_json_path=None, random_seed = 1) -> None:
         # stage
@@ -47,6 +49,9 @@ class Randomizer():
 
         # material
         self.material_dict = {}
+        self.floor_mtl_urls, self.floor_mtl_names, self.floor_material_prim_paths = [], [], []
+        self.wall_mtl_urls, self.wall_mtl_names, self.wall_material_prim_paths = [], [], []
+
 
     def set_seed(self, seed):
         self.random_seed = seed
@@ -119,38 +124,50 @@ class Randomizer():
         # except:
             
         # load the materials from nucleus url link
-        mat_root_path = "http://localhost:8080/omniverse://127.0.0.1/NVIDIA/Materials/"
-        carb.log_info(f"Collecting files for {mat_root_path}")
-        result1, entries = omni.client.list(mat_root_path)
+        # mat_root_path = "http://localhost:8080/omniverse://127.0.0.1/NVIDIA/Materials/"
+        # carb.log_info(f"Collecting files for {mat_root_path}")
+        # result1, entries = omni.client.list(mat_root_path)
     
-        if result1 != omni.client.Result.OK:
-            raise Exception(f"nucleus connect error at path: {mat_root_path}")
-        for e in entries:
+        # if result1 != omni.client.Result.OK:
+        #     raise Exception(f"nucleus connect error at path: {mat_root_path}")
+        # for e in entries:
             
-            # collect base only
-            # if e.relative_path != "Base":
-            #     continue
+        #     # collect base only
+        #     # if e.relative_path != "Base":
+        #     #     continue
             
-            material_type_folder = mat_root_path + e.relative_path + "/"
-            result2, mat_type_entries = omni.client.list(material_type_folder)
-            for mat_type_e in mat_type_entries:
-                print("mat result: ", mat_type_e.relative_path)
-                if mat_type_e.relative_path not in self.material_dict:
-                    self.material_dict[mat_type_e.relative_path] = []
-                material_folder = material_type_folder + mat_type_e.relative_path + "/"
-                result3, mat_entries = omni.client.list(material_folder)
-                for mat_e in mat_entries:
-                    if mat_e.relative_path.endswith(".mdl"):
-                        mat_path = material_folder + mat_e.relative_path
-                        self.material_dict[mat_type_e.relative_path].append(mat_path)
+        #     material_type_folder = mat_root_path + e.relative_path + "/"
+        #     result2, mat_type_entries = omni.client.list(material_type_folder)
+        #     for mat_type_e in mat_type_entries:
+        #         print("mat result: ", mat_type_e.relative_path)
+        #         if mat_type_e.relative_path not in self.material_dict:
+        #             self.material_dict[mat_type_e.relative_path] = []
+        #         material_folder = material_type_folder + mat_type_e.relative_path + "/"
+        #         result3, mat_entries = omni.client.list(material_folder)
+        #         for mat_e in mat_entries:
+        #             if mat_e.relative_path.endswith(".mdl"):
+        #                 mat_path = material_folder + mat_e.relative_path
+        #                 self.material_dict[mat_type_e.relative_path].append(mat_path)
 
-        # filter_out_empty
-        temp_dict = {}
-        for key in self.material_dict:
-            if len(self.material_dict[key]) > 0:
-                temp_dict[key] = self.material_dict[key]
+        # # filter_out_empty
+        # temp_dict = {}
+        # for key in self.material_dict:
+        #     if len(self.material_dict[key]) > 0:
+        #         temp_dict[key] = self.material_dict[key]
                 
-        self.material_dict = temp_dict
+        # self.material_dict = temp_dict
+
+        material_path = os.path.join(EXTENSION_FOLDER_PATH, "Material")
+        for mat_type in os.listdir(material_path):
+            mat_folder = os.path.join(material_path, mat_type)
+            self.material_dict[mat_type] = []
+            for mat_name in os.listdir(mat_folder):
+                print("mat_name", mat_name)
+                if mat_name.endswith(".mdl"):
+                    mat_path = os.path.join(mat_folder, mat_name)
+                    self.material_dict[mat_type].append(mat_path)
+
+        print(material_path, "material_dict: ", self.material_dict)
     
     def randomize_house(self, rand = True, randomize_floor =True, randomize_wall = True):
         """
@@ -160,25 +177,22 @@ class Randomizer():
         """
         
         look_prim = self.stage.GetPrimAtPath("/World/Looks")
-        self.floor_mtl_urls, self.floor_mtl_names, self.floor_material_prim_paths = [], [], []
-        self.wall_mtl_urls, self.wall_mtl_names, self.wall_material_prim_paths = [], [], []
+        if len(self.floor_material_prim_paths) == 0:
 
-        if not look_prim.IsValid():
-            
             # get all materials
             self.setup_material_helper()
             floor_parent = self.stage.GetPrimAtPath("/World/layout/floors")
             wall_parent = self.stage.GetPrimAtPath("/World/layout/structure") # roomStruct
             self.random_info["floor_materials"] = [x for k in ["Wood"] for x in self.material_dict[k]] # Carpet
-            self.random_info["wall_materials"] = [x for k in ["Wall_Board"] for x in self.material_dict[k]] # "Masonry", "Architecture"
+            self.random_info["wall_materials"] = [x for k in ["Wall"] for x in self.material_dict[k]] # "Masonry", "Architecture"
             # print(self.random_info["floor_materials"])
-            len_floor = len(self.random_info["floor_materials"])
-            len_wall = len(self.random_info["wall_materials"])
-            print("len_floor, len_wall:", len_floor, len_wall)
+            self.len_floor = len(self.random_info["floor_materials"])
+            self.len_wall = len(self.random_info["wall_materials"])
+            # print("len_floor, len_wall:", self.len_floor, self.len_wall)
 
-            for i in range(len_wall):
+            for i in range(self.len_wall):
                 wall_mtl_url = self.random_info["wall_materials"][i] #random.choice(self.random_info["wall_materials"]) if rand else self.random_info["wall_materials"][0]
-                wall_mtl_name = wall_mtl_url.split("/")[-1][:-4]
+                wall_mtl_name = wall_mtl_url.replace("\\","/").split("/")[-1][:-4]
 
                 # change mtl
                 new_looks_path1, wall_material_prim_path = get_material_prim_path(wall_mtl_name)
@@ -191,9 +205,9 @@ class Randomizer():
                 self.wall_mtl_names.append(wall_mtl_name)
                 self.wall_material_prim_paths.append(wall_material_prim_path)
 
-            for i in range(len_floor):
+            for i in range(self.len_floor):
                 floor_mtl_url = self.random_info["floor_materials"][i] # random.choice(self.random_info["floor_materials"]) if rand else self.random_info["floor_materials"][0]
-                floor_mtl_name = floor_mtl_url.split("/")[-1][:-4]
+                floor_mtl_name = floor_mtl_url.replace("\\","/").split("/")[-1][:-4]
 
                 new_looks_path2, floor_material_prim_path = get_material_prim_path(floor_mtl_name)
                 if new_looks_path2 and randomize_floor:
@@ -208,10 +222,21 @@ class Randomizer():
             # print("debug mats:", self.floor_mtl_urls, self.floor_mtl_names, self.floor_material_prim_paths)
             # print("debug mats:", self.wall_mtl_urls, self.wall_mtl_names, self.wall_material_prim_paths)
             
-        print("create mat:", floor_mtl_url, floor_mtl_name, floor_material_prim_path)
-        print("create mat:", wall_mtl_url, wall_mtl_name, wall_material_prim_path)
-        floor_mtl_url = wall_mtl_url
-        floor_mtl_name = wall_mtl_name
+        # print("create mat:", floor_mtl_url, floor_mtl_name, floor_material_prim_path)
+        # print("create mat:", wall_mtl_url, wall_mtl_name, wall_material_prim_path)
+        # floor_mtl_url = wall_mtl_url
+        # floor_mtl_name = wall_mtl_name
+
+        floor_idx = random.randint(0, self.len_floor - 1) if rand else 0
+        wall_idx = random.randint(0, self.len_wall - 1) if rand else 0
+        
+        floor_mtl_url = self.floor_mtl_urls[floor_idx]
+        floor_mtl_name = self.floor_mtl_names[floor_idx]
+        floor_material_prim_path = self.floor_material_prim_paths[floor_idx]
+
+        wall_mtl_url = self.wall_mtl_urls[wall_idx]
+        wall_mtl_name = self.wall_mtl_names[wall_idx]
+        wall_material_prim_path = self.wall_material_prim_paths[wall_idx]
         
         for prim in floor_parent.GetChildren():
             if prim is None:
