@@ -12,13 +12,14 @@ from omni.kit.material.library import get_material_prim_path, create_mdl_materia
 from task.config import EXTENSION_FOLDER_PATH
 
 class Randomizer():
-    def __init__(self, task_json_path=None, random_seed = 1) -> None:
+    def __init__(self, task_json_path=None, random_seed = 1, load_nucleus = False) -> None:
         # stage
         self.stage = omni.usd.get_context().get_stage()
         # self.house = house
         # self.layout = self.house.layout if house is not None else {}
         self.task_json_path = task_json_path
         self.random_seed = random_seed
+        self.load_nucleus = load_nucleus
 
         # randomize index
         self.light_rnd = -1 # light randomized index
@@ -157,17 +158,32 @@ class Randomizer():
                 
         # self.material_dict = temp_dict
 
-        material_path = os.path.join(EXTENSION_FOLDER_PATH, "Material")
-        for mat_type in os.listdir(material_path):
-            mat_folder = os.path.join(material_path, mat_type)
-            self.material_dict[mat_type] = []
-            for mat_name in os.listdir(mat_folder):
-                print("mat_name", mat_name)
-                if mat_name.endswith(".mdl"):
-                    mat_path = os.path.join(mat_folder, mat_name)
-                    self.material_dict[mat_type].append(mat_path)
+        if not self.load_nucleus:
+            material_path = os.path.join(EXTENSION_FOLDER_PATH, "Material")
+            for mat_type in os.listdir(material_path):
+                mat_folder = os.path.join(material_path, mat_type)
+                self.material_dict[mat_type] = []
+                for mat_name in os.listdir(mat_folder):
+                    # print("mat_name", mat_name)
+                    if mat_name.endswith(".mdl"):
+                        mat_path = os.path.join(mat_folder, mat_name)
+                        self.material_dict[mat_type].append(mat_path)
+        else:
+            material_type_folder = "omniverse://127.0.0.1/Users/yizhou/Material/"
+            result2, mat_type_entries = omni.client.list(material_type_folder)
+            for mat_type_e in mat_type_entries:
+                # print("mat result: ", mat_type_e.relative_path)
+                if mat_type_e.relative_path not in self.material_dict:
+                    self.material_dict[mat_type_e.relative_path] = []
+                material_folder = material_type_folder + mat_type_e.relative_path + "/"
+                result3, mat_entries = omni.client.list(material_folder)
+                for mat_e in mat_entries:
+                    if mat_e.relative_path.endswith(".mdl"):
+                        mat_path = material_folder + mat_e.relative_path
+                        self.material_dict[mat_type_e.relative_path].append(mat_path)
 
-        print(material_path, "material_dict: ", self.material_dict)
+
+        # print(material_path, "material_dict: ", self.material_dict)
     
     def randomize_house(self, rand = True, randomize_floor =True, randomize_wall = True):
         """
@@ -177,12 +193,14 @@ class Randomizer():
         """
         
         look_prim = self.stage.GetPrimAtPath("/World/Looks")
+        floor_parent = self.stage.GetPrimAtPath("/World/layout/floors")
+        wall_parent = self.stage.GetPrimAtPath("/World/layout/structure") # roomStruct
+
         if len(self.floor_material_prim_paths) == 0:
 
             # get all materials
             self.setup_material_helper()
-            floor_parent = self.stage.GetPrimAtPath("/World/layout/floors")
-            wall_parent = self.stage.GetPrimAtPath("/World/layout/structure") # roomStruct
+
             self.random_info["floor_materials"] = [x for k in ["Wood"] for x in self.material_dict[k]] # Carpet
             self.random_info["wall_materials"] = [x for k in ["Wall"] for x in self.material_dict[k]] # "Masonry", "Architecture"
             # print(self.random_info["floor_materials"])

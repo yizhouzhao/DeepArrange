@@ -86,7 +86,7 @@ class MyExtension(omni.ext.IExt):
             carb.log_error("Please add /World/layout (load scene) first!")
             return 
 
-        self.randomizer = Randomizer()
+        self.randomizer = Randomizer(load_nucleus = self.load_nucleus)
         self.randomizer.randomize_house(rand = rand)
 
 
