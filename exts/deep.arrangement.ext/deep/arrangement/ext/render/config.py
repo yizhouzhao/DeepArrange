@@ -75,4 +75,20 @@ TASK_CAMERA_INFO = {
             }
         }
     },
+    "Desk":{
+        "Border":{
+            # 0 for main camera
+            "main": {
+                "position": [0, 56, 200],
+                "rotation": (0, 0, 0, 1),
+                "focal_length": 14,
+            },
+            # side camera
+            "side": {
+                "position": [75, 175, 150],
+                "rotation": (0.19860587196943386, 0.0970421786241807, 0.4281531387629506, 0.8762553811781653),
+                "focal_length": 14,
+            }
+        }
+    },
 }
