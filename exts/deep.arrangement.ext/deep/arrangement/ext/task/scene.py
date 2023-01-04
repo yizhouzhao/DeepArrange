@@ -53,7 +53,7 @@ class ArrangeScene():
         self.layer = self.stage.GetRootLayer()
         house_prim_path = "/World/layout"
         house_path = os.path.join(self.asset_path, "S", "0", "layout.usd")  
-        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 450, 0), rotation=(0.7071068, 0.7071068, 0, 0))
+        import_asset_to_stage(self.stage, house_prim_path, house_path, position=(0, 456, 0), rotation=(0.7071068, 0.7071068, 0, 0))
 
         """
         Add ground

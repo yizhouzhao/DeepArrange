@@ -32,6 +32,9 @@ class RenderHelper():
         self.side_choice = side_choice
         self.resolution = resolution
 
+        # camera paths
+        self.camera_paths = []
+
         # setup view port   
         self.stage = omni.usd.get_context().get_stage()
 
@@ -69,7 +72,7 @@ class RenderHelper():
         Add camera for current task
         """
         camera_info = TASK_CAMERA_INFO[self.task_type][self.side_choice]
-        self.camera_paths = []
+        
         # add main camera
         
         camera_path = f"/World/render/camera_{camera_type}"
@@ -92,7 +95,7 @@ class RenderHelper():
                 Gf.Matrix4d().SetRotate(rotation) * \
                 Gf.Matrix4d().SetTranslate(position)
 
-        print("xform_mat: ", xform_mat)
+        # print("xform_mat: ", xform_mat)
         omni.kit.commands.execute(
             "TransformPrimCommand",
             path=target_path,
