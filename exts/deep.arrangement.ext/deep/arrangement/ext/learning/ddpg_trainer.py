@@ -72,11 +72,11 @@ class DDPGTrainer():
         self._need_to_update_eval_statistics = True
 
     def update(self, batch):
-        rewards = batch['rewards']
-        terminals = batch['terminals']
-        obs = batch['observations']
-        actions = batch['actions']
-        next_obs = batch['next_observations']
+        rewards = batch['rewards'].to(self.device)
+        terminals = batch['terminals'].to(self.device)
+        obs = batch['observations'].to(self.device)
+        actions = batch['actions'].to(self.device)
+        next_obs = batch['next_observations'].to(self.device)
 
         obj_features = batch['object_features'].to(self.device)
 

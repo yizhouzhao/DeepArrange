@@ -2,8 +2,6 @@ import torch
 import torch.nn as nn
 from torchvision import models
 
-from learning.network.resnet import ResNetFeatureExtractor
-from learning.distributions import *
 
 class Policy(nn.Module):
     def __init__(self, image_feature_dim = 512, object_feature_dim = 512) -> None:
@@ -17,21 +15,16 @@ class Policy(nn.Module):
         )
 
         self.mean_fc = nn.Linear(128, 2)
-        self.std_fc = nn.Linear(128, 2)
     
     def forward(self, image_feature, object_feature):
         x = torch.cat([image_feature, object_feature], dim = 1)
         x = self.layers(x)
         
         # get mean
-        mean = self.mean_fc(x)
+        x = self.mean_fc(x)
 
-        # get sd
-        log_std = self.std_fc(x)
-        log_std = torch.clamp(log_std, -5, 2)
-        std = torch.exp(log_std)
+        return torch.sigmoid(x)
 
-        return TanhNormal(mean, std)
 
 class QFunction(nn.Module):
     def __init__(self, image_feature_dim = 512, object_feature_dim = 512, action_dim = 2) -> None:
