@@ -23,7 +23,7 @@ class Policy(nn.Module):
         # get mean
         x = self.mean_fc(x)
 
-        return torch.sigmoid(x)
+        return x
 
 
 class QFunction(nn.Module):

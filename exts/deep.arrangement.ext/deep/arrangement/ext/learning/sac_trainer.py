@@ -22,6 +22,7 @@ class SACTrainer():
         target_entropy=None,
         device = torch.device("cuda"),
         ) -> None:
+        self.name = "sac"
         self.device = device
 
         self.policy = policy.to(self.device)

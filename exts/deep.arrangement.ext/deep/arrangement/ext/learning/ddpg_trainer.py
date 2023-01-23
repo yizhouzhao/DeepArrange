@@ -36,6 +36,7 @@ class DDPGTrainer():
             device = torch.device("cuda"),
     ):
         super().__init__()
+        self.name = "ddpg"
         self.device = device
         if qf_criterion is None:
             qf_criterion = nn.MSELoss()

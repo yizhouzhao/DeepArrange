@@ -38,7 +38,10 @@ def obtain_action_from_trainer(image_feature_file, object_feature_file, trainer,
     object_feature = torch.load(object_feature_file).unsqueeze(0).to(device)
 
     dist = trainer.policy(image_feature, object_feature)
-    action = dist.sample(scaler = scaler)
+    if trainer.name == "sac":
+        action = dist.sample(scaler = scaler)
+    else:
+        action = dist * scaler
     action = action.flatten().tolist()
     return action
 
