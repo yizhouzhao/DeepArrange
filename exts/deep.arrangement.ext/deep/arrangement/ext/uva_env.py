@@ -96,6 +96,11 @@ class UvaEnv():
                 delete_paths.append("/World/base")
         
         if clean_all:
+            # clean light
+            light_prim = self.stage.GetPrimAtPath("/World/defaultLight")
+            if not light_prim.IsValid():
+                delete_paths.append("/World/defaultLight")
+
             # clean render
             render_prim = self.stage.GetPrimAtPath("/World/render")
             if render_prim.IsValid():

@@ -2,7 +2,7 @@ import omni.kit.commands
 import omni.usd
 from pxr import UsdGeom, Usd, Gf, UsdLux, Sdf
 
-def add_scene_default():
+def add_scene_default(task_type = "Wall"):
     """
     add default prim '/World' and '/DistantLight' to scene
     """
@@ -18,7 +18,10 @@ def add_scene_default():
         distantLight.CreateIntensityAttr(3000)
 
         # (0.98079, -0.19509, 0, 0) # (0.65328, 0.2706, 0.2706, 0.65328)
-        distantLight.AddOrientOp().Set(Gf.Quatf(0.96593, -0.25882, 0, 0))
+        if task_type == "Bookshelf":
+            distantLight.AddOrientOp().Set(Gf.Quatf(0.79829, -0.60227, 0, 0))
+        else:
+            distantLight.AddOrientOp().Set(Gf.Quatf(0.96593, -0.25882, 0, 0))
 
 def get_prim_bbox(stage, prim):
     """
