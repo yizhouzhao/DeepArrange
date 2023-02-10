@@ -190,3 +190,5 @@ OBJS_SHAPE_CONFIGS = {
         "Picture": []
     },
 }
+
+OBJS_SIZE_SHRINK = ["Sculpture", "Vase"]

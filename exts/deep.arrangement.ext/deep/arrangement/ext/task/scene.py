@@ -248,10 +248,12 @@ class ArrangeScene():
             if not ("Stack" in object_info["name"] or "Open" in object_info["name"]): 
                 rotation = Gf.Quatd(*OBJS_SHAPE_CONFIGS[self.task_choice][object_info["type"]])
             # picture and clock
-            
-            
 
-        scale = 1.0
+        if object_info["type"] in OBJS_SIZE_SHRINK:
+            scale = 0.5
+        else:
+            scale = 1.0
+            
         return rotation, scale
 
     def move_object(self, object_prim, position = (0, 200, 0)): 
